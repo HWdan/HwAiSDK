@@ -36,5 +36,5 @@ None
  # s.dependency 'HwBluetoothSDK'
  s.dependency 'WatchfaceSDK'
  s.dependency 'SSZipArchive'
- s.vendored_frameworks = 'NativeLib.xcframework'
+ s.vendored_frameworks = 'NativeLib.xcframework','HwBluetoothSDK.framework'
 end
