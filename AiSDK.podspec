@@ -15,11 +15,11 @@ Pod::Spec.new do |s|
 None
                        DESC
 
-  s.homepage         = 'https://github.com/HWdan/HwAiSDK.git'
+  s.homepage         = 'https://gitee.com/huawo-wear/ai-sdk.git'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'huangwentai' => 'hwt1573tiger@163.com' }
-  s.source           = { :git => 'https://github.com/HWdan/HwAiSDK.git', :tag => s.version.to_s }
+  s.author           = { 'sujiang' => 'sujiang@huawo-wear.com' }
+  s.source           = { :git => 'https://gitee.com/huawo-wear/ai-sdk.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '9.0'
