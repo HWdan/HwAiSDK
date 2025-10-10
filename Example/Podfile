@@ -1,0 +1,19 @@
+source 'https://github.com/CocoaPods/Specs.git'
+source 'https://github.com/sususu/LYSpecs.git'
+
+use_frameworks!
+
+platform :ios, '10.0'
+
+target 'AiSDK_Example' do
+  pod 'SVProgressHUD'
+  pod 'ReactiveObjC'
+  pod 'AiSDK', :path => '../'
+  pod 'HwBluetoothSDK', :git => 'https://gitee.com/huawo-wear/bluetooth-sdk-oc.git', :branch => 'develop'
+  pod 'WatchfaceSDK', :git => 'http://192.168.8.244/ios/watchfacesdk.git', :branch => 'main'
+  target 'AiSDK_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
