@@ -9,7 +9,7 @@
 #import "HwMainVC.h"
 #import "AiSDK_Example-Swift.h"
 #import <SVProgressHUD/SVProgressHUD.h>
-#import "HwBluetoothSDK.h"
+#import "HwBluetoothSDK/HwBluetoothSDK.h"
 #import "AiSDK.h"
 #import "AiSDK/AiImageUtils.h"
 
