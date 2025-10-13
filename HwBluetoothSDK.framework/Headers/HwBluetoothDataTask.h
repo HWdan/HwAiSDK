@@ -17,5 +17,7 @@
                                  sendDevice:(HwBluetoothDevice *)sendDevice
                                    callback:(HwBCRequestCallback)callback;
 
+- (void) restartTimerIfNeeded;
+
 @end
 

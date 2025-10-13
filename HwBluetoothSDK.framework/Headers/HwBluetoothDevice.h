@@ -119,6 +119,7 @@ extern NSString *HwBluetoothDeviceReadyNotification;
 #pragma mark - ota
 - (void) writeDataToOTANotificationCharacteristic:(NSData *)data;
 - (void) writeDataToOTAWriteCharacteristic:(NSData *)data;
+- (void) writeDataTo8001WriteCharacteristic:(NSData *)data;
 
 #pragma mark - RSSI
 /**

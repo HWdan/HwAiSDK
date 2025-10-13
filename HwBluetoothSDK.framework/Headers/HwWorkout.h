@@ -534,11 +534,13 @@ typedef NS_ENUM(NSInteger, HwWorkoutType)
  最小气压
  */
 @property(nonatomic, assign) NSInteger minPressure;
+@property(nonatomic, assign) BOOL supportedNav;
 
 @property(nonatomic, strong) NSArray<HwWorkoutPoint *> *workoutPoints;
 @property(nonatomic, strong) NSArray<HwWorkoutGpsPoint *> *workoutGpsPoints;
 
 - (HwWorkout *) initWithData:(NSData *)data;
+- (HwWorkout *) initWithBigDataContent:(NSData *)bigDataContent;
 
 
 @end

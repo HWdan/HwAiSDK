@@ -48,7 +48,8 @@ typedef NS_ENUM(NSInteger, HwDeviceEvent)
     HwDeviceEventUploadData = 0x06,
     HwDeviceEventSyncWeather = 0x07,
     HwDeviceEventSyncAgps = 0x08,
-    HwDeviceEventHeartRateMonitorFailed = 0x09
+    HwDeviceEventHeartRateMonitorFailed = 0x09,
+    HwDeviceEventSyncLocation = 0x13
 };
 
 typedef NS_ENUM(NSInteger, HwAiType)
@@ -102,6 +103,7 @@ typedef void (^HwGenerateAiHealthAnalysisRequestCallback)(HwHealthData *_Nullabl
 typedef void (^HwAiSettingUpdateCallback)(HwAiType type, int param1, int param2, int param3);
 typedef void (^HwAiEventCallback)(BOOL enter, HwAiType type, int param1, int param2, int param3);
 typedef void (^HwAiAnswerHandlerCallback)(BOOL play);
+typedef void (^HwAvailableStorageCallback)(NSInteger available, NSInteger total, NSError *_Nullable error);
 
 /*!
  蓝牙任务管理类
@@ -257,6 +259,10 @@ typedef void (^HwAiAnswerHandlerCallback)(BOOL play);
 - (void) addAiAnswerHandlerListener:(HwAiAnswerHandlerCallback _Nonnull)callback;
 - (void) removeAiAnswerHandlerListener:(HwAiAnswerHandlerCallback _Nonnull)callback;
 - (void) removeAllAiAnswerHandlerListeners;
+
+- (void) addAvailableStroageUpdatedListener:(HwAvailableStorageCallback _Nonnull)callback;
+- (void) removeAvailableStroageUpdatedListener:(HwAvailableStorageCallback _Nonnull)callback;
+- (void) removeAllAvailableStroageUpdatedListeners;
 
 - (void) deviceDataComeFromHeartRate:(NSData *_Nullable)data;
 - (void) deviceDatasComeFrom8004:(NSData *_Nullable)data;

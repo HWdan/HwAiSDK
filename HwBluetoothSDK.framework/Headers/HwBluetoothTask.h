@@ -50,6 +50,7 @@ typedef NS_ENUM(NSInteger, HwBluetoothTaskPriority)
 
 // 这里可以覆盖dataModel的timeout
 @property(nonatomic, assign) NSTimeInterval timeout;
+@property(nonatomic, assign) NSTimeInterval lastUpdateTime;
 @property(nonatomic, assign) HwBluetoothTaskType type;
 @property(nonatomic, weak) id<HwBluetoothTaskDelegate> delegate;
 @property(nonatomic, assign) HwBluetoothTaskState state;
@@ -74,5 +75,7 @@ typedef NS_ENUM(NSInteger, HwBluetoothTaskPriority)
  这个可以自己调用取消任务
  */
 - (void) cancel;
+
+- (BOOL) isTimeout;
 
 @end

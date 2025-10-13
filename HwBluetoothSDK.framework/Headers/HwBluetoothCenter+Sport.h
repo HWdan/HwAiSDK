@@ -263,7 +263,7 @@ typedef void (^HwBpsCallback)(NSArray<HwBloodPressure *> * _Nullable bpArr, NSEr
 typedef void (^HwSleepInfoArrayCallback)(NSArray<HwSleepPoint *> * _Nullable sleepArray, NSError *_Nullable error);
 
 // 运动时间单位为分种[the unit of sport time is minute]
-
+ 
 /*! @brief
  根据睡眠个数获取睡眠详情[obtain the sleep details based on the sleep numbers]
  

@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSArray<HwBluetoothValueUnit *> *) unitsWithData:(NSData *)data;
 + (NSData *) dataFromUnits:(NSArray<HwBluetoothValueUnit *> *)units;
++ (NSArray<HwBluetoothValueUnit *> *) unitsWithData2:(NSData *)data;
 + (NSData *) dataFromUnitsLength2:(NSArray<HwBluetoothValueUnit *> *)units;
 
 @end

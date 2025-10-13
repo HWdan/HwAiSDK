@@ -8,6 +8,7 @@
 #import "HwBluetoothCenter.h"
 #import "HwPrayerBeadsSwitch.h"
 #import "HwMuslimWorshipSwitch.h"
+#import "HwMuslimDayAlert.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,9 +18,13 @@ typedef void (^HwCollectedAllahIndexsCallback)(NSArray<NSNumber *> *_Nonnull lis
 
 @interface HwBluetoothCenter (Muslim)
 
+// 朝拜开关相关
 - (HwBluetoothTask *_Nullable) setMuslimWorshipSwitches:(NSArray<HwMuslimWorshipSwitch *> *_Nonnull)swList
                                                callback:(HwBoolCallback _Nullable)callback;
 - (HwBluetoothTask *_Nullable) getMuslimWorshipSwitchesWithCallback:(HwMuslimWorshipSwitchesCallback _Nonnull)callback;
+- (HwBluetoothTask *_Nullable) setMuslimWorshipMasterSwitche:(BOOL)on callback:(HwBoolCallback _Nullable)callback;
+- (HwBluetoothTask *_Nullable) getMuslimWorshipMasterSwitcheWithCallback:(HwBoolCallback _Nullable)callback;
+
 
 - (HwBluetoothTask *_Nullable) setPrayerBeadsSwitch:(HwPrayerBeadsSwitch *_Nonnull)sw
                                            callback:(HwBoolCallback _Nullable)callback;
@@ -46,6 +51,12 @@ typedef void (^HwCollectedAllahIndexsCallback)(NSArray<NSNumber *> *_Nonnull lis
 - (HwBluetoothTask *_Nullable) getCollectedAllahIndexsWithCallback:(HwCollectedAllahIndexsCallback)callback;
 - (HwBluetoothTask *_Nullable) setCollectedAllahIndexs:(NSArray<NSNumber *> *_Nonnull)list
                                               callback:(HwBoolCallback)callback;
+
+// 朝拜提醒相关
+- (HwBluetoothTask *_Nullable) setPrayerAlertTime:(NSArray<HwMuslimDayAlert *> *_Nonnull)dayAlertList
+                                         callback:(HwBoolCallback _Nullable)callback;
+- (HwBluetoothTask *_Nullable) getPrayerAlertTimeWithCallback:(HwBoolCallback _Nullable)callback;
+
 
 @end
 

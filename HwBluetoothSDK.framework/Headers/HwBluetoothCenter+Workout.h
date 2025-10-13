@@ -91,7 +91,10 @@ typedef void (^HwWorkoutRealtimeDataCallback)(HwWorkoutRealtimeData * _Nullable 
                                                         latitude:(double)latitude
                                                             time:(long)time
                                                callback:(HwBoolCallback _Nullable )callback;
-
+- (HwBluetoothTask *_Nullable) setDeviceNonPreciseGpsLocationWithLongitude:(double)longitude
+                                                                  latitude:(double)latitude
+                                                                      time:(long)time
+                                                                  callback:(HwBoolCallback _Nullable )callback;
 
 @end
 

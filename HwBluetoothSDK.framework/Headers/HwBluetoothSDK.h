@@ -371,6 +371,13 @@ Device's camera interface event listener
 - (void) setDeviceMapCenterWithLongitude:(double)longitude
                                 latitude:(double)latitude
                                 callback:(HwBoolCallback _Nullable)callback;
+- (void) setDeviceMapRangeWithLongitude:(double)longitude
+                               latitude:(double)latitude
+                           maxLongitude:(double)longitude
+                           minLongitude:(double)minLongitude
+                            maxLatitude:(double)maxLatitude
+                            minLatitude:(double)minLatitude
+                               callback:(HwBoolCallback _Nullable)callback;
 - (void) setDeviceBullets:(NSArray<HwDeviceBullet *> *_Nullable)bullets
                        on:(BOOL)on
                  callback:(HwBoolCallback _Nullable)callback;
@@ -1221,6 +1228,11 @@ typedef void (^HwHeartrateAlarmCallback)(HwHeartrateAlarm *_Nullable hrAlarm, NS
                                   latitude:(double)latitude
                                       time:(long)time
                                   callback:(HwBoolCallback _Nullable )callback;
+// 和上面的区别就是，这个gps精度要求不高
+- (void) setDeviceNonPreciseGpsLocationWithLongitude:(double)longitude
+                                            latitude:(double)latitude
+                                                time:(long)time
+                                            callback:(HwBoolCallback _Nullable )callback;
 
 /*! @brief
  Start workout
@@ -1431,6 +1443,10 @@ typedef void (^HwBtConnectionStateCallback)(BOOL connected);
 
 - (void) getMusicAvailableStorageWithCallback:(HwAvailableStorageCallback _Nonnull)callback;
 - (void) getOfflineMapAvailableStorageWithCallback:(HwBCIntegerCallback _Nonnull)callback;
+
+- (void) addDeviceMusicStorageChangedListener:(HwAvailableStorageCallback _Nonnull)callback;
+- (void) removeDeviceMusicStorageChangedListener:(HwAvailableStorageCallback _Nonnull)callback;
+- (void) removeAllDeviceMusicStorageChangedListeners:(HwAvailableStorageCallback _Nonnull)callback;
 
 #pragma mark - AI
 

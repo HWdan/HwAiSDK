@@ -19,6 +19,7 @@
 #import "HwSedentaryReminderForLS16.h"
 #import "HwQrCard.h"
 #import "HwDeviceBullet.h"
+#import "HwAiAgent.h"
 
 #pragma mark - define
 
@@ -119,6 +120,13 @@
 - (HwBluetoothTask *_Nullable) setDeviceMapCenterWithLongitude:(double)longitude
                                                       latitude:(double)latitude
                                                       callback:(HwBoolCallback _Nullable)callback;
+- (HwBluetoothTask *_Nullable) setDeviceMapRangeWithLongitude:(double)longitude
+                                                     latitude:(double)latitude
+                                                  maxLongitude:(double)maxLongitude
+                                                  minLongitude:(double)minLongitude
+                                                   maxLatitude:(double)maxLatitude
+                                                   minLatitude:(double)minLatitude
+                                                     callback:(HwBoolCallback _Nullable)callback;
 - (HwBluetoothTask *_Nullable) setDeviceBullets:(NSArray<HwDeviceBullet *> *_Nullable)bullets
                                              on:(BOOL)on
                                        callback:(HwBoolCallback _Nullable)callback;
@@ -826,6 +834,38 @@ typedef void (^HwQrcodeCardsCallback)(NSArray<HwQrCard *> *_Nullable cards, NSEr
 
 - (HwBluetoothTask *_Nullable) getMusicAvailableStorageWithCallback:(HwAvailableStorageCallback _Nonnull)callback;
 - (HwBluetoothTask *_Nullable) getOfflineMapAvailableStorageWithCallback:(HwBCIntegerCallback _Nonnull)callback;
+- (void) addDeviceMusicStorageChangedListener:(HwAvailableStorageCallback _Nonnull)callback;
+- (void) removeDeviceMusicStorageChangedListener:(HwAvailableStorageCallback _Nonnull)callback;
+- (void) removeAllDeviceMusicStorageChangedListeners;
+#pragma mark - 高原关爱
+- (HwBluetoothTask *_Nullable) setPlateauCareWithInterval:(NSInteger)interval
+                                                 callback:(HwBoolCallback _Nullable)callback;
+- (HwBluetoothTask *_Nullable) getPlateauCareWithCallback:(HwBCIntegerCallback _Nonnull)callback;
+
+#pragma mark - AI智能体
+- (HwBluetoothTask *_Nullable) setAiAgentsWithAiAgents:(NSArray<HwAiAgent *> * _Nonnull)aiAgents
+                                              callback:(HwBoolCallback _Nullable)callback;
+- (HwBluetoothTask *_Nullable) getAiAgentsWithCallback:(void(^_Nonnull)(NSArray<HwAiAgent *> *_Nullable aiAgents, NSError *_Nullable error))callback;
+
+#pragma mark - 蓝牙对讲机
+/*! @brief
+ 设置蓝牙对讲机名称
+ 
+ @param name 名称
+ @param callback bool回调
+ @return task
+ */
+- (HwBluetoothTask *_Nullable) setWalkieTalkieName:(NSString *_Nonnull)name
+                                          callback:(HwBoolCallback _Nullable)callback;
+
+/*! @brief
+ 获取蓝牙对讲机名称
+ 
+ @param callback string回调
+ @return task
+ */
+- (HwBluetoothTask *_Nullable) getWalkieTalkieNameWithCallback:(HwStringCallback _Nonnull)callback;
+
 @end
 
 
