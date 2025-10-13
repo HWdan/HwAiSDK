@@ -44,6 +44,19 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (assign, nonatomic) NSInteger pace;
 
+@property(nonatomic, assign) NSInteger actionPosture;
+@property(nonatomic, assign) NSInteger currentSwolf;
+@property(nonatomic, assign) NSInteger actionCount;
+@property(nonatomic, assign) NSInteger currentDuration;
+@property(nonatomic, assign) NSInteger avgActionRate;
+@property(nonatomic, assign) NSInteger maxActionRate;
+@property(nonatomic, assign) NSInteger currentAvgPace;
+@property(nonatomic, assign) NSInteger consecutiveActionCount;
+/**
+ 1开始、2暂停、3继续、4结束
+ */
+@property(nonatomic, assign) NSInteger state;
+
 - (BOOL) isSuspended;
 - (BOOL) isSuspendedEnd;
 

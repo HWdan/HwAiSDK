@@ -26,9 +26,11 @@
 #import "HwSleep.h"
 #import "HwWorldClockCity.h"
 #import "HwSimpleCustomWatchface.h"
+#import "HwBluetoothCenter.h"
 #import "HwFileUtils.h"
 #import "HwGpsStatus.h"
 #import "HwBluetoothCenter+AI.h"
+#import "HwBluetoothCenter+Muslim.h"
 
 #define HwBluetoothSDK_Version @"3.2.10"
 
@@ -95,6 +97,7 @@
  */
 - (void) destroySDK;
 
+- (HwBluetoothState) state;
 /**
  Get SDK version.
  */
@@ -242,7 +245,6 @@ Usage:
 
 #pragma mark - APIs
 #pragma mark - Device Relative APIs
-
 - (void) heartbeat:(HwBoolCallback _Nonnull)callback;
 
 /*! @brief
@@ -298,6 +300,13 @@ Device's camera interface event listener
  Get the GPS firmware version number and the valid period of AGPS data
  */
 - (void) getDeviceGpsStatusWithCallback:(HwGpsStatusCallback _Nonnull)callback;
+- (void) setDeviceGpsInfoWithClipType:(NSString *_Nonnull)clipType
+                            secretKey:(NSString *_Nonnull)secretKey
+                             callback:(HwBoolCallback _Nullable)callback;
+- (void) setCurrentGpsLocationWithLatitude:(double)latitude
+                                 longitude:(double)longitude
+                                 timestamp:(NSTimeInterval)timestamp
+                                  callback:(HwBoolCallback _Nullable)callback;
 
 /*! @brief
  Get the ID and unique identification of the device
@@ -337,6 +346,13 @@ Device's camera interface event listener
 - (void) getFirmwareVersionWithCallback:(HwStringCallback _Nullable)callback;
 
 /*! @brief
+ Get firmware version for TA
+
+ @param callback string callback
+*/
+- (void) getFirmwareVersionForTAWithCallback:(HwStringCallback _Nullable)callback;
+
+/*! @brief
  Get device type(Watch model)
  
  @param callback string
@@ -347,6 +363,17 @@ Device's camera interface event listener
 - (void) getDeviceInfoWithCallback:(HwDeviceInfoCallback _Nullable)callback;
 - (void) getDeviceWatchfaceVersionWithCallback:(HwBCIntegerCallback _Nullable)callback;
 - (void) getDeviceProtocolVersionWithCallback:(HwBCIntegerCallback _Nullable)callback;
+- (void) setDeviceMapAuthCode:(NSString *_Nonnull)authCode
+                         uuid:(NSString *_Nonnull)uuid
+                     callback:(HwBoolCallback _Nullable)callback;
+- (void) setDeviceMapTheme:(HwMapTheme)theme
+                  callback:(HwBoolCallback _Nullable)callback;
+- (void) setDeviceMapCenterWithLongitude:(double)longitude
+                                latitude:(double)latitude
+                                callback:(HwBoolCallback _Nullable)callback;
+- (void) setDeviceBullets:(NSArray<HwDeviceBullet *> *_Nullable)bullets
+                       on:(BOOL)on
+                 callback:(HwBoolCallback _Nullable)callback;
 
 /*! @brief
 Start to bind with watch
@@ -370,6 +397,7 @@ Start to bind with watch
  6. Set watch time, as default, set '[Date date]' to the watch;
  7. Notify watch that binding SOP is finished so that watch can do some initialization.
  @param userInfo Please check HwUserInfo.h
+ @param isNewDevice YES: new device  NO: old device
  @param deviceBindingCallback Callback an Boolean, whether the watch was binded before
  @param deviceConfirmedCallback Callback when √ is clicked
  @param deviceBindAgainCallback Callback when user confirm to bind again
@@ -377,6 +405,7 @@ Start to bind with watch
  @param failedCallback Callback when user click × on the watch or any other exception happens
 */
 - (void) startLS16BindWithUserInfo:(HwUserInfo *_Nonnull)userInfo
+                       isNewDevice:(BOOL)isNewDevice
              deviceBindingCallback:(HwBoolCallback _Nullable)deviceBindingCallback
            deviceConfirmedCallback:(HwBCVoidCallback _Nullable)deviceConfirmedCallback
            deviceBindAgainCallback:(HwBCVoidCallback _Nullable)deviceBindAgainCallback
@@ -419,6 +448,15 @@ Start to bind with watch
 - (void) setDeviceTime:(NSDate *_Nonnull)time
                  is24H:(BOOL)is24H
               callback:(HwBoolCallback _Nullable)callback;
+
+/*! @brief
+ 设置设备时间 Set time format of watch
+ 
+ @param is24H 是否24小时制 if time format is 24H
+ @param callback bool回调
+ */
+- (void) setDeviceTimeWith24H:(BOOL)is24H
+                     callback:(HwBoolCallback _Nullable)callback;
 
 /*! @brief
  Get time from device
@@ -875,6 +913,12 @@ Start to bind with watch
  Get blood pressure data. This API is only useful for watches with blood pressure feature supported.
  */
 - (void) getBpsWithCallback:(HwBpsCallback _Nonnull)bpsCallback;
+- (void) delBpsWithCallback:(HwBoolCallback _Nullable)callback;
+
+- (void) getPAIsWithCallback:(HwPAIsCallback _Nonnull)callback;
+- (void) delPAIsWithCallback:(HwBoolCallback _Nullable)callback;
+- (void) getVO2maxsWithCallback:(HwVO2maxsCallback _Nonnull)callback;
+- (void) delVO2maxsWithCallback:(HwBoolCallback _Nullable)callback;
 
 /*! @brief
  Get the number of health data in the watch,
@@ -1078,7 +1122,12 @@ typedef void (^HwHeartrateAlarmCallback)(HwHeartrateAlarm *_Nullable hrAlarm, NS
 - (void) getSpO2MonitorEnableWithCallback:(HwBoolCallback _Nullable)callback;
 - (void) setSpO2MonitorEnable:(BOOL)on
                      callback:(HwBoolCallback _Nonnull)callback;
+- (void) getAODEnableWithCallback:(HwBoolCallback _Nonnull)callback;
+- (void) setAODEnable:(BOOL)on
+             callback:(HwBoolCallback _Nonnull)callback;
 
+- (void) getLiftWristAwakenEnableWithCallback:(HwBoolCallback _Nonnull)callback;
+- (void) setLiftWristAwakenEnable:(BOOL)on callback:(HwBoolCallback _Nullable)callback;
 
 #pragma mark - 用户相关API接口[API port]
 #pragma mark - 用户信息[user's information]
@@ -1182,6 +1231,11 @@ typedef void (^HwHeartrateAlarmCallback)(HwHeartrateAlarm *_Nullable hrAlarm, NS
 - (void) startWorkoutWithType:(HwWorkoutType)type
                      goalType:(NSInteger)goalType
                     goalValue:(NSInteger)goalVal
+                     callback:(HwBoolCallback _Nullable)callback;
+
+- (void) startWorkoutWithType:(HwWorkoutType)type
+                    goalTypes:(NSArray<NSNumber *> * _Nonnull)goalTypes
+                   goalValues:(NSArray<NSNumber *> * _Nonnull)goalVals
                      callback:(HwBoolCallback _Nullable)callback;
 
 /*! @brief
@@ -1375,6 +1429,8 @@ typedef void (^HwBtConnectionStateCallback)(BOOL connected);
                                     callback:(HwBoolCallback _Nonnull)callback;
 - (void) delAllAlbumFilesWithCallback:(HwBoolCallback _Nonnull)callback;
 
+- (void) getMusicAvailableStorageWithCallback:(HwAvailableStorageCallback _Nonnull)callback;
+- (void) getOfflineMapAvailableStorageWithCallback:(HwBCIntegerCallback _Nonnull)callback;
 
 #pragma mark - AI
 
@@ -1402,9 +1458,30 @@ typedef void (^HwBtConnectionStateCallback)(BOOL connected);
                                 code:(int)code
                                  msg:(NSString *_Nullable)msg;
 
+- (void) setAiTranslateResultWithResult:(NSString *_Nullable)result
+                                   code:(int)code
+                                    msg:(NSString *_Nullable)msg;
+
+- (void) setAiAgentResultWithResult:(NSString *_Nullable)result
+                               code:(int)code
+                                msg:(NSString *_Nullable)msg;
+- (void) setAiMeetingResult:(HwMeeting *_Nullable)meeting
+                       type:(NSInteger)type
+                       code:(int)code
+                        msg:(NSString *_Nullable)msg;
+
+- (void) notifyAiMeetingHandling;
+
+- (void) setAiWatchfacePreviewWithPreviewName:(NSString *_Nullable)previewName
+                                         code:(int)code
+                                          msg:(NSString *_Nullable)msg;
+
 - (void) setAiWatchfaceResultWithWatchfaceName:(NSString *_Nullable)watchfaceName
                                           code:(int)code
                                            msg:(NSString *_Nullable)msg;
+- (void) getAiRecordDataWithCallback:(HwDataCallback _Nonnull)callback;
+
+- (void) getMeetingRecordDataWithCallback:(HwDataCallback _Nonnull)callback;
 
 - (void) addAiWatchfaceEnterOrExitListener:(HwAiWatchfaceEnterOrExitCallback _Nonnull)callback;
 - (void) removeAiWatchfaceEnterOrExitListener:(HwAiWatchfaceEnterOrExitCallback _Nonnull)callback;
@@ -1433,6 +1510,73 @@ typedef void (^HwBtConnectionStateCallback)(BOOL connected);
 - (void) addGenerateAiAnswerRequestListener:(HwGenerateAiAnswerRequestCallback _Nonnull)callback;
 - (void) removeGenerateAiAnswerRequestListener:(HwGenerateAiAnswerRequestCallback _Nonnull)callback;
 - (void) removeAllGenerateAiAnswerRequestListeners;
+
+- (void) addGenerateAiWatchfacePreviewRequestListener:(HwGenerateAiWatchfacePreviewRequestCallback _Nonnull)callback;
+- (void) removeGenerateAiWatchfacePreviewRequestListener:(HwGenerateAiWatchfacePreviewRequestCallback _Nonnull)callback;
+- (void) removeAllGenerateAiWatchfacePreviewRequestListeners;
+
+- (void) addAiEventListener:(HwAiEventCallback _Nonnull)callback;
+- (void) removeAiEventListener:(HwAiEventCallback _Nonnull)callback;
+- (void) removeAllAiEventListeners;
+
+- (void) addAiSettingUpdateListener:(HwAiSettingUpdateCallback _Nonnull)callback;
+- (void) removeAiSettingUpdateListener:(HwAiSettingUpdateCallback _Nonnull)callback;
+- (void) removeAllAiSettingUpdateListeners;
+
+- (void) addGenerateAiMeetingRequestListener:(HwGenerateAiMeetingRequestCallback _Nonnull)callback;
+- (void) removeGenerateAiMeetingRequestListener:(HwGenerateAiMeetingRequestCallback _Nonnull)callback;
+- (void) removeAllGenerateAiMeetingRequestListeners;
+
+- (void) addGenerateAiHealthAnalysisRequestListener:(HwGenerateAiHealthAnalysisRequestCallback _Nonnull)callback;
+- (void) removeGenerateAiHealthAnalysisRequestListener:(HwGenerateAiHealthAnalysisRequestCallback _Nonnull)callback;
+- (void) removeAllGenerateAiHealthAnalysisRequestListeners;
+- (void) setAiHealthAnalysisResultWithResult:(HwHealthAnalysisResult *_Nullable)result
+                                        code:(int)code
+                                         msg:(NSString *_Nullable)msg;
+
+
+- (void) addGenerateAiTranslateRequestListener:(HwGenerateAiTranslateRequestCallback _Nonnull)callback;
+- (void) removeGenerateAiTranslateRequestListener:(HwGenerateAiTranslateRequestCallback _Nonnull)callback;
+- (void) removeAllGenerateAiTranslateRequestListeners;
+
+- (void) addGenerateAiAgentResultRequestListener:(HwGenerateAiAgentResultRequestCallback _Nonnull)callback;
+- (void) removeGenerateAiAgentResultRequestListener:(HwGenerateAiAgentResultRequestCallback _Nonnull)callback;
+- (void) removeAllGenerateAiAgentResultRequestListeners;
+
+- (void) addAiAnswerHandlerListener:(HwAiAnswerHandlerCallback _Nonnull)callback;
+- (void) removeAiAnswerHandlerListener:(HwAiAnswerHandlerCallback _Nonnull)callback;
+- (void) removeAllAiAnswerHandlerListeners;
+
+#pragma mark - 穆斯林朝拜
+- (void) setMuslimWorshipSwitches:(NSArray<HwMuslimWorshipSwitch *> *_Nonnull)swList
+                                               callback:(HwBoolCallback _Nullable)callback;
+- (void) getMuslimWorshipSwitchesWithCallback:(HwMuslimWorshipSwitchesCallback _Nonnull)callback;
+
+- (void) setPrayerBeadsSwitch:(HwPrayerBeadsSwitch *_Nonnull)sw
+                     callback:(HwBoolCallback _Nullable)callback;
+- (void) setPrayerBeadsSwitchState:(BOOL)on
+                          callback:(HwBoolCallback _Nullable)callback;
+- (void) setPrayerBeadsSwitchStartHour:(NSInteger)startHour
+                           startMinute:(NSInteger)startMinute
+                              callback:(HwBoolCallback _Nullable)callback;
+- (void) setPrayerBeadsSwitchEndHour:(NSInteger)endHour
+                           endMinute:(NSInteger)endMinute
+                            callback:(HwBoolCallback _Nullable)callback;
+
+- (void) setPrayerBeadsSwitchInterval:(NSTimeInterval)interval
+                             callback:(HwBoolCallback _Nullable)callback;
+
+- (void) setPrayerBeadsSwitchInteractiveType:(HwPrayerBeadsInteractiveType)type
+                                    callback:(HwBoolCallback _Nullable)callback;
+
+- (void) getPrayerBeadsSwitchWithCallback:(HwHwPrayerBeadsSwitchCallback _Nonnull)callback;
+
+- (void) getWorshipCompassStyleWithCallback:(HwBCIntegerCallback _Nonnull)callback;
+- (void) setWorshipCompassStyle:(NSInteger)style
+                       callback:(HwBoolCallback _Nullable)callback;
+- (void) getCollectedAllahIndexsWithCallback:(HwCollectedAllahIndexsCallback _Nonnull)callback;
+- (void) setCollectedAllahIndexs:(NSArray<NSNumber *> *_Nonnull)list
+                        callback:(HwBoolCallback _Nullable)callback;
 
 
 @end

@@ -30,7 +30,7 @@
 		</data>
 		<key>Headers/HwBluetoothCenter+AI.h</key>
 		<data>
-		ZEFw2GrJmXiiikekEID9BnD0Mq4=
+		32aCcFIgBGmQDG0PvakcoZ3nmLU=
 		</data>
 		<key>Headers/HwBluetoothCenter+Customize.h</key>
 		<data>
@@ -38,7 +38,7 @@
 		</data>
 		<key>Headers/HwBluetoothCenter+Device.h</key>
 		<data>
-		7h0uw0HfJFh77x62b2fWlG5/AeA=
+		6a983CMYF1tyRM21ACDbeUe7fFY=
 		</data>
 		<key>Headers/HwBluetoothCenter+Expand.h</key>
 		<data>
@@ -48,13 +48,17 @@
 		<data>
 		Q7Q6CNN+ZYIxFF/Xx3gwEKUfXlA=
 		</data>
+		<key>Headers/HwBluetoothCenter+Muslim.h</key>
+		<data>
+		O9jvOQG1lNmy+6hMEld8KnQAkts=
+		</data>
 		<key>Headers/HwBluetoothCenter+Ota.h</key>
 		<data>
 		bK7PxXuJbIQ4f7+Eum92yZQUWlc=
 		</data>
 		<key>Headers/HwBluetoothCenter+Sport.h</key>
 		<data>
-		aIqMMCDGechR8rh9euxBdoLN6wE=
+		H/f05AuVMHl5LvBYUFfpE4qCDnw=
 		</data>
 		<key>Headers/HwBluetoothCenter+StatusSetting.h</key>
 		<data>
@@ -66,7 +70,7 @@
 		</data>
 		<key>Headers/HwBluetoothCenter+User.h</key>
 		<data>
-		UA2kA4rtGTuth8cic9+ax8sdhQw=
+		rdXl/aeHSgfVyYZU7zWR9MCqniA=
 		</data>
 		<key>Headers/HwBluetoothCenter+Utils.h</key>
 		<data>
@@ -78,7 +82,7 @@
 		</data>
 		<key>Headers/HwBluetoothCenter+Workout.h</key>
 		<data>
-		muHH46JiqeMLzBh+otiZJSj7zSY=
+		rgcEVMSrbujyc9s98sHTkCU4yQY=
 		</data>
 		<key>Headers/HwBluetoothCenter+WorkoutTrack.h</key>
 		<data>
@@ -118,7 +122,7 @@
 		</data>
 		<key>Headers/HwBluetoothDeviceRequestManager.h</key>
 		<data>
-		nd/m4HjYfoeVX67kwRxaFCgmEpk=
+		dAkZQPj6/IY7QxrNEEFhSl/x6xE=
 		</data>
 		<key>Headers/HwBluetoothDisconnectRequest.h</key>
 		<data>
@@ -130,7 +134,7 @@
 		</data>
 		<key>Headers/HwBluetoothError.h</key>
 		<data>
-		JwGr0mojxTL14R1OzP/7VRiIc4s=
+		MdpWTPeYVW/KUHtkYyUJv0CMkS8=
 		</data>
 		<key>Headers/HwBluetoothInterfaces.h</key>
 		<data>
@@ -146,7 +150,7 @@
 		</data>
 		<key>Headers/HwBluetoothSDK.h</key>
 		<data>
-		v+7DGCnRSgrIO16xTSaxTFIFqoQ=
+		neRCeNn/kB+M+CYtTfNakfK2sVw=
 		</data>
 		<key>Headers/HwBluetoothScanner.h</key>
 		<data>
@@ -170,11 +174,15 @@
 		</data>
 		<key>Headers/HwBluetoothValueUnit.h</key>
 		<data>
-		mkR+4aRRROlRZ3ZBo171hF4gk1E=
+		rF2ENcRwg/4WeTa9z0Cvd/sAbko=
+		</data>
+		<key>Headers/HwBodyState.h</key>
+		<data>
+		iW6wHtmJ2FWv6P04t6yZV8nI3pY=
 		</data>
 		<key>Headers/HwCommonDefines.h</key>
 		<data>
-		5NM8OIz4flo/jK6feaS/Mmmei7I=
+		m9ClRSRfRcitghUVyVl4GC0TMZ8=
 		</data>
 		<key>Headers/HwContact.h</key>
 		<data>
@@ -184,13 +192,17 @@
 		<data>
 		Vnv1o9W+osiX+hDYR+Ai8jmxMYI=
 		</data>
+		<key>Headers/HwDeviceBullet.h</key>
+		<data>
+		ZiKc0yBql8MxB0l+tE66ThewRj8=
+		</data>
 		<key>Headers/HwDeviceDefines.h</key>
 		<data>
-		hgXlTEY3+uM8l+MB0Fijldf7mtk=
+		ZFzj4QJBiJXTB2I2GSWzy1mnuL0=
 		</data>
 		<key>Headers/HwDeviceInfo.h</key>
 		<data>
-		TIswkBlLmbShJei01wmbF9gVcj0=
+		+VNBYJFPRoXwYdZ6UN8Oj0w2nys=
 		</data>
 		<key>Headers/HwDontDisturbModel.h</key>
 		<data>
@@ -218,11 +230,19 @@
 		</data>
 		<key>Headers/HwGpsStatus.h</key>
 		<data>
-		MnMzCNDZyOJwV+QGKCRGqpC4fEw=
+		IrFExYDpvKnrtwHr6X1Gfddlbl8=
 		</data>
 		<key>Headers/HwHandwashingConfig.h</key>
 		<data>
 		yV3uY+suNIGNB04MLVlenSZIPw0=
+		</data>
+		<key>Headers/HwHealthAnalysisResult.h</key>
+		<data>
+		b0Hlo6N125fKKbkelbsfaJfzJog=
+		</data>
+		<key>Headers/HwHealthData.h</key>
+		<data>
+		negifHwhDPDg12XsCbniJlkumkw=
 		</data>
 		<key>Headers/HwHeartRate.h</key>
 		<data>
@@ -258,15 +278,19 @@
 		</data>
 		<key>Headers/HwLS16.h</key>
 		<data>
-		16ezjTEwzTghsr74ay6KcYCWp1s=
+		oLIoKxfsvgkmrkblXR1Ni7LqQ/I=
 		</data>
 		<key>Headers/HwLanguageUtil.h</key>
 		<data>
-		r4K06cacRBAh0KbEnHsaRDZP7v4=
+		xCZbgFw+ie5aQfT90DLct8NVnQQ=
 		</data>
 		<key>Headers/HwLocalizeTimeZone.h</key>
 		<data>
 		hLkcUH5Z+k1u7yCu2fCkE/rF2Jg=
+		</data>
+		<key>Headers/HwMeeting.h</key>
+		<data>
+		bjF0vZB4BR6JVJlt6EOXhK87PC4=
 		</data>
 		<key>Headers/HwMenstrual.h</key>
 		<data>
@@ -276,9 +300,21 @@
 		<data>
 		mxMvUXEcQr3dcAh/x/QW0W4sVHw=
 		</data>
+		<key>Headers/HwMuslimWorshipSwitch.h</key>
+		<data>
+		pCy6vJHoQM5eTdlJsjTSc0sGrL8=
+		</data>
+		<key>Headers/HwPAI.h</key>
+		<data>
+		cVC+NvI1WSomijFxSap5qBA42oo=
+		</data>
 		<key>Headers/HwPhysiologicalPeriodSetting.h</key>
 		<data>
 		EW3HLyl3d2SXIymGrEUBN+NEgGc=
+		</data>
+		<key>Headers/HwPrayerBeadsSwitch.h</key>
+		<data>
+		9G9bhzK4LTroy2MHXB598BfBLsw=
 		</data>
 		<key>Headers/HwQrCard.h</key>
 		<data>
@@ -306,7 +342,7 @@
 		</data>
 		<key>Headers/HwSleep.h</key>
 		<data>
-		qFNHiMeXzLfZnKLlFs9rNsEU1ww=
+		qCgBck+UYp0Yz/+phZXuhUZ/gzA=
 		</data>
 		<key>Headers/HwSleepPoint.h</key>
 		<data>
@@ -350,7 +386,11 @@
 		</data>
 		<key>Headers/HwUserInfo.h</key>
 		<data>
-		1Sy0Y9NJJWo+DKAO3zPdg7Tap8Q=
+		Y1x1DlD1SWqClxt2zuNtRMUs3r4=
+		</data>
+		<key>Headers/HwVO2max.h</key>
+		<data>
+		OS13DWmhstXXjNIYNmIFZ+pYRNg=
 		</data>
 		<key>Headers/HwVibrationModel.h</key>
 		<data>
@@ -358,7 +398,7 @@
 		</data>
 		<key>Headers/HwWeatherInfo.h</key>
 		<data>
-		FLfVNHyZsSEjWAcp+bKTN9mljc0=
+		vS/zaW22wqvN7PNFHnGUNIbpzs0=
 		</data>
 		<key>Headers/HwWidget.h</key>
 		<data>
@@ -366,19 +406,19 @@
 		</data>
 		<key>Headers/HwWorkout.h</key>
 		<data>
-		IcQLLG0duhNJ9Pr7EHau3/wsS2c=
+		65Rnq6ERy6/ggkps7RUmE3ZeSqU=
 		</data>
 		<key>Headers/HwWorkoutGpsPoint.h</key>
 		<data>
-		Bec7bm0BOOvECvVuaO8A837BbQQ=
+		pSan6BFC8P6ubQ2+7tnAEYpJ97I=
 		</data>
 		<key>Headers/HwWorkoutPoint.h</key>
 		<data>
-		zpxDfcJF+gEt3/WAgFUJhMJG37I=
+		SKnqeTQimwBzYNpwQPjDHEPsRYE=
 		</data>
 		<key>Headers/HwWorkoutRealtimeData.h</key>
 		<data>
-		5uWCGdCBHGfey6SGVUTjjThGqQI=
+		Pc949yBzkPx9kPfkR5scFqAOy70=
 		</data>
 		<key>Headers/HwWorldClockCity.h</key>
 		<data>
@@ -386,7 +426,7 @@
 		</data>
 		<key>Headers/NSData+HwBLE.h</key>
 		<data>
-		FPLIKLKaRzwsbj9IllAIHwi/ko4=
+		9UdHKB0TzxZuhLxjqb6Ydf4x+4g=
 		</data>
 		<key>Headers/NSData+hw_lz4.h</key>
 		<data>
@@ -418,7 +458,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		7gZxLB4im6A0unWKpixx8ZfqZU4=
+		vhjIeT9OZ3k/3Fwfyd8jbtdaDFM=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -501,11 +541,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			ZEFw2GrJmXiiikekEID9BnD0Mq4=
+			32aCcFIgBGmQDG0PvakcoZ3nmLU=
 			</data>
 			<key>hash2</key>
 			<data>
-			7+sUpgVfCoYeW/N8EaevJ8wHucBDrnYdYjaeUomiYUY=
+			7bhi8i3V840c5dkTHlDUFXBmFeqDe0FHAg70gDnlhpg=
 			</data>
 		</dict>
 		<key>Headers/HwBluetoothCenter+Customize.h</key>
@@ -523,11 +563,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			7h0uw0HfJFh77x62b2fWlG5/AeA=
+			6a983CMYF1tyRM21ACDbeUe7fFY=
 			</data>
 			<key>hash2</key>
 			<data>
-			3FBWFoSXWRsmRG7DdcyVRqqkAb0Ed/g8kqr/xWbXFKk=
+			3KflJYWiIf7ZjRJfwgwlB5nk7v9z7pScvtveFvkRdb8=
 			</data>
 		</dict>
 		<key>Headers/HwBluetoothCenter+Expand.h</key>
@@ -552,6 +592,17 @@
 			cBJ8tDG8kAJGO7Ocj1wAj2Ezy8OMh0+vJQAHbg52Y3c=
 			</data>
 		</dict>
+		<key>Headers/HwBluetoothCenter+Muslim.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			O9jvOQG1lNmy+6hMEld8KnQAkts=
+			</data>
+			<key>hash2</key>
+			<data>
+			NKjMbO8vIt8HmkLK2OpO4XiDhVYKVV+AlAqEkGvczGQ=
+			</data>
+		</dict>
 		<key>Headers/HwBluetoothCenter+Ota.h</key>
 		<dict>
 			<key>hash</key>
@@ -567,11 +618,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			aIqMMCDGechR8rh9euxBdoLN6wE=
+			H/f05AuVMHl5LvBYUFfpE4qCDnw=
 			</data>
 			<key>hash2</key>
 			<data>
-			flrOr5ebjdAe/kCVxWIQLlHYvAh8d462y1uNzgp85vM=
+			13p/Vu7sW6uvEKDISPWX2TJK9vumfaZs8HgFAjr/WDo=
 			</data>
 		</dict>
 		<key>Headers/HwBluetoothCenter+StatusSetting.h</key>
@@ -600,11 +651,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			UA2kA4rtGTuth8cic9+ax8sdhQw=
+			rdXl/aeHSgfVyYZU7zWR9MCqniA=
 			</data>
 			<key>hash2</key>
 			<data>
-			XAMTLr9CdPwIXmUj7+BkKHCWtG9aaj3ylbCrYltZSNo=
+			5kybGHCpNTzcdYOi6aojP746sK9w1CJKOvLNrE11mJ8=
 			</data>
 		</dict>
 		<key>Headers/HwBluetoothCenter+Utils.h</key>
@@ -633,11 +684,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			muHH46JiqeMLzBh+otiZJSj7zSY=
+			rgcEVMSrbujyc9s98sHTkCU4yQY=
 			</data>
 			<key>hash2</key>
 			<data>
-			97SyxMEDmJ2NfMGLKfrdV6QrAalLXzAnJ07lEq+9KLY=
+			dJ8PtJ+ya/ZqeJ8/1TOdrwfHo8yWALMQj3om3AYMO0w=
 			</data>
 		</dict>
 		<key>Headers/HwBluetoothCenter+WorkoutTrack.h</key>
@@ -743,11 +794,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			nd/m4HjYfoeVX67kwRxaFCgmEpk=
+			dAkZQPj6/IY7QxrNEEFhSl/x6xE=
 			</data>
 			<key>hash2</key>
 			<data>
-			rD7ySRHKW9z5FPh8+FxMyOLum7guelejB5sn2ni9dHg=
+			blRKE8Ypa8taze1YT2FD4bPcEdV2/9dqNi8uq2QR138=
 			</data>
 		</dict>
 		<key>Headers/HwBluetoothDisconnectRequest.h</key>
@@ -776,11 +827,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			JwGr0mojxTL14R1OzP/7VRiIc4s=
+			MdpWTPeYVW/KUHtkYyUJv0CMkS8=
 			</data>
 			<key>hash2</key>
 			<data>
-			9Lg7A7R+aW91478p23w7qSoKEu5mt8/jr0RCwGVP1nc=
+			TGBUZieHE9vUaz9DuWa1izp8nn5OV/36ebFOMnzn1XA=
 			</data>
 		</dict>
 		<key>Headers/HwBluetoothInterfaces.h</key>
@@ -820,11 +871,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			v+7DGCnRSgrIO16xTSaxTFIFqoQ=
+			neRCeNn/kB+M+CYtTfNakfK2sVw=
 			</data>
 			<key>hash2</key>
 			<data>
-			C/FLBAeIiXMYdN/HmdgfldctZZEPdCy0PqODrhdt+NA=
+			jWPQu+zeRFpxhX4qGmEzppoUntXKPCVUvt8Gs1yTRE0=
 			</data>
 		</dict>
 		<key>Headers/HwBluetoothScanner.h</key>
@@ -886,22 +937,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			mkR+4aRRROlRZ3ZBo171hF4gk1E=
+			rF2ENcRwg/4WeTa9z0Cvd/sAbko=
 			</data>
 			<key>hash2</key>
 			<data>
-			NBpDOdsFBWvNB34TEorL27Xiwg/OXGRV6HqiqmLwZ8c=
+			AR7BndtLi2e6V1tIUonDY09sERa3vrB/RrEsHT9gdUY=
+			</data>
+		</dict>
+		<key>Headers/HwBodyState.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			iW6wHtmJ2FWv6P04t6yZV8nI3pY=
+			</data>
+			<key>hash2</key>
+			<data>
+			z8POD0TUIySRR0mAmciTF+CNEyJ8lasNq3yZ1dc4jAM=
 			</data>
 		</dict>
 		<key>Headers/HwCommonDefines.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			5NM8OIz4flo/jK6feaS/Mmmei7I=
+			m9ClRSRfRcitghUVyVl4GC0TMZ8=
 			</data>
 			<key>hash2</key>
 			<data>
-			T2xH0YiMCpN38ujivoTQtUVjHr4/Rl7pIzyaXEHmluc=
+			Umn+ueepM9OvTgtdiOTimPLLFBnC0XJdCdvm9inzFSg=
 			</data>
 		</dict>
 		<key>Headers/HwContact.h</key>
@@ -926,26 +988,37 @@
 			c3igbcV488aGH8oQkSpenWVNiTxlLazpd3+7v6EviyY=
 			</data>
 		</dict>
+		<key>Headers/HwDeviceBullet.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			ZiKc0yBql8MxB0l+tE66ThewRj8=
+			</data>
+			<key>hash2</key>
+			<data>
+			mAXJ29JZ/QPblSWEPIeRTSY0SGn1CujxdlwA/aIZMdw=
+			</data>
+		</dict>
 		<key>Headers/HwDeviceDefines.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			hgXlTEY3+uM8l+MB0Fijldf7mtk=
+			ZFzj4QJBiJXTB2I2GSWzy1mnuL0=
 			</data>
 			<key>hash2</key>
 			<data>
-			2lM/s2idvIlGYoF7ZwFMUR+1CCGHfS/Z+H5Ti9+u7sI=
+			IHclJ4+CCMi134J1I1XDYe8fkG5Uk2te1531Ip1K4no=
 			</data>
 		</dict>
 		<key>Headers/HwDeviceInfo.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			TIswkBlLmbShJei01wmbF9gVcj0=
+			+VNBYJFPRoXwYdZ6UN8Oj0w2nys=
 			</data>
 			<key>hash2</key>
 			<data>
-			96/ymyUq9eYwE3j9pi9BgVPQ8WEsUvTGTLl/WzL34Xs=
+			K0OT6hmSEk5uGHb/P3EhDb3IlYT+Al6FjveN0TL9hKE=
 			</data>
 		</dict>
 		<key>Headers/HwDontDisturbModel.h</key>
@@ -1018,11 +1091,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			MnMzCNDZyOJwV+QGKCRGqpC4fEw=
+			IrFExYDpvKnrtwHr6X1Gfddlbl8=
 			</data>
 			<key>hash2</key>
 			<data>
-			xnunZ3Z5IDipSDoVqqJyEIjl0fUJFOHbyveyfN2ul7M=
+			1QVF5EwTvB2b8VVz9GlyvAW0juiB1MuTmbDRKclClbk=
 			</data>
 		</dict>
 		<key>Headers/HwHandwashingConfig.h</key>
@@ -1034,6 +1107,28 @@
 			<key>hash2</key>
 			<data>
 			4zjLeMcprLjDwRYJS522Q6GjY5Dv48aeIBxnEfudc1Y=
+			</data>
+		</dict>
+		<key>Headers/HwHealthAnalysisResult.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			b0Hlo6N125fKKbkelbsfaJfzJog=
+			</data>
+			<key>hash2</key>
+			<data>
+			Mjl8fqghiqJ8FKXbePcNejHal+8qiiYMwqfGlgdttuw=
+			</data>
+		</dict>
+		<key>Headers/HwHealthData.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			negifHwhDPDg12XsCbniJlkumkw=
+			</data>
+			<key>hash2</key>
+			<data>
+			5j49a8VLCEEg57V58GkG82nlTreFt+VwkAZjHxCafF4=
 			</data>
 		</dict>
 		<key>Headers/HwHeartRate.h</key>
@@ -1128,22 +1223,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			16ezjTEwzTghsr74ay6KcYCWp1s=
+			oLIoKxfsvgkmrkblXR1Ni7LqQ/I=
 			</data>
 			<key>hash2</key>
 			<data>
-			GtzlP3koJ8iR+eSARbxbX4JWo5gvonWAWrbyMyV+z0U=
+			nJ6fa7BpOM0GZwNhuHw/Tfu9qP3aMVeXQoc+yMUj6uA=
 			</data>
 		</dict>
 		<key>Headers/HwLanguageUtil.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			r4K06cacRBAh0KbEnHsaRDZP7v4=
+			xCZbgFw+ie5aQfT90DLct8NVnQQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			rakpLMujMxJvzAHXF2yrTI26mvA49J0aU0EDbLeO344=
+			f8n4UrmWijZAZbKOmTsusBGRMMTUapB6A2OTzA2+B5M=
 			</data>
 		</dict>
 		<key>Headers/HwLocalizeTimeZone.h</key>
@@ -1155,6 +1250,17 @@
 			<key>hash2</key>
 			<data>
 			xu7qqD8elWInx3BXDxxdNusVYkHggVbJRkI19cz0mG4=
+			</data>
+		</dict>
+		<key>Headers/HwMeeting.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			bjF0vZB4BR6JVJlt6EOXhK87PC4=
+			</data>
+			<key>hash2</key>
+			<data>
+			fbsvSDSKCtWe6vbIx9NJ0yzB/UloGVNuoV3lQR1eT+8=
 			</data>
 		</dict>
 		<key>Headers/HwMenstrual.h</key>
@@ -1179,6 +1285,28 @@
 			ZYQqGdFZ6ifk5tZA0sW8hmNbQyVNQL12zuntfZycR54=
 			</data>
 		</dict>
+		<key>Headers/HwMuslimWorshipSwitch.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			pCy6vJHoQM5eTdlJsjTSc0sGrL8=
+			</data>
+			<key>hash2</key>
+			<data>
+			XCWNrpAHR37KQxQOnRfqbebYdn3LaUcnwHzIq5ED9aQ=
+			</data>
+		</dict>
+		<key>Headers/HwPAI.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			cVC+NvI1WSomijFxSap5qBA42oo=
+			</data>
+			<key>hash2</key>
+			<data>
+			94dl3p5DHsYBECyxmRhJ3BcldC3tFwWeloNNNUAUv64=
+			</data>
+		</dict>
 		<key>Headers/HwPhysiologicalPeriodSetting.h</key>
 		<dict>
 			<key>hash</key>
@@ -1188,6 +1316,17 @@
 			<key>hash2</key>
 			<data>
 			8p87N+hg9P706kxN+9xnvzrYDSRa5Ofg/cYTKyiGzZE=
+			</data>
+		</dict>
+		<key>Headers/HwPrayerBeadsSwitch.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			9G9bhzK4LTroy2MHXB598BfBLsw=
+			</data>
+			<key>hash2</key>
+			<data>
+			FglIgZbT9bOqZplsmIWh516BH4fMGloKVwxelq0y8T8=
 			</data>
 		</dict>
 		<key>Headers/HwQrCard.h</key>
@@ -1260,11 +1399,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			qFNHiMeXzLfZnKLlFs9rNsEU1ww=
+			qCgBck+UYp0Yz/+phZXuhUZ/gzA=
 			</data>
 			<key>hash2</key>
 			<data>
-			G+0D+hYdYiLNhp8z/i0xvqqo9xHbpPCuALhHbIXr0u4=
+			ByPBUpdVTxq3h5v2wpWaq1sO+t6B12CTj8MZI5PF0Vs=
 			</data>
 		</dict>
 		<key>Headers/HwSleepPoint.h</key>
@@ -1381,11 +1520,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			1Sy0Y9NJJWo+DKAO3zPdg7Tap8Q=
+			Y1x1DlD1SWqClxt2zuNtRMUs3r4=
 			</data>
 			<key>hash2</key>
 			<data>
-			5VoL1t5kIAc+N5hbP0+uQcdjYzfDGMD6vkxtWjIXRt4=
+			OyeZFYFIqHhhtqK39wVmgVVkrUCG6sO3NKi6gKJR0dw=
+			</data>
+		</dict>
+		<key>Headers/HwVO2max.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			OS13DWmhstXXjNIYNmIFZ+pYRNg=
+			</data>
+			<key>hash2</key>
+			<data>
+			04ZyJiZHanG8fk2u3LrDKrs8Xdi5fxtwPAo+Iau3zfk=
 			</data>
 		</dict>
 		<key>Headers/HwVibrationModel.h</key>
@@ -1403,11 +1553,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			FLfVNHyZsSEjWAcp+bKTN9mljc0=
+			vS/zaW22wqvN7PNFHnGUNIbpzs0=
 			</data>
 			<key>hash2</key>
 			<data>
-			C8emUXOwlzlTSonlPO7Hu8gT0Cgqb25uN7jLMnCohO8=
+			Hm0DCKwKMiC9CNNOTak69NhXQAA8Uam82ro+YEbRkzw=
 			</data>
 		</dict>
 		<key>Headers/HwWidget.h</key>
@@ -1425,44 +1575,44 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			IcQLLG0duhNJ9Pr7EHau3/wsS2c=
+			65Rnq6ERy6/ggkps7RUmE3ZeSqU=
 			</data>
 			<key>hash2</key>
 			<data>
-			hJ/APyM625g7WqxGLoetuHYsXnYrb52SkwCFhkMJanM=
+			dkB1NZfP5L8EQ9a0BO1oe3DUoxQxm8f53mzBZTKORso=
 			</data>
 		</dict>
 		<key>Headers/HwWorkoutGpsPoint.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Bec7bm0BOOvECvVuaO8A837BbQQ=
+			pSan6BFC8P6ubQ2+7tnAEYpJ97I=
 			</data>
 			<key>hash2</key>
 			<data>
-			enm/9fT6do+juvTKor/bGz+sXwp6l3VZ7b1dVLchxl0=
+			VHYvMfYXPt5oOnUcu+bOLZ83FMxw+yNjfoj/+oS+hY4=
 			</data>
 		</dict>
 		<key>Headers/HwWorkoutPoint.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			zpxDfcJF+gEt3/WAgFUJhMJG37I=
+			SKnqeTQimwBzYNpwQPjDHEPsRYE=
 			</data>
 			<key>hash2</key>
 			<data>
-			6d2+6fYr4yoo6LkKtQfmSRAn4cqugbMhtkp8Xc1dYnw=
+			11OOFTiRry9pOF/bprD03cHx2+MeA3RJeyZ/Pp6CA5s=
 			</data>
 		</dict>
 		<key>Headers/HwWorkoutRealtimeData.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			5uWCGdCBHGfey6SGVUTjjThGqQI=
+			Pc949yBzkPx9kPfkR5scFqAOy70=
 			</data>
 			<key>hash2</key>
 			<data>
-			6g8I8LCcO3E5RfJWgDhLPVaHwhAxpf1qkBlUFURZzcA=
+			9UDvogZltwYBLEpu+4ufcDni3J3o11VLij1DcMJKmVI=
 			</data>
 		</dict>
 		<key>Headers/HwWorldClockCity.h</key>
@@ -1480,11 +1630,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			FPLIKLKaRzwsbj9IllAIHwi/ko4=
+			9UdHKB0TzxZuhLxjqb6Ydf4x+4g=
 			</data>
 			<key>hash2</key>
 			<data>
-			1wI6aIja+fUN8HAzK5Cs9QYTicRlXnK/nHG05ncBkVw=
+			7KgeJb755pGCKMOFbjsmd84P7hBDNW1pchoCXB8DfMg=
 			</data>
 		</dict>
 		<key>Headers/NSData+hw_lz4.h</key>

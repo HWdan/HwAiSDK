@@ -18,6 +18,7 @@
 #import "HwPhysiologicalPeriodSetting.h"
 #import "HwSedentaryReminderForLS16.h"
 #import "HwQrCard.h"
+#import "HwDeviceBullet.h"
 
 #pragma mark - define
 
@@ -57,6 +58,11 @@
  Get the GPS firmware version number and the valid period of AGPS data
  */
 - (HwBluetoothTask *_Nullable) getDeviceGpsStatusWithCallback:(HwGpsStatusCallback _Nonnull)callback;
+- (HwBluetoothTask *_Nullable) setDeviceGpsInfoWithClipType:(NSString *_Nonnull)clipType secretKey:(NSString *_Nonnull)secretKey callback:(HwBoolCallback _Nullable)callback;
+- (HwBluetoothTask *_Nullable) setCurrentGpsLocationWithLatitude:(double)latitude
+                                                       longitude:(double)longitude
+                                                       timestamp:(NSTimeInterval)timestamp
+                                                        callback:(HwBoolCallback _Nullable)callback;
 
 /*! @brief
  获取设备的ID get ID of the watch
@@ -82,6 +88,8 @@
  */
 - (HwBluetoothTask *_Nullable) getFirmwareVersionWithCallback:(HwStringCallback _Nullable)callback;
 
+- (HwBluetoothTask *_Nullable) getFirmwareVersionForTAWithCallback:(HwStringCallback _Nullable)callback;
+
 /*! @brief
  获取设备信息 Get device info
  
@@ -103,6 +111,17 @@
 - (HwBluetoothTask *_Nullable) getDeviceInfoWithCallback:(HwDeviceInfoCallback _Nullable)callback;
 - (HwBluetoothTask *_Nullable) getDeviceWatchfaceVersionWithCallback:(HwBCIntegerCallback _Nullable)callback;
 - (HwBluetoothTask *_Nullable) getDeviceProtocolVersionWithCallback:(HwBCIntegerCallback _Nullable)callback;
+- (HwBluetoothTask *_Nullable) setDeviceMapAuthCode:(NSString *_Nonnull)authCode
+                                               uuid:(NSString *_Nonnull)uuid
+                                           callback:(HwBoolCallback _Nullable)callback;
+- (HwBluetoothTask *_Nullable) setDeviceMapTheme:(HwMapTheme)theme
+                                        callback:(HwBoolCallback _Nullable)callback;
+- (HwBluetoothTask *_Nullable) setDeviceMapCenterWithLongitude:(double)longitude
+                                                      latitude:(double)latitude
+                                                      callback:(HwBoolCallback _Nullable)callback;
+- (HwBluetoothTask *_Nullable) setDeviceBullets:(NSArray<HwDeviceBullet *> *_Nullable)bullets
+                                             on:(BOOL)on
+                                       callback:(HwBoolCallback _Nullable)callback;
 
 /*! @brief
  开始绑定设备 starting to pairing with watch
@@ -121,6 +140,7 @@
  @return task
  */
 - (HwBluetoothTask *_Nullable) startConfirmBindWithUID:(NSString *_Nonnull)uid
+                                           isNewDevice:(BOOL)isNewDevice
                                               callback:(HwBoolCallback _Nullable)callback;
 
 - (HwBluetoothTask *_Nullable) getDeviceUIDWithCallback:(HwStringCallback _Nonnull)callback;
@@ -804,6 +824,8 @@ typedef void (^HwQrcodeCardsCallback)(NSArray<HwQrCard *> *_Nullable cards, NSEr
 - (HwBluetoothTask *_Nullable) delAllAlbumFilesWithCallback:(HwBoolCallback _Nonnull)callback;
 
 
+- (HwBluetoothTask *_Nullable) getMusicAvailableStorageWithCallback:(HwAvailableStorageCallback _Nonnull)callback;
+- (HwBluetoothTask *_Nullable) getOfflineMapAvailableStorageWithCallback:(HwBCIntegerCallback _Nonnull)callback;
 @end
 
 

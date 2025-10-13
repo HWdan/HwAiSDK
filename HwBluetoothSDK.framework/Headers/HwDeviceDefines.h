@@ -28,7 +28,13 @@
  */
 typedef NS_ENUM(NSInteger, HwSex) {
     HwSexMale = 0x00,
-    HwSexFemale = 0x01
+    HwSexFemale = 0x01,
+    HwSexUnkown = 0x02
+};
+
+typedef NS_ENUM(NSInteger, HwMapTheme) {
+    HwMapThemeLight = 0x00,
+    HwMapThemeDark = 0x01
 };
 
 /*!
@@ -117,6 +123,10 @@ typedef NS_ENUM(NSInteger, HwLanguage) {
     HwLanguageKhmer = 0x2A,                 // 高棉语 Khmer
     HwLanguageMalaysia = 0x2B,              // 马来西亚 Malaysia
     HwLanguageSlovak = 0x2C,                // 斯洛伐克语 Slovak
+    HwLanguageBulgarian = 0x2D,             // 保加利亚语（Bulgarian）
+    HwLanguageSlovenian = 0x2E,             // 斯洛文尼亚语（Slovenian）
+    HwLanguageCroatian = 0x2F,              // 克罗地亚语（Croatian）
+    HwLanguageDanish = 0x30,                // 丹麦语（Danish）
 };
 
 /*!

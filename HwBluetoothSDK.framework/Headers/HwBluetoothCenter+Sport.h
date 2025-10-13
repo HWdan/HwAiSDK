@@ -15,6 +15,10 @@
 #import "HwStress.h"
 #import "HwSleep.h"
 #import "HwBloodPressure.h"
+#import "HwPAI.h"
+#import "HwVO2max.h"
+#import "HwBodyState.h"
+#import "HwCommonDefines.h"
 
 extern NSString * _Nonnull HwKeySportIndex;
 // cache key for sport state at timestamp
@@ -191,6 +195,8 @@ typedef void (^HwBpsCallback)(NSArray<HwBloodPressure *> * _Nullable bpArr, NSEr
                                                     endTime:(NSTimeInterval)endTime
                                                    callback:(HwHealthDataCountForLSCallback _Nonnull)callback;
 - (HwBluetoothTask *_Nullable) getBpNumWithCallback:(HwBpCountCallback _Nonnull)callback;
+- (HwBluetoothTask *_Nullable) getPAINumWithCallback:(HwBCIntegerCallback _Nonnull)callback;
+- (HwBluetoothTask *_Nullable) getVO2maxNumWithCallback:(HwBCIntegerCallback _Nonnull)callback;
 
 - (HwBluetoothTask *_Nullable) getSportsWithStartTime:(NSTimeInterval)startTime
                                               endTime:(NSTimeInterval)endTime
@@ -225,6 +231,13 @@ typedef void (^HwBpsCallback)(NSArray<HwBloodPressure *> * _Nullable bpArr, NSEr
                                            callback:(HwSpo2sCallback _Nonnull)callback;
 - (HwBluetoothTask *_Nullable) getBpWithCount:(NSInteger)count
                                      callback:(HwBpsCallback _Nonnull)callback;
+- (HwBluetoothTask *_Nullable) getPAIsWithCount:(NSInteger)count
+                                       callback:(HwPAIsCallback _Nonnull)callback;
+- (HwBluetoothTask *_Nullable) delPAIsWithCallback:(HwBoolCallback _Nullable)callback;
+- (HwBluetoothTask *_Nullable) getVO2maxsWithCount:(NSInteger)count
+                                          callback:(HwVO2maxsCallback _Nonnull)callback;
+- (HwBluetoothTask *_Nullable) delVO2maxsWithCallback:(HwBoolCallback _Nullable)callback;
+- (HwBluetoothTask *_Nullable) getBodyStateWithCallback:(HwBodyStateCallback _Nonnull)callback;
 - (HwBluetoothTask *_Nullable) deleteBpWithCallback:(HwBoolCallback _Nullable)callback;
 
 - (HwBluetoothTask *_Nullable) getNewestHeartrateWithCallback:(HwNewestHeartRateCallback _Nullable)callback;

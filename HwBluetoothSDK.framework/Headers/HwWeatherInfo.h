@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) NSInteger sendibleTemperature; // 体感温度             (somatosensory temperature)
 @property(nonatomic, assign) NSInteger ultravioletIndex;    // 紫外线指数                (UV index)
 @property(nonatomic, assign) NSInteger sunriseHour;         // 日出小时                 Sunrise time (hour part)
-@property(nonatomic, assign) NSInteger sunriseMinutes;      // 日出分钟，跟日出小时组成日出时间     Sunrise time (min part)
+@property(nonatomic, assign) NSInteger sunriseMinute;      // 日出分钟，跟日出小时组成日出时间     Sunrise time (min part)
 @property(nonatomic, assign) NSInteger sunsetHour;          // 日落小时                             Sunset time (hour part)
 @property(nonatomic, assign) NSInteger sunsetMinute;        // 日落分钟                             Sunset time (min part)
 

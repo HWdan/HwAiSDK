@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (assign, nonatomic) float accuracy;
 @property (assign, nonatomic) double altitude;
 @property (assign, nonatomic) bool suspended;
+@property (assign, nonatomic) bool turnBack;
 
 @end
 

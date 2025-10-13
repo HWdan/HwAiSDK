@@ -20,7 +20,11 @@ extern NSString *HwKeyAge;
 extern NSString *HwKeyUnit;
 extern NSString *HwKeyHeight;
 extern NSString *HwKeyWeight;
+extern NSString *HwKeyBirthdayYear;
+extern NSString *HwKeyBirthdayMonth;
+extern NSString *HwKeyBirthdayDay;
 
+@class HwUserInfo;
 /*!
  @brief 用户相关API接口[API port]
  */
@@ -40,6 +44,8 @@ extern NSString *HwKeyWeight;
                                  height:(NSInteger)height
                                  weight:(NSInteger)weight
                                callback:(HwBoolCallback)callback;
+- (HwBluetoothTask *) setUserInfo:(HwUserInfo *)userInfo
+                         callback:(HwBoolCallback)callback;
 
 /*! @brief
  返回个人信息[return to personal detail]

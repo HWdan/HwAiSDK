@@ -25,6 +25,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, assign) NSInteger weight;
 
+@property(nonatomic, assign) NSInteger birthdayYear;
+@property(nonatomic, assign) NSInteger birthdayMonth;
+@property(nonatomic, assign) NSInteger birthdayDay;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -8,15 +8,18 @@
 
 #import "HwBluetoothCenter.h"
 #import "HwBluetoothDeviceRequestManager.h"
+#import "HwMeeting.h"
+#import "HwHealthData.h"
+#import "HwHealthAnalysisResult.h"
 
 @interface HwBluetoothCenter (AI)
 
 - (HwBluetoothTask *_Nullable)setAppStatus:(HwAppState)appStatus;
 
-- (HwBluetoothTask *_Nullable) setStartRecordingResultWithCode:(int)code 
+- (HwBluetoothTask *_Nullable) setStartRecordingResultWithCode:(int)code
                                                         andMsg:(NSString *_Nullable)msg;
 
-- (HwBluetoothTask *_Nullable) setEndRecordingResultWithCode:(int)code 
+- (HwBluetoothTask *_Nullable) setEndRecordingResultWithCode:(int)code
                                                       andMsg:(NSString *_Nullable)msg;
 
 - (void) setRecordToTextResultWithResult:(NSString *_Nullable)result
@@ -27,9 +30,34 @@
                                 code:(int)code
                               andMsg:(NSString *_Nullable)msg;
 
+- (void) setAiTranslateResultWithResult:(NSString *_Nullable)result
+                                   code:(int)code
+                                    msg:(NSString *_Nullable)msg;
+
+- (void) setAiAgentResultWithResult:(NSString *_Nullable)result
+                               code:(int)code
+                                msg:(NSString *_Nullable)msg;
+
+- (void) setAiMeetingResult:(HwMeeting *_Nullable)meeting
+                       type:(NSInteger)type
+                       code:(int)code
+                        msg:(NSString *_Nullable)msg;
+- (void) notifyAiMeetingHandling;
+
+- (void) setAiHealthAnalysisResult:(HwHealthAnalysisResult *_Nullable)result
+                              code:(int)code
+                               msg:(NSString *_Nullable)msg;
+
+
+- (HwBluetoothTask *_Nullable) setAiWatchfacePreviewWithPreviewName:(NSString *_Nullable)previewName
+                                                               code:(int)code
+                                                             andMsg:(NSString *_Nullable)msg;
+
 - (HwBluetoothTask *_Nullable) setAiWatchfaceResultWithWatchfaceName:(NSString *_Nullable)watchfaceName
                                                                 code:(int)code
                                                               andMsg:(NSString *_Nullable)msg;
+- (HwBluetoothTask *_Nullable) getAiRecordDataWithCallback:(HwDataCallback _Nonnull)callback;
+- (HwBluetoothTask *_Nullable) getMeetingRecordDataWithCallback:(HwDataCallback _Nonnull)callback;
 
 - (void) addAiWatchfaceEnterOrExitListener:(HwAiWatchfaceEnterOrExitCallback _Nonnull)callback;
 - (void) removeAiWatchfaceEnterOrExitListener:(HwAiWatchfaceEnterOrExitCallback _Nonnull)callback;
@@ -59,5 +87,36 @@
 - (void) removeGenerateAiAnswerRequestListener:(HwGenerateAiAnswerRequestCallback _Nonnull)callback;
 - (void) removeAllGenerateAiAnswerRequestListeners;
 
+- (void) addGenerateAiWatchfacePreviewRequestListener:(HwGenerateAiWatchfacePreviewRequestCallback _Nonnull)callback;
+- (void) removeGenerateAiWatchfacePreviewRequestListener:(HwGenerateAiWatchfacePreviewRequestCallback _Nonnull)callback;
+- (void) removeAllGenerateAiWatchfacePreviewRequestListeners;
+
+- (void) addAiEventListener:(HwAiEventCallback _Nonnull)callback;
+- (void) removeAiEventListener:(HwAiEventCallback _Nonnull)callback;
+- (void) removeAllAiEventListeners;
+
+- (void) addAiSettingUpdateListener:(HwAiSettingUpdateCallback _Nonnull)callback;
+- (void) removeAiSettingUpdateListener:(HwAiSettingUpdateCallback _Nonnull)callback;
+- (void) removeAllAiSettingUpdateListeners;
+
+- (void) addGenerateAiMeetingRequestListener:(HwGenerateAiMeetingRequestCallback _Nonnull)callback;
+- (void) removeGenerateAiMeetingRequestListener:(HwGenerateAiMeetingRequestCallback _Nonnull)callback;
+- (void) removeAllGenerateAiMeetingRequestListeners;
+
+- (void) addGenerateAiHealthAnalysisRequestListener:(HwGenerateAiHealthAnalysisRequestCallback _Nonnull)callback;
+- (void) removeGenerateAiHealthAnalysisRequestListener:(HwGenerateAiHealthAnalysisRequestCallback _Nonnull)callback;
+- (void) removeAllGenerateAiHealthAnalysisRequestListeners;
+
+- (void) addGenerateAiTranslateRequestListener:(HwGenerateAiTranslateRequestCallback _Nonnull)callback;
+- (void) removeGenerateAiTranslateRequestListener:(HwGenerateAiTranslateRequestCallback _Nonnull)callback;
+- (void) removeAllGenerateAiTranslateRequestListeners;
+
+- (void) addGenerateAiAgentResultRequestListener:(HwGenerateAiAgentResultRequestCallback _Nonnull)callback;
+- (void) removeGenerateAiAgentResultRequestListener:(HwGenerateAiAgentResultRequestCallback _Nonnull)callback;
+- (void) removeAllGenerateAiAgentResultRequestListeners;
+
+- (void) addAiAnswerHandlerListener:(HwAiAnswerHandlerCallback _Nonnull)callback;
+- (void) removeAiAnswerHandlerListener:(HwAiAnswerHandlerCallback _Nonnull)callback;
+- (void) removeAllAiAnswerHandlerListeners;
 
 @end

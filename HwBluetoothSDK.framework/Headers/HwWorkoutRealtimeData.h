@@ -75,6 +75,7 @@ typedef NS_ENUM(NSInteger, HwWorkoutAction) {
  alert value
  */
 @property(nonatomic, assign) NSInteger alertBpm;
+@property(nonatomic, assign) NSInteger poolLength;
 /**
  Whether bpm alert is on
  */
@@ -86,6 +87,30 @@ typedef NS_ENUM(NSInteger, HwWorkoutAction) {
 @property (assign, nonatomic) float accuracy;
 @property (assign, nonatomic) double altitude;
 @property (assign, nonatomic) bool suspended;
+@property (assign, nonatomic) bool turnBack;
+
+@property (assign, nonatomic) NSUInteger laps;
+@property (assign, nonatomic) NSUInteger actionCount;
+@property (assign, nonatomic) NSUInteger consecutiveActionCount;
+@property (assign, nonatomic) NSUInteger interruptActionCount;
+/**
+ * 次/分
+ */
+@property (assign, nonatomic) NSUInteger actionRate;
+/**
+ * 动作姿势
+ */
+@property (assign, nonatomic) NSUInteger actionPosture;
+@property (assign, nonatomic) NSUInteger swolf;
+@property (assign, nonatomic) NSUInteger actualDuration1;
+@property (assign, nonatomic) NSUInteger actualDuration2;
+@property (assign, nonatomic) NSUInteger actualDuration3;
+@property (assign, nonatomic) NSInteger elevation;
+@property (assign, nonatomic) NSInteger elevationGain;
+@property (assign, nonatomic) NSInteger elevationLoss;
+@property (assign, nonatomic) NSUInteger strike;
+@property (assign, nonatomic) NSUInteger cadence;
+@property (assign, nonatomic) NSInteger pressure;
 
 - (id) initWithDuration:(NSInteger)duration
                distance:(NSInteger)distance

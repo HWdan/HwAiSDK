@@ -16,46 +16,32 @@ NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSInteger, HwWorkoutType)
 {
     HwWorkoutTypeOther = 0,
-    HwWorkoutTypeWalk __attribute__((deprecated("Use HwWorkoutTypeOutdoorWalking"))) = 1,
     // 户外健走
     HwWorkoutTypeOutdoorWalking = 1,
-    HwWorkoutTypeRun __attribute__((deprecated("Use HwWorkoutTypeOutdoorRunning"))) = 2,
     // 户外跑步
     HwWorkoutTypeOutdoorRunning = 2,
     // 健身操
     HwWorkoutTypeSettingupExercise = 3,
-    HwWorkoutTypeSwin __attribute__((deprecated("Use HwWorkoutTypeSwimming"))) = 4,
     // 游泳
     HwWorkoutTypeSwimming = 4,
     // 户外骑行
-    HwWorkoutTypeRide __attribute__((deprecated("Use HwWorkoutTypeOutdoorCycling"))) = 5,
     HwWorkoutTypeOutdoorCycling = 5,
-    // 爬楼梯
-    HwWorkoutTypeClimbStairs __attribute__((deprecated("Use HwWorkoutTypeStairClimbing"))) = 6,
-    HwWorkoutTypeStairClimbing = 6,
     // 登山运动
-    HwWorkoutTypeClimbMountains __attribute__((deprecated("Use HwWorkoutTypeMoutaineering"))) = 7,
     HwWorkoutTypeMoutaineering = 7,
     // 站立训练
-    HwWorkoutTypeStand __attribute__((deprecated("Use HwWorkoutTypeStandingTraining"))) = 8,
     HwWorkoutTypeStandingTraining = 8,
     // 坐姿训练
-    HwWorkoutTypeSit __attribute__((deprecated("Use HwWorkoutTypeSittingTraining"))) = 9,
     HwWorkoutTypeSittingTraining = 9,
     
     // 室内骑行
-    HwWorkoutTypeRideIndoor __attribute__((deprecated("Use HwWorkoutTypeIndoorCycling"))) = 10,
     HwWorkoutTypeIndoorCycling = 10,
     // 举重训练
-    HwWorkoutTypeWeights __attribute__((deprecated("Use HwWorkoutTypeWeightTraining"))) = 11,
     HwWorkoutTypeWeightTraining = 11,
     // 有氧运动
     HwWorkoutTypeAerobics = 12,
     // 室内健走
-    HwWorkoutTypeIndoorWalk __attribute__((deprecated("Use HwWorkoutTypeIndoorWalking"))) = 13,
     HwWorkoutTypeIndoorWalking = 13,
     // 室内跑步
-    HwWorkoutTypeIndoorRun __attribute__((deprecated("Use HwWorkoutTypeIndoorRunning"))) = 14,
     HwWorkoutTypeIndoorRunning = 14,
     // 瑜伽
     HwWorkoutTypeYoga = 15,
@@ -76,7 +62,6 @@ typedef NS_ENUM(NSInteger, HwWorkoutType)
     // 徒步
     HwWorkoutTypeHiking = 23,  // 徒步
     // 越野跑
-    HwWorkoutTypeOutdoorRun __attribute__((deprecated("Use HwWorkoutTypeCrossCountry"))) = 24, //野外跑,
     HwWorkoutTypeCrossCountry = 24,
     // 划船机
     HwWorkoutTypeRowingMachine = 25,
@@ -291,6 +276,156 @@ typedef NS_ENUM(NSInteger, HwWorkoutType)
     HwWorkoutTypeIndoorSwimming = 145,
     // 室外游泳
     HwWorkoutTypeOutdoorSwimming = 146,
+    HwWorkoutTypeSEPAK_TAKRAW           = 0x93,     //藤球
+    HwWorkoutTypeKENDO                  = 0x94,     //剑道
+    HwWorkoutTypeSAVATE                 = 0x95,     //赛法斗
+    HwWorkoutTypeKABADDI                = 0x96,     //卡巴迪
+    HwWorkoutTypeTRAMPOLINE             = 0x97,     //蹦床
+    HwWorkoutTypeATV                    = 0x98,     //ATV 全地形车运动
+    HwWorkoutTypeDRAGON_BOAT_RACING     = 0x9a,     //赛龙舟
+    HwWorkoutTypePARASAILING            = 0x9b,     //帆伞运动
+    HwWorkoutTypePLANK                  = 0x9c,     //平板支撑
+
+    HwWorkoutTypeKAYAKING                   = 0x9d,     //皮艇
+    HwWorkoutTypeWATER_SPORTS               = 0x9e,     //水上运动
+    HwWorkoutTypeWATER_ACTIVITIES           = 0x9f,     //一般水上活动
+    HwWorkoutTypeSNOW_MOBILING              = 0xa0,     //雪上摩托车
+    HwWorkoutTypeSLED                       = 0xa1,     //雪橇
+    HwWorkoutTypeCROSSCOUNTRY_SKING         = 0xa2,     //越野滑雪
+
+    HwWorkoutTypeSNOWBOARDING               = 0xa3,     //单板滑雪
+    HwWorkoutTypeSNOWSHOEING                = 0xa4,     //雪鞋健行
+    HwWorkoutTypeSNOW_SPORT                 = 0xa5,     //雪地运动
+    HwWorkoutTypeEXTREME_SPORTS             = 0xa6,     //一般极限运动
+    HwWorkoutTypeTRIATHLONS                 = 0xa7,     //铁人三项运动
+    HwWorkoutTypeHANDCYCLING                = 0xa8,     //手轮车
+    HwWorkoutTypeTRACK_FIELD                = 0xa9,     //田径
+    HwWorkoutTypeSTEEPLESCHASE              = 0xaa,     //障碍
+
+//    HwWorkoutTypeAIR_WALKER                 = 0xab,     //漫步机
+    HwWorkoutTypeRESISTANCE_TRAINING        = 0xac,     //抗阻力训练
+    HwWorkoutTypeCROSSFIT                   = 0xad,     //健身
+    HwWorkoutTypeGROUP_CALISTHENICS         = 0xae,     //团体操
+    HwWorkoutTypeYOGA_CAT_POSE              = 0xaf,     //瑜珈猫式
+    HwWorkoutTypeYOGA_COW_POSE              = 0xb0,     //瑜珈牛式
+    HwWorkoutTypeYOGA_COBRA_POSE            = 0xb1,     //瑜珈眼镜蛇式
+    HwWorkoutTypeYOGA_HERO_1                = 0xb2,     //瑜珈英雄式1
+    HwWorkoutTypeYOGA_HERO_2                = 0xb3,     //瑜珈英雄式2
+    HwWorkoutTypeYOGA_HERO_3                = 0xb4,     //瑜珈英雄式3
+    HwWorkoutTypeYOGA_ROLLING               = 0xb5,     //瑜珈滚轮
+    HwWorkoutTypeCROSS_FIT                  = 0xb6,     //混合健身
+    HwWorkoutTypeFUNCTIONAL_TRAINING        = 0xb7,     //功能性训练
+    HwWorkoutTypePHYSICAL_TRAINING          = 0xb8,     //体能训练
+    HwWorkoutTypeBODY_COMBAT                = 0xb9,     //有氧搏击操
+    HwWorkoutTypeCIRCUIT_TRAINING           = 0xba,     //循环训练
+    HwWorkoutTypeAEROBICS                   = 0xbb,     //有氧运动
+    HwWorkoutTypeCALISTHENICS               = 0xbc,     //健美操
+    HwWorkoutTypeP90X                       = 0xbd,     //P90X
+    HwWorkoutTypeKETTLEBELL_TRAINING        = 0xbe,     //壶铃训练
+    HwWorkoutTypeSTAIR_CLIMBING_MACHINE     = 0xbf,     //爬楼梯机
+//    HwWorkoutTypeWEIGHTLIFTING              = 0xc0,     //举重
+    HwWorkoutTypeBARRE                      = 0xc1,     //运动塑形操
+    HwWorkoutTypeMIND_BODY                  = 0xc2,     //身心运动
+    HwWorkoutTypeFLEXIBILITY                = 0xc3,     //柔软操
+    HwWorkoutTypeMIXED_CARDIO               = 0xc4,     //混和有氧
+    HwWorkoutTypeCROSS_TRAINING             = 0xc5,     //交叉训练
+    HwWorkoutTypeSTEP_TRAINING              = 0xc6,     //阶梯训练
+    HwWorkoutTypeGENERAL_EXERCISE           = 0xc7,     //一般锻炼
+    HwWorkoutTypeDIVING                     = 0xc8,     //跳水
+    HwWorkoutTypeWATER_FITNESS              = 0xc9,     //水上健身
+    HwWorkoutTypeFREESTYLE_SWIMMING         = 0xca,     //自由泳
+    HwWorkoutTypeBREASTSTROKE_SWIMMING      = 0xcb,     //蛙泳
+    HwWorkoutTypeBACKSTROKE_SWIMMING        = 0xcc,     //仰泳
+    HwWorkoutTypeBUTTERFLY_SWIMMING         = 0xcd,     //蝶泳
+    HwWorkoutTypeICE_SPORTS                 = 0xce,     //一般冰上运动
+
+//    HwWorkoutTypeAMERICAN_FOOTBALL          = 0x82,     //美式橄榄球, 看 130,0x82
+    HwWorkoutTypeBEACH_SOCCER               = 0xd0,     //沙滩足球
+    HwWorkoutTypeBEACH_VOLLEYBALL           = 0xd1,     //沙滩排球
+//    HwWorkoutTypeDODGE_BALL                 = 0x81,     //躲避球, 129
+    HwWorkoutTypeRACQUETBALL                = 0xd3,     //美式壁球
+    HwWorkoutTypeGATEBALL                   = 0xd4,     //门球
+    HwWorkoutTypePICKLEBALL                 = 0xd5,     //匹克球
+    HwWorkoutTypeLACROSSE                   = 0xd6,     //长曲棍球
+    HwWorkoutTypeWATER_POLO                 = 0xd7,     //水球
+    HwWorkoutTypeICE_HOCKEY                 = 0xd8,     //冰球
+    HwWorkoutTypeBALL_GAMES                 = 0xd9,     //一般球类运动
+
+    HwWorkoutTypeGENERAL_DANCE              = 0xda,     //一般舞蹈
+
+    HwWorkoutTypeBATTLE_GAME                = 0xdb,     //对战游戏
+    HwWorkoutTypeSWING                      = 0xdc,     //秋千
+//    HwWorkoutTypeSTAIR_CLIMBING             = 0xdd,     //爬楼梯，看值为 0x90, 10进制 144
+    HwWorkoutTypeSCOOTER_RIDING             = 0xde,     //滑板车
+//    HwWorkoutTypePARAGLIDING                = 0xdf,     //滑翔伞
+    HwWorkoutTypeTEAM_SPORTS                = 0xe0,     //团队竞技
+    HwWorkoutTypeFITNESS_GAMING             = 0xe1,     //健身电玩
+    HwWorkoutTypeEQUESTRIAN_SPORTS          = 0xe2,     //马术运动
+    HwWorkoutTypePLAY                       = 0xe3,     //玩乐
+    HwWorkoutTypeWHITEWATER_RAFTING         = 0xe4,     //白水漂流
+    HwWorkoutTypeSUP                        = 0xe5,     //浆板冲浪
+    HwWorkoutTypeSCUBA_DIVING               = 0xe6,     //潜水
+    HwWorkoutTypeKITESURFING                = 0xe7,     //风筝冲浪
+    HwWorkoutTypeWAKEBOARDING               = 0xe8,     //冲浪滑水
+    HwWorkoutTypeWINDSURFING                = 0xe9,     //风帆冲浪
+    HwWorkoutTypeORIENTEERING               = 0xea,     //定向越野
+    HwWorkoutTypeRECREATIONAL_SPORTS        = 0xeb,     //一般休闲运动
+    HwWorkoutTypeELEVATOR                   = 0xec,     //乘电梯
+    HwWorkoutTypeESCALATOR                  = 0xed,     //乘手扶梯
+    HwWorkoutTypeGARDENING                  = 0xee,     //做园艺
+    HwWorkoutTypeHOUSE_WORK                 = 0xef,     //做家务
+    HwWorkoutTypeIN_VEHICLE                 = 0xf0,     //在车里
+    HwWorkoutTypeSTILL                      = 0xf1,     //静止
+    HwWorkoutTypeTILTING                    = 0xf2,     //倾斜
+    HwWorkoutTypeWHEELCHAIR                 = 0xf3,     //坐轮椅移动
+    HwWorkoutTypePlateTennis = 244, // 板式网球
+    HwWorkoutTypeFreestyle = 256,//自由泳，LS项目使用
+    HwWorkoutTypeIntegratedTraining = 257, // 自由训练，LS项目使用
+    HwWorkoutTypeCrossCountryRun = 258, // 越野跑，LS项目使用
+    HwWorkoutTypeAerobicTraining2 = 259, // 有氧运动，LS项目使用
+    HwWorkoutTypeSwimmingInAPool = 260, // 泳池游泳，LS项目使用
+    HwWorkoutTypeBackstrokeSwimming = 261, // 仰泳，LS项目使用
+    HwWorkoutTypeSnowSports = 262, // 雪地运动，LS项目使用
+    HwWorkoutTypeSledge = 263, // 雪橇，LS项目使用
+    HwWorkoutTypeLeisureSports = 264, // 休闲运动，LS项目使用
+    HwWorkoutTypeBreaststroke = 265, // 蛙泳，LS项目使用
+    HwWorkoutTypeEllipticalMachine = 266, // 椭圆机，LS项目使用
+    HwWorkoutTypeTriathlon = 267, // 铁人三项，LS项目使用
+    HwWorkoutTypeJumpRope = 268, // 跳绳，LS项目使用
+    HwWorkoutTypeParachute = 269, // 跳伞，LS项目使用
+    HwWorkoutTypeAthletics = 270, // 田径，LS项目使用
+    HwWorkoutTypeIndoorCycle = 271, // 室内骑行，LS项目使用
+    HwWorkoutTypeIndoorRun = 272, // 室内跑步，LS项目使用
+    HwWorkoutTypeIndoorWalk = 273, // 室内健走，LS项目使用
+    HwWorkoutTypeIndoorFitness2 = 274, // 室内健身，LS项目使用
+    HwWorkoutTypeRacing = 275, // 赛车，LS项目使用
+    HwWorkoutTypeFlexibilityTraining2 = 276, // 柔韧训练，LS项目使用
+    HwWorkoutTypeTRX = 277, // 全身抗阻力锻炼，LS项目使用
+    HwWorkoutTypeTableTennis = 278, // 乒乓球，LS项目使用
+    HwWorkoutTypeRafting = 279, // 漂流，LS项目使用
+    HwWorkoutTypeKayak = 280, // 皮划艇，LS项目使用
+    HwWorkoutTypeStairClimber = 281, // 爬楼机，LS项目使用
+    HwWorkoutTypeJetSkiing = 282, // 摩托艇，LS项目使用
+    HwWorkoutTypeEquestrian = 283, // 马术运动，LS项目使用
+    HwWorkoutTypeStrengthTraining2 = 284, // 力量训练，LS项目使用
+    HwWorkoutTypeLatin2 = 285, // 拉丁舞，LS项目使用
+    HwWorkoutTypeSwimmingInOpenWaters = 286, // 开放水域游泳，LS项目使用
+    HwWorkoutTypeJazz2 = 287, // 爵士舞，LS项目使用
+    HwWorkoutTypeBallroomDance = 288, // 交谊舞，LS项目使用
+    HwWorkoutTypeMixedTraining2 = 289, // 混合有氧，LS项目使用
+    HwWorkoutTypeParaglider = 290, // 滑翔伞，LS项目使用
+    HwWorkoutTypeWaterSkiing = 291, // 滑水，LS项目使用
+    HwWorkoutTypeSpeedSkating = 292, // 滑冰，LS项目使用
+    HwWorkoutTypeScooter = 293, // 滑板车，LS项目使用
+    HwWorkoutTypeOutdoorCycle = 294, // 户外骑行，LS项目使用
+    HwWorkoutTypeOutdoorRun = 295, // 户外跑步，LS项目使用
+    HwWorkoutTypeOutdoorIceSkating2 = 296, // 户外溜冰，LS项目使用
+    HwWorkoutTypeOutdoorWalk = 297, // 户外健走，LS项目使用
+    HwWorkoutTypeSquareDance2 = 298, // 广场舞，LS项目使用
+    HwWorkoutTypeButterflyStroke = 299, // 蝶泳，LS项目使用
+    HwWorkoutTypeClimbing2 = 300, // 登山，LS项目使用
+    HwWorkoutTypeBungee2 = 301, // 蹦极，LS项目使用
+    HwWorkoutTypeBallet2 = 302, // 芭蕾舞，LS项目使用
 };
 
 
@@ -361,6 +496,44 @@ typedef NS_ENUM(NSInteger, HwWorkoutType)
 @property(nonatomic, assign) NSUInteger anaerobicDuration;
 @property(nonatomic, assign) NSUInteger limitDuration;
 @property(nonatomic, assign) NSUInteger restingDuration;
+
+@property(nonatomic, assign) NSInteger elevationGain;
+@property(nonatomic, assign) NSInteger elevationLoss;
+@property(nonatomic, assign) NSInteger elevationNow;
+@property(nonatomic, assign) NSUInteger actionCount;
+@property(nonatomic, assign) NSUInteger swolf;
+@property(nonatomic, assign) NSUInteger actionPosture;
+@property(nonatomic, assign) NSUInteger laps;
+@property(nonatomic, assign) NSUInteger actionRate;
+@property(nonatomic, assign) NSUInteger maxConsecutiveActionCount;
+@property(nonatomic, assign) NSUInteger interruptActionCount;
+@property(nonatomic, assign) NSUInteger actualDuration1;
+@property(nonatomic, assign) NSUInteger actualDuration2;
+@property(nonatomic, assign) NSUInteger actualDuration3;
+@property(nonatomic, assign) NSUInteger aerobicTrainingEffect;
+@property(nonatomic, assign) NSUInteger anaerobicTrainingEffect;
+/**
+ 步幅，0.01米
+ */
+@property(nonatomic, assign) NSUInteger strike;
+/**
+ 锻炼恢复时间
+ */
+@property(nonatomic, assign) NSUInteger recoveryTime;
+
+@property(nonatomic, assign) NSUInteger poolLength;
+/**
+ 最大摄氧量
+ */
+@property(nonatomic, assign) NSUInteger vo2max;
+/**
+ 最大气压值
+ */
+@property(nonatomic, assign) NSInteger maxPressure;
+/**
+ 最小气压
+ */
+@property(nonatomic, assign) NSInteger minPressure;
 
 @property(nonatomic, strong) NSArray<HwWorkoutPoint *> *workoutPoints;
 @property(nonatomic, strong) NSArray<HwWorkoutGpsPoint *> *workoutGpsPoints;

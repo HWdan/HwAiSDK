@@ -12,8 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HwLS16 : NSObject
 
-- (NSInteger) workoutValueFromType:(HwWorkoutType)type;
-- (HwWorkoutType) workoutTypeFromValue:(NSInteger)value;
+- (NSInteger) workoutValueFromType:(HwWorkoutType)type
+                     forDeviceType:(NSString *_Nullable)deviceType;
+- (HwWorkoutType) workoutTypeFromValue:(NSInteger)value
+                         forDeviceType:(NSString *_Nullable)deviceType;
 
 @end
 

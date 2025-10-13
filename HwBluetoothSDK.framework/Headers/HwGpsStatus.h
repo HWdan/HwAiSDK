@@ -15,9 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) long agpsValidEndTime;
 
-@property (nonatomic, assign) NSString *gpsClipType;
+@property (nonatomic, copy) NSString *gpsClipType;
 
-@property (nonatomic, assign) NSString *gpsFirmwareVersion;
+@property (nonatomic, copy) NSString *gpsFirmwareVersion;
 
 @property (nonatomic, assign) NSInteger gpsFirmwareBuild;
 

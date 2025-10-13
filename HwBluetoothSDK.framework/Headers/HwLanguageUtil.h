@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
  @see HwLanguage
  */
 + (HwLanguage) getPhoneLanguage;
++ (HwLanguage) getLanguageWithLocale:(NSString *)locale;
++ (NSString *) getLocaleWithLanguage:(HwLanguage)language;
 
 @end
 

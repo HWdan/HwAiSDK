@@ -76,6 +76,14 @@ typedef void (^HwWorkoutRealtimeDataCallback)(HwWorkoutRealtimeData * _Nullable 
                              dataUpdateInterval:(NSInteger)dataUpdateInterval
                                        callback:(HwBoolCallback _Nullable )callback;
 
+- (HwBluetoothTask *_Nullable) setWorkoutAction:(HwWorkoutAction)action
+                                           type:(int)type
+                                      goalTypes:(NSArray<NSNumber *> * _Nonnull)goalTypes
+                                     goalValues:(NSArray<NSNumber *> * _Nonnull)goalVals
+                             dataUpdateInterval:(NSInteger)dataUpdateInterval
+                                       callback:(HwBoolCallback _Nullable )callback;
+
+
 - (HwBluetoothTask *_Nullable) getWorkoutRealtimeDataWithCallback:(HwWorkoutRealtimeDataCallback _Nonnull)callback;
 
 //设置当前GPS定位数据

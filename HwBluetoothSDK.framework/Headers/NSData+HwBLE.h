@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSData *) dataWithString:(NSString *)str
                   maxLength:(NSInteger)maxLength;
+- (NSString *) hexString;
++ (NSData *) dataWithHexString:(NSString *)hex;
 
 @end
 

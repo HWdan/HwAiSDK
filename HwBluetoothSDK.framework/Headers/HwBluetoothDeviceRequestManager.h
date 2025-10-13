@@ -51,6 +51,17 @@ typedef NS_ENUM(NSInteger, HwDeviceEvent)
     HwDeviceEventHeartRateMonitorFailed = 0x09
 };
 
+typedef NS_ENUM(NSInteger, HwAiType)
+{
+    HwAiTypeWatchface = 0x00,
+    HwAiTypeQnI = 0x01,
+    HwAiTypeTranslate = 0x02,
+    HwAiTypeAgent = 0x03,
+    HwAiTypeMeeting = 0x04,
+    HwAiTypeHealthAnalysis = 0x05,
+    HwAiTypeUnknown = 0xff
+};
+
 typedef void (^HwDeviceEventCallback)(HwDeviceEvent type);
 typedef void (^HwDeviceControlCallback)(BOOL success);
 
@@ -73,12 +84,24 @@ typedef void (^HwHealthDataUpdatedCallback)(NSInteger step, NSInteger distance, 
 typedef void (^HwSpO2StateUpdatedCallback)(BOOL monitoring);
 typedef void (^HwRequestGpsLocationCallback)(BOOL requestGps);
 typedef void (^HwAppStatusRequestCallback)(void);
-typedef void (^HwStartRecordingCallback)(int type);
+typedef void (^HwStartRecordingCallback)(int type, int language);
 typedef void (^HwEndRecordingCallback)(int type);
-typedef void (^HwGenerateAiWatchfaceRequestCallback)(void);
+//typedef void (^HwGenerateAiWatchfaceRequestCallback)(void);
 typedef void (^HwGenerateAiAnswerRequestCallback)(void);
+typedef void (^HwGenerateAiTranslateRequestCallback)(void);
+typedef void (^HwGenerateAiAgentResultRequestCallback)(void);
 typedef void (^HwAiWatchfaceEnterOrExitCallback)(BOOL enter);
 typedef void (^HwAiAnswerEnterOrExitCallback)(BOOL enter);
+//typedef void (^HwGenerateAiWatchfacePreviewRequestCallback)(void);
+typedef void (^HwGenerateAiWatchfacePreviewRequestCallback)(NSInteger type);//0 静态表盘  1 动态表盘
+typedef void (^HwGenerateAiWatchfaceRequestCallback)(NSInteger type);
+typedef void (^HwGenerateAiMeetingRequestCallback)(NSDate *_Nullable meetingTime, NSInteger contentType);
+
+@class HwHealthData;
+typedef void (^HwGenerateAiHealthAnalysisRequestCallback)(HwHealthData *_Nullable healthData);
+typedef void (^HwAiSettingUpdateCallback)(HwAiType type, int param1, int param2, int param3);
+typedef void (^HwAiEventCallback)(BOOL enter, HwAiType type, int param1, int param2, int param3);
+typedef void (^HwAiAnswerHandlerCallback)(BOOL play);
 
 /*!
  蓝牙任务管理类
@@ -202,6 +225,38 @@ typedef void (^HwAiAnswerEnterOrExitCallback)(BOOL enter);
 - (void) addGenerateAiAnswerRequestListener:(HwGenerateAiAnswerRequestCallback _Nonnull)callback;
 - (void) removeGenerateAiAnswerRequestListener:(HwGenerateAiAnswerRequestCallback _Nonnull)callback;
 - (void) removeAllGenerateAiAnswerRequestListeners;
+
+- (void) addGenerateAiWatchfacePreviewRequestListener:(HwGenerateAiWatchfacePreviewRequestCallback _Nonnull)callback;
+- (void) removeGenerateAiWatchfacePreviewRequestListener:(HwGenerateAiWatchfacePreviewRequestCallback _Nonnull)callback;
+- (void) removeAllGenerateAiWatchfacePreviewRequestListeners;
+
+- (void) addAiEventListener:(HwAiEventCallback _Nonnull)callback;
+- (void) removeAiEventListener:(HwAiEventCallback _Nonnull)callback;
+- (void) removeAllAiEventListeners;
+
+- (void) addAiSettingUpdateListener:(HwAiSettingUpdateCallback _Nonnull)callback;
+- (void) removeAiSettingUpdateListener:(HwAiSettingUpdateCallback _Nonnull)callback;
+- (void) removeAllAiSettingUpdateListeners;
+
+- (void) addGenerateAiMeetingRequestListener:(HwGenerateAiMeetingRequestCallback _Nonnull)callback;
+- (void) removeGenerateAiMeetingRequestListener:(HwGenerateAiMeetingRequestCallback _Nonnull)callback;
+- (void) removeAllGenerateAiMeetingRequestListeners;
+
+- (void) addGenerateAiHealthAnalysisRequestListener:(HwGenerateAiHealthAnalysisRequestCallback _Nonnull)callback;
+- (void) removeGenerateAiHealthAnalysisRequestListener:(HwGenerateAiHealthAnalysisRequestCallback _Nonnull)callback;
+- (void) removeAllGenerateAiHealthAnalysisRequestListeners;
+
+- (void) addGenerateAiTranslateRequestListener:(HwGenerateAiTranslateRequestCallback _Nonnull)callback;
+- (void) removeGenerateAiTranslateRequestListener:(HwGenerateAiTranslateRequestCallback _Nonnull)callback;
+- (void) removeAllGenerateAiTranslateRequestListeners;
+
+- (void) addGenerateAiAgentResultRequestListener:(HwGenerateAiAgentResultRequestCallback _Nonnull)callback;
+- (void) removeGenerateAiAgentResultRequestListener:(HwGenerateAiAgentResultRequestCallback _Nonnull)callback;
+- (void) removeAllGenerateAiAgentResultRequestListeners;
+
+- (void) addAiAnswerHandlerListener:(HwAiAnswerHandlerCallback _Nonnull)callback;
+- (void) removeAiAnswerHandlerListener:(HwAiAnswerHandlerCallback _Nonnull)callback;
+- (void) removeAllAiAnswerHandlerListeners;
 
 - (void) deviceDataComeFromHeartRate:(NSData *_Nullable)data;
 - (void) deviceDatasComeFrom8004:(NSData *_Nullable)data;

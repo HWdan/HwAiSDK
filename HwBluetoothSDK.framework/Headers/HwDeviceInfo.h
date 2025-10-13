@@ -24,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) NSInteger watchfaceVersion;
 @property(nonatomic, assign) NSInteger protocolVersion;
 @property(nonatomic, assign) HwBindState bindState;
+@property(nonatomic, strong) NSString *mapUUID;
+@property(nonatomic, assign) BOOL mapAuthorized;
 
 @end
 

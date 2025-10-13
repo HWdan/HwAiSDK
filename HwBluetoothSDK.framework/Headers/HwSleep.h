@@ -59,6 +59,9 @@ NS_ASSUME_NONNULL_BEGIN
  timeInterval： timeInterval 思澈平台传 2 * 3600 ，其他旧项目传 1 * 3600  (it's unit is second)
  */
 + (NSArray<HwSleep *> *)merge:(NSArray<HwSleep *> *)sleepList timeInterval:(NSTimeInterval)timeInterval;
++ (NSArray<HwSleep *> *)mergeNighttime:(NSArray<HwSleep *> *)sleepList
+                          timeInterval:(NSTimeInterval)timeInterval
+                              timezone:(NSTimeZone *)timezone;
 
 @end
 
