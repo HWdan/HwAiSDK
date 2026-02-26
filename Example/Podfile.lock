@@ -53,10 +53,10 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   AiSDK:
-    :commit: 67459b4e50d302ab8da56ee37cc8f074f6f0d61a
+    :commit: 6ef2c853ca75c439bc52084dace2166a3a93148c
     :git: https://github.com/HWdan/HwAiSDK.git
   WatchfaceSDK:
-    :commit: 247468c87fb0699fe796512d68cf4608660ba2a7
+    :commit: 84c508a34c842c91bfdb838e77f1bf6de7f760dd
     :git: https://github.com/HWdan/WatchfaceSDK.git
 
 SPEC CHECKSUMS:
@@ -66,7 +66,7 @@ SPEC CHECKSUMS:
   ReactiveObjC: 011caa393aa0383245f2dcf9bf02e86b80b36040
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
-  WatchfaceSDK: 7fc9d193f528cb7739af3019c6fbd36b07d2b78a
+  WatchfaceSDK: 2e7f53ac19c9b0256e6256b5d096a98bacba5f0c
   Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
 
 PODFILE CHECKSUM: 867cea9d01ec165f8e657ac07a780999d9e50d48
