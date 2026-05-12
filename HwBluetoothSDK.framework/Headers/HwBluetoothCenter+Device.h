@@ -64,6 +64,10 @@
                                                        longitude:(double)longitude
                                                        timestamp:(NSTimeInterval)timestamp
                                                         callback:(HwBoolCallback _Nullable)callback;
+- (HwBluetoothTask *_Nullable) setCurrentGpsOrNetLocationWithLatitude:(double)latitude
+                                                            longitude:(double)longitude
+                                                            timestamp:(NSTimeInterval)timestamp
+                                                             callback:(HwBoolCallback _Nullable)callback;
 
 /*! @brief
  获取设备的ID get ID of the watch
@@ -798,6 +802,8 @@ typedef void (^HwGpsShouldUpdateCallback)(long validStartTime, long validEndTime
 
 - (HwBluetoothTask *_Nullable) setContactWithContacts:(NSArray<HwContact *> *_Nonnull)contacts
                                     callback:(HwBoolCallback _Nullable)callback;
+- (HwBluetoothTask *_Nullable) setContactV2WithContacts:(NSArray<HwContact *> *_Nonnull)contacts
+                                    callback:(HwBoolCallback _Nullable)callback;
 - (HwBluetoothTask *_Nullable) getContactsWithCallback:(void(^_Nonnull)(NSArray<HwContact *> *_Nullable contacts, NSError *_Nullable error))callback;
 
 #pragma mark - SedentaryReminder
@@ -834,6 +840,7 @@ typedef void (^HwQrcodeCardsCallback)(NSArray<HwQrCard *> *_Nullable cards, NSEr
 
 - (HwBluetoothTask *_Nullable) getMusicAvailableStorageWithCallback:(HwAvailableStorageCallback _Nonnull)callback;
 - (HwBluetoothTask *_Nullable) getOfflineMapAvailableStorageWithCallback:(HwBCIntegerCallback _Nonnull)callback;
+- (HwBluetoothTask *_Nullable) getCoustomInterfaceAvailableStorageWithCallback:(HwBCIntegerCallback _Nonnull)callback;
 - (void) addDeviceMusicStorageChangedListener:(HwAvailableStorageCallback _Nonnull)callback;
 - (void) removeDeviceMusicStorageChangedListener:(HwAvailableStorageCallback _Nonnull)callback;
 - (void) removeAllDeviceMusicStorageChangedListeners;
