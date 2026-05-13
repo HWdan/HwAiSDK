@@ -1617,6 +1617,10 @@ typedef void (^HwBtConnectionStateCallback)(BOOL connected);
 - (void) setCollectedAllahIndexs:(NSArray<NSNumber *> *_Nonnull)list
                         callback:(HwBoolCallback _Nullable)callback;
 
+- (void) setPrayerAlertTime:(NSArray<HwMuslimDayAlert *> *_Nonnull)dayAlertList
+                   callback:(HwBoolCallback _Nullable)callback;
+- (void) getPrayerAlertTimeWithCallback:(HwBoolCallback _Nullable)callback;
+
 - (void) setAiSubscriptionInfoWithType:(NSInteger) type
                              startTime:(NSTimeInterval)startTime
                                endTime:(NSTimeInterval)endTime
