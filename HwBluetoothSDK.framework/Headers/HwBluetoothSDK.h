@@ -35,6 +35,8 @@
 #import "HwBluetoothCenter+BigDataSport.h"
 #import "HwBluetoothCenter+BleFileSender.h"
 #import "HwLS16.h"
+#import "HwDeviceInfo.h"
+#import "HwMuslimDayAlert.h"
 
 #define HwBluetoothSDK_Version @"3.2.10"
 
@@ -1146,6 +1148,11 @@ typedef void (^HwHeartrateAlarmCallback)(HwHeartrateAlarm *_Nullable hrAlarm, NS
 
 - (void) getLiftWristAwakenEnableWithCallback:(HwBoolCallback _Nonnull)callback;
 - (void) setLiftWristAwakenEnable:(BOOL)on callback:(HwBoolCallback _Nullable)callback;
+
+// 删除压力详情
+- (void) deleteStressWithCallback:(HwBoolCallback _Nullable)callback;
+// 删除血氧详情
+- (void) deleteBloodOxygenWithCallback:(HwBoolCallback _Nullable)callback;
 
 #pragma mark - 用户相关API接口[API port]
 #pragma mark - 用户信息[user's information]
