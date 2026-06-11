@@ -41,7 +41,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[HwBluetoothSDK sharedInstance] getWorkoutsWithCallback:^(NSArray<HwWorkout *> * _Nullable workouts, NSError * _Nullable error) {
         
+    }];
     self.title = @"AI测试";
     // ====== 使用开始 =====
     // 需要实现代理方法

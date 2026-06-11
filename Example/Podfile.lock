@@ -53,7 +53,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   AiSDK:
-    :commit: b1ef5f2b6053971965ef61ee6a7b7ccac5b6d9f2
+    :commit: 0a6c3e7e4d90ae9e97efad4060f91aa76201d7a7
     :git: https://github.com/HWdan/HwAiSDK.git
   WatchfaceSDK:
     :commit: a38c4075e6b578792c778b88706a92f0de7c7b83
