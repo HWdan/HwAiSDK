@@ -37,6 +37,7 @@
 #import "HwLS16.h"
 #import "HwDeviceInfo.h"
 #import "HwMuslimDayAlert.h"
+#import "HwBluetoothDeviceRequestManager.h"
 
 #define HwBluetoothSDK_Version @"3.2.10"
 
