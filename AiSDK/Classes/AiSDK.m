@@ -577,7 +577,7 @@
     _appStatusRequestCallback = ^{
         [weakSelf didRequestAppStatus];
     };
-    _startRecordingCallback = ^(int type, int language) {
+    _startRecordingCallback = ^(int type, int language, int outputLanguage) {
         [AiLogger i:@"startRecording, type: %@, language: %@", @(type), @(language)];
         if (weakSelf.working) {
             [weakSelf didRequestStartRecording:type language:language];
