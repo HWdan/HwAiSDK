@@ -8,6 +8,8 @@
 #import "HwBluetoothCenter+Sport.h"
 #import "HwBluetoothCenter+Device.h"
 #import "HwBluetoothCenter+User.h"
+#import "HwBluetoothCenter+DrinkWater.h"
+#import "HwBluetoothCenter+PhoneSchedule.h"
 #import "HwBluetoothCenter+Ota.h"
 #import "HwBluetoothCenter+FileDifferenceOta.h"
 #import "HwBluetoothCenter+Expand.h"
@@ -38,6 +40,7 @@
 #import "HwDeviceInfo.h"
 #import "HwMuslimDayAlert.h"
 #import "HwBluetoothDeviceRequestManager.h"
+#import "HwBluetoothDeviceRequestManager+DrinkWaterRecords.h"
 
 #define HwBluetoothSDK_Version @"3.2.10"
 
@@ -1197,6 +1200,21 @@ typedef void (^HwHeartrateAlarmCallback)(HwHeartrateAlarm *_Nullable hrAlarm, NS
 
 - (void) setDrinkWaterConfig:(HwDrinkWaterConfig *_Nonnull)config
                     callback:(HwBoolCallback _Nullable)callback;
+
+#pragma mark - Drink water records
+- (void) getAvailableDrinkWaterRecordIdsWithCallback:(HwDrinkWaterRecordIdsCallback _Nonnull)callback;
+- (void) getAllDrinkWaterRecordsWithCallback:(HwDrinkWaterRecordsCallback _Nonnull)callback;
+- (void) addDrinkWaterRecord:(HwDrinkWaterRecord *_Nonnull)record callback:(HwBoolCallback _Nullable)callback;
+- (void) editDrinkWaterRecord:(HwDrinkWaterRecord *_Nonnull)record callback:(HwBoolCallback _Nullable)callback;
+- (void) deleteDrinkWaterRecordWithId:(NSInteger)recordId callback:(HwBoolCallback _Nullable)callback;
+- (void) deleteAllDrinkWaterRecordsWithCallback:(HwBoolCallback _Nullable)callback;
+- (void) setAllDrinkWaterRecords:(NSArray<HwDrinkWaterRecord *> *_Nonnull)records callback:(HwBoolCallback _Nullable)callback;
+- (void) addDrinkWaterRecordsChangedListener:(HwDrinkWaterRecordsChangedCallback _Nonnull)callback;
+- (void) removeDrinkWaterRecordsChangedListener:(HwDrinkWaterRecordsChangedCallback _Nonnull)callback;
+- (void) removeAllDrinkWaterRecordsChangedListeners;
+
+#pragma mark - Phone schedule sync
+- (void) syncPhoneSchedules:(NSArray<HwPhoneScheduleEvent *> *_Nonnull)events callback:(HwBoolCallback _Nullable)callback;
 
 #pragma mark - Workout APIs
 - (void) getWorkoutsWithCallback:(HwWorkoutsCallback _Nonnull)callback;
