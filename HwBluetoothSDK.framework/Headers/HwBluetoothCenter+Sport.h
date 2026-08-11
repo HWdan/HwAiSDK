@@ -98,6 +98,7 @@ typedef void (^HwGoalInfoCallback)(HwGoal * _Nullable goal, NSError * _Nullable 
 extern NSString * _Nonnull HwKeyHeartRateIndex;
 extern NSString * _Nonnull HwKeyHeartRateTime;
 extern NSString * _Nonnull HwKeyHeartRateBmp;
+extern NSString * _Nonnull HwKeyHeartRateResting;
 
 extern NSString * _Nonnull HwKeyHeartRateMin;
 extern NSString * _Nonnull HwKeyHeartRateMax;

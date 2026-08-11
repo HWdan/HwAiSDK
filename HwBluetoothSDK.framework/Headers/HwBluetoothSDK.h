@@ -10,6 +10,7 @@
 #import "HwBluetoothCenter+User.h"
 #import "HwBluetoothCenter+DrinkWater.h"
 #import "HwBluetoothCenter+PhoneSchedule.h"
+#import "HwBluetoothCenter+StandingSetting.h"
 #import "HwBluetoothCenter+Ota.h"
 #import "HwBluetoothCenter+FileDifferenceOta.h"
 #import "HwBluetoothCenter+Expand.h"
@@ -43,6 +44,12 @@
 #import "HwBluetoothDeviceRequestManager+DrinkWaterRecords.h"
 
 #define HwBluetoothSDK_Version @"3.2.10"
+
+typedef NS_ENUM(NSInteger, HWPlatformType) {
+    HWPlatformTypeSifli = 0,
+    HWPlatformTypeRealtek,
+    HWPlatformTypeJieLi,
+};
 
 /**
  3.2.10:
@@ -486,6 +493,14 @@ Start to bind with watch
  
  */
 - (void) getDeviceTimeWithCallback:(HwDateCallback _Nullable)callback;
+
+/*! @brief
+ Power off the watch
+ 
+ @param callback bool
+ 
+ */
+- (void) shutdownDeviceWithCallback:(HwBoolCallback _Nullable)callback;
 
 /*! @brief
  Restart the watch
@@ -1215,6 +1230,10 @@ typedef void (^HwHeartrateAlarmCallback)(HwHeartrateAlarm *_Nullable hrAlarm, NS
 
 #pragma mark - Phone schedule sync
 - (void) syncPhoneSchedules:(NSArray<HwPhoneScheduleEvent *> *_Nonnull)events callback:(HwBoolCallback _Nullable)callback;
+
+#pragma mark - Standing setting
+- (void) getStandingSettingWithCallback:(HwStandingSettingCallback _Nonnull)callback;
+- (void) setStandingSetting:(HwStandingSetting *_Nonnull)setting callback:(HwBoolCallback _Nullable)callback;
 
 #pragma mark - Workout APIs
 - (void) getWorkoutsWithCallback:(HwWorkoutsCallback _Nonnull)callback;
