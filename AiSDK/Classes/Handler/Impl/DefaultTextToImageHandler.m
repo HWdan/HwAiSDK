@@ -24,7 +24,9 @@
     } else {
         [AiLogger i:@"转成图片啦"];
     }
-    [[AiSDK sharedInstance] textToImageCompleted:image code:code msg:errorMsg];
+    
+    AiSDK *sdk = [AiSDK sharedInstance];
+    [sdk.devicePlatformStrategy completeTextToImageWithSDK:sdk image:image code:code errorMsg:errorMsg];
 }
 
 @end

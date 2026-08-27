@@ -95,16 +95,16 @@
         return;
     }
     
-    NSString *sleep = [report stringForKey:@"Sleep"];
-    NSString *hr = [report stringForKey:@"HeartRate"];
-    NSString *spo2 = [report stringForKey:@"BloodOxygen"];
-    NSString *step = [report stringForKey:@"Steps"];
-    NSString *bp = [report stringForKey:@"BloodPressure"];
+    NSString *sleep = [self formatRTLText:[report stringForKey:@"Sleep"]];
+    NSString *hr = [self formatRTLText:[report stringForKey:@"HeartRate"]];
+    NSString *spo2 = [self formatRTLText:[report stringForKey:@"BloodOxygen"]];
+    NSString *step = [self formatRTLText:[report stringForKey:@"Steps"]];
+    NSString *bp = [self formatRTLText:[report stringForKey:@"BloodPressure"]];
     
-    NSString *stress = [report stringForKey:@"Stress"];
-    NSString *pai = [report stringForKey:@"PAI"];
-    NSString *weight = [report stringForKey:@"Weight"];
-    NSString *summary = [report stringForKey:@"Conclusion"];
+    NSString *stress = [self formatRTLText:[report stringForKey:@"Stress"]];
+    NSString *pai = [self formatRTLText:[report stringForKey:@"PAI"]];
+    NSString *weight = [self formatRTLText:[report stringForKey:@"Weight"]];
+    NSString *summary = [self formatRTLText:[report stringForKey:@"Conclusion"]];
     
     HwHealthAnalysisResult *result = [[HwHealthAnalysisResult alloc] init];
     result.step = step;
@@ -126,12 +126,14 @@
 - (void) failed:(NSInteger)code msg:(NSString *)msg
 {
     if (self.isCanceled) {
+        
         [AiLogger i:@"failed but is canceled"];
         return;
     }
+    msg = [[AiSDK sharedInstance] errorMsgWithCode:code];
     [AiLogger e:@"HealthAnalysisResult Failed: %@, %@", @(code), msg];
     [[HwBluetoothSDK sharedInstance] setAiHealthAnalysisResultWithResult:nil code:(int)code msg:msg];
-    [[AiSDK sharedInstance] healthAnalysisResultCompleted:nil code:code msg:[[AiSDK sharedInstance] errorMsgWithCode:code]];
+    [[AiSDK sharedInstance] healthAnalysisResultCompleted:nil code:code msg:msg];
 }
 
 - (NSData *) healthDataToJsonData:(HwHealthData *)hd
@@ -144,8 +146,29 @@
         [day setObject:[self getDateStringBeforeDays:daily.day] forKey:@"day"];
         [day setObject:[NSString stringWithFormat:@"%@", @(hd.gender)] forKey:@"gender"];
         [day setObject:[NSString stringWithFormat:@"%@", @(hd.age)] forKey:@"age"];
-        [day setObject:[NSString stringWithFormat:@"%@", @(hd.weight / 10.0)] forKey:@"weight"];
-        [day setObject:[NSString stringWithFormat:@"%@", @(hd.height)] forKey:@"height"];
+        NSString *unit = @"kg";
+        float factor = 1.0;
+        if (hd.unit == 1) {
+            unit = @"lb";
+            factor = factor * 2.2;
+        }
+        [day setObject:[NSString stringWithFormat:@"%.1f%@", hd.weight / 10.0 * factor, unit] forKey:@"weight"];
+        
+        NSString *heightStr = [NSString stringWithFormat:@"%ldcm", (long)hd.height];
+
+        if (hd.unit == 1) {
+            double allIn = hd.height / 2.54;
+            int ft = (int)floor(allIn / 12);
+            int inh = (int)round(allIn - ft * 12);
+            
+            if (inh == 12) {
+                ft++;
+                inh = 0;
+            }
+            
+            heightStr = [NSString stringWithFormat:@"%d ft %d in", ft, inh];
+        }
+        [day setObject:[NSString stringWithFormat:@"%@", heightStr] forKey:@"height"];
         
         if (daily.step > 0) {
             [day setObject:[NSString stringWithFormat:@"%@", @(daily.step)] forKey:@"step"];
@@ -207,5 +230,24 @@
     return [dateFormatter stringFromDate:targetDate];
 }
 
+- (NSString *)formatRTLText:(NSString *)text {
+    if (text.length == 0) return text;
+    BOOL containsArabic = NO;
+    for (NSInteger i = 0; i < text.length; i++) {
+        unichar c = [text characterAtIndex:i];
+        if ((c >= 0x0600 && c <= 0x06FF) ||
+            (c >= 0x0750 && c <= 0x077F) ||
+            (c >= 0x08A0 && c <= 0x08FF) ||
+            (c >= 0xFB50 && c <= 0xFDFF) ||
+            (c >= 0xFE70 && c <= 0xFEFF)) {
+            containsArabic = YES;
+            break;
+        }
+    }
+    if (containsArabic) {
+        return [NSString stringWithFormat:@"\u2067%@\u2069", text];
+    }
+    return text;
+}
 
 @end

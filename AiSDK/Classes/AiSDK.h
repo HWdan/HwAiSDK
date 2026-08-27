@@ -7,12 +7,14 @@
 
 #import <Foundation/Foundation.h>
 #import <AiDeviceInfo.h>
+#import "AiDevicePlatformStrategy.h"
 #import "WatchfaceSDK/WatchfaceSDK-Swift.h"
 #import "ILog.h"
 #import "AiSDKCallback.h"
 #import "IAiWatchfaceNameProvider.h"
 #import "IAiErrorMessageProvider.h"
 #import "AiOrderInfo.h"
+#import "AiExerciseAnalyzeModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -128,10 +130,12 @@ typedef NS_ENUM(NSInteger, AiError) {
 
 - (void) setDeviceInfo:(AiDeviceInfo *)deviceInfo;
 - (AiDeviceInfo *) getDeviceInfo;
+- (id<AiDevicePlatformStrategy>)devicePlatformStrategy;
 - (void) cleanDeviceInfo;
 
 - (void) startWorking;
 - (void) stopWorking;
+- (void) cancelAll;
 
 /// ======  methods
 - (void) voiceDialogStarted;
@@ -144,15 +148,26 @@ typedef NS_ENUM(NSInteger, AiError) {
 - (void) textToImageCompleted:(UIImage *_Nullable)image
                          code:(NSInteger)code
                           msg:(NSString *_Nullable)msg;
+- (void) textToImageCompleted_JL:(UIImage *_Nullable)image
+                         code:(NSInteger)code
+                          msg:(NSString *_Nullable)msg;
 - (void) imageToPreviewCompleted:(UIImage *_Nullable)image
                             code:(NSInteger)code
                              msg:(NSString *_Nullable)msg;
 - (void) previewSyncToDeviceCompleted:(NSInteger)code
                                   msg:(NSString *_Nullable)msg;
+- (void) previewSyncToDeviceCompleted:(NSInteger)code
+                                  msg:(NSString *)msg
+                           isCanceled:(BOOL)isCanceled;
+
 - (void) watchfaceSyncProgressUpdated:(CGFloat)progress;
 - (void) watchfaceSyncToDeviceCompleted:(SlifiCustomWatchface *_Nullable)watchface
                                    code:(NSInteger)code
                                     msg:(NSString *_Nullable)msg;
+- (void) watchfaceSyncToDeviceCompleted:(SlifiCustomWatchface *)watchface
+                                   code:(NSInteger)code
+                                   msg:(NSString *)msg
+                             isCanceled:(BOOL)isCanceled;
 
 - (void) textToAgentResultCompleted:(NSString *_Nullable)result
                                code:(NSInteger)code
@@ -161,6 +176,9 @@ typedef NS_ENUM(NSInteger, AiError) {
 - (void) textToTranslateResultCompleted:(NSString *_Nullable)result
                                    code:(NSInteger)code
                                     msg:(NSString *_Nullable)msg;
+- (void) textToVoiceCompleted:(NSString *_Nullable)filePath
+                         code:(NSInteger)code
+                          msg:(NSString *_Nullable)msg;
 
 - (void) meetingResultCompleted:(HwMeeting *_Nullable)meeting
                   voiceFilePath:(NSString *_Nullable)voiceFilePath
@@ -181,6 +199,15 @@ typedef NS_ENUM(NSInteger, AiError) {
 
 - (void) getOrderInfoWithMac:(NSString *)mac
                     callback:(void(^)(AiOrderInfo *orderInfo, NSString *_Nullable errorMsg))callback;
+
+/*
+ type:38.普通运动分析，39.骑行骑马分析，40.户外跑步分析，41.户外健走徒步，42.室内行走分析、跑步机、跑酷、室内跑步分析，43.登山分析，44.越野跑、定向越野分析，45.攀岩分析，46.跳绳分析，47.椭圆机分析，48.划船机分析，49.开放水域游泳分析，50.泳池游泳、自由泳、蛙泳、仰泳、蝶泳分析
+ data:传入要分析的运动数据字典
+ */
+
+- (void) getAiExerciseAnalyzeWithType:(int)type
+                                 data:(NSDictionary *)data
+                             callback:(void(^)(AiExerciseAnalyzeModel *exerciseAnalyzeModel, NSString *_Nullable errorMsg))callback;
 
 @end
 

@@ -10,6 +10,8 @@
 #import "AiSDK/AiSDK.h"
 #import <HwBluetoothSDK/HwBluetoothSDK.h>
 #import "AiLocaleUtils.h"
+#import "NSData+HwBLE.h"
+#import "AiFileUtils.h"
 //#import <NativeLib/NativeLib.h>
 //#import <NativeLib/NativeLib-Swift.h>
 @import NativeLib;
@@ -38,7 +40,7 @@
     
     NSString *inputLocale = [AiLocaleUtils fitLocale:inputLanguagePrefix];
     NSString *outputLocale = [AiLocaleUtils fitLocale:outputLanguagePrefix];
-    
+    [AiLogger i:@"翻译inputLocale：%@,翻译outputLocale：%@", inputLocale,outputLocale];
     NSString *agentCode = @"CdTnaimjFJ1N7B5EbT";
     __weak typeof(self) weakSelf = self;
     [[AFlash shared] chatWithRequestId:requestId wid:wid thirdUuid:nil code:agentCode inputType:@"text" contentId:nil textContent:text data:nil fileFormat:nil inputLanguage:inputLocale outputLanguage:outputLocale onSuccess:^(NSString * _Nonnull requestId, NSString * _Nonnull sendTextContent, NSString * _Nonnull outputType, NSString * _Nonnull contentId, NSString * _Nullable answerTextContent, NSString * _Nullable imgUrl, NSString * _Nullable thumbnail, SubscriptionInfo * _Nullable subscriptionInfo) {
@@ -78,6 +80,21 @@
     } else {
         [AiLogger i:@"%@", text];
     }
+    // 保存字符串到本地
+    NSData *tmpData = [text dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *crcData = [HwBluetoothCenter crcDataFromData:tmpData total:4];
+    NSString *hex = [crcData hexString];
+    
+    NSString *dir = [AiFileUtils generateTextToVoicePath];
+    NSString *txtPath = [dir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt", hex]];
+    
+    // 保存文件
+    NSError *error = nil;
+    BOOL success = [tmpData writeToFile:txtPath options:NSDataWritingAtomic error:&error];
+    if (!success) {
+        [AiLogger e:@"保存txt文件失败: %@", error.localizedDescription];
+    }
+    
     [[AiSDK sharedInstance] textToTranslateResultCompleted:text code:code msg:[[AiSDK sharedInstance] errorMsgWithCode:code]];
 }
 

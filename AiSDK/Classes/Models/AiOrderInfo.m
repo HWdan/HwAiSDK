@@ -9,4 +9,9 @@
 
 @implementation AiOrderInfo
 
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"AiOrderInfo--> orderNum: %@, orderType: %@, endTime: %@", @(self.orderNum), @(self.orderType), @(self.endTime)];
+}
+
 @end

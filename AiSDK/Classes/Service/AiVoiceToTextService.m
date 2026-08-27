@@ -69,7 +69,7 @@
     [AiLogger i:@"AiVoiceToTextService prepare"];
 }
 
-- (void)destroy { 
+- (void)destroy {
     [AiLogger i:@"AiVoiceToTextService destroy"];
 }
 
@@ -83,7 +83,7 @@
     [[AiSDK sharedInstance] voiceDialogStarted];
 }
 
-- (void)stopRecording { 
+- (void)stopRecording {
     [AiLogger i:@"AiVoiceToTextService stopRecording"];
     [self removeTimer];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -99,19 +99,38 @@
         [AiLogger i:@"AiVoiceToTextService getRecordFile 已取消"];
         return;
     }
-    [[HwBluetoothSDK sharedInstance] getAiRecordDataWithCallback:^(NSData *data, NSError *error) {
-        if (error) {
-            [self done:nil code:error.code errorMsg:error.localizedDescription];
-        } else {
-            if (data.length == 0) {
-                [self done:nil code:AiErrorRecordVoiceIsEmpty errorMsg:[[AiSDK sharedInstance] errorMsgWithCode:AiErrorRecordVoiceIsEmpty]];
-                return;
+
+    if ([AiSDK sharedInstance].getDeviceInfo.isJLProtocol) {
+        [[HwBluetoothSDK sharedInstance] getJLAiRecordDataWithCallback:^(NSData *data, NSError *error) {
+            if (error) {
+                [self done:nil code:error.code errorMsg:error.localizedDescription];
+            } else {
+                if (data.length == 0) {
+                    [self done:nil code:AiErrorRecordVoiceIsEmpty errorMsg:[[AiSDK sharedInstance] errorMsgWithCode:AiErrorRecordVoiceIsEmpty]];
+                    return;
+                }
+                [self voiceToText:data];
+                // 下面这个保存只是debug用的
+                [self saveMp3Data:data];
             }
-            [self voiceToText:data];
-            // 下面这个保存只是debug用的
-            [self saveMp3Data:data];
-        }
-    }];
+        }];
+    } else {
+        [[HwBluetoothSDK sharedInstance] getAiRecordDataWithCallback:^(NSData *data, NSError *error) {
+            if (error) {
+                [self done:nil code:error.code errorMsg:error.localizedDescription];
+            } else {
+                if (data.length == 0) {
+                    [self done:nil code:AiErrorRecordVoiceIsEmpty errorMsg:[[AiSDK sharedInstance] errorMsgWithCode:AiErrorRecordVoiceIsEmpty]];
+                    return;
+                }
+                [self voiceToText:data];
+                // 下面这个保存只是debug用的
+                [self saveMp3Data:data];
+            }
+        }];
+    }
+    
+    
 }
 
 - (void) saveMp3Data:(NSData *)data
@@ -141,7 +160,7 @@
     NSString *locale = [[AiSDK sharedInstance] getDeviceInfo].currentLocale;
     
     if (self.langugage >= 0) {
-        NSString *languagePrefix = [HwLanguageUtil getLocaleWithLanguage:self.langugage];        
+        NSString *languagePrefix = [HwLanguageUtil getLocaleWithLanguage:self.langugage];
         locale = [AiLocaleUtils fitLocale:languagePrefix];
     }
     

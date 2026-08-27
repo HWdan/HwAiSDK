@@ -11,7 +11,7 @@
 #import "AiSDK.h"
 #import "AiLogger.h"
 #import "AiFileUtils.h"
-#import "HwBluetoothSDK/HwBluetoothSDK.h"
+#import "HwBluetoothSDK.h"
 #import "WatchfaceSDK/WatchfaceSDK-Swift.h"
 
 @interface DefaultImageToPreviewHandler()
@@ -123,11 +123,13 @@
     
     NSURL *url = [NSURL fileURLWithPath:filePath];
     NSString *deviceUUID = device.peripheral.identifier.UUIDString;
+    [AiLogger i:@"DefaultImageToPreviewHandler--startMakePreviewBin..."];
     [[SifliWatchfaceSDK getInstance] syncZipFileWithDevIdentifier:deviceUUID filePath:url type:3 progressCallback:^(NSInteger progress) {
-        NSLog(@"preview progress: %@", @(progress));
+        [AiLogger i:@"watchface progress:%@f",@(progress)];
+
     } finishCallback:^(BOOL success, NSString *message, NSInteger code, NSNumber *devCode) {
         if (!success) {
-            [AiLogger e:@"sync preview to device failed: %@", @(code)];
+            [AiLogger e:@"sync preview to device failed: %@，message:%@", @(code),message];
             [self syncToDeviceDone:AiErrorMakeQjsWatchfaceFailed errorMsg:[[AiSDK sharedInstance] errorMsgWithCode:AiErrorMakeQjsWatchfaceFailed]];
             return;
         } else {
@@ -139,11 +141,10 @@
 - (void) syncToDeviceDone:(NSInteger)code
                  errorMsg:(NSString *)errorMsg
 {
-    if (self.isCanceled) {
-        return;
-    }
     dispatch_async(dispatch_get_main_queue(), ^{
-        [[AiSDK sharedInstance] previewSyncToDeviceCompleted:code msg:errorMsg];
+        [[AiSDK sharedInstance] previewSyncToDeviceCompleted:code
+                                                         msg:errorMsg
+                                                  isCanceled:self.isCanceled];
     });
     _source = nil;
     _deviceInfo = nil;

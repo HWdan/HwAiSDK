@@ -32,7 +32,8 @@
 #import "DefaultTextToAnswerTextHandler.h"
 #import "DefaultTextToImageHandler.h"
 #import "DefaultImageToPreviewHandler.h"
-#import "DefaultImageToWatchfaceHandler.h"
+#import "JLImageToPreviewHandler.h"
+#import "AiDevicePlatformStrategyFactory.h"
 #import "DefaultAiWatchfaceNameProvider.h"
 #import "AiDefaultErrorMessageProvider.h"
 
@@ -61,6 +62,8 @@
 @property(nonatomic, copy) HwAppStatusRequestCallback appStatusRequestCallback;
 @property(nonatomic, copy) HwStartRecordingCallback startRecordingCallback;
 @property(nonatomic, copy) HwEndRecordingCallback endRecordingCallback;
+@property(nonatomic, copy) HwAiSubscriptionInfoRequestCallback subscriptionInfoRequestCallback;
+@property(nonatomic, copy) HwAiVoicePlayRequestCallback voicePlayRequestCallback;
 
 @property(nonatomic, copy) HwBluetoothConnectionStateChangedCallback connectionStateChangedCallback;
 
@@ -73,6 +76,7 @@
 @property(nonatomic, strong) id<ITextToAnswerTextHandler> textToAnswerHandler;
 @property(nonatomic, strong) id<ITextToImageHandler> textToImageHandler;
 @property(nonatomic, strong) id<IImageToPreviewHandler> imageToPreviewHandler;
+@property(nonatomic, strong) id<IImageToPreviewHandler> jlImageToPreviewHandler;
 @property(nonatomic, strong) id<IImageToWatchfaceHandler> imageToWatchfaceHandler;
 @property(nonatomic, strong) id<IAiWatchfaceNameProvider> watchfaceNameProvider;
 @property(nonatomic, strong) id<ITextToVoiceHandler> textToVoiceHandler;
@@ -115,6 +119,7 @@
     _textToAnswerHandler = nil;
     _textToImageHandler = nil;
     _imageToPreviewHandler = nil;
+    _jlImageToPreviewHandler = nil;
     _imageToWatchfaceHandler = nil;
     
     [_textToAgentResultHandler cancel];
@@ -143,6 +148,8 @@
     _watchfaceNameProvider = nil;
     _connectionStateChangedCallback = nil;
     _aiAnswerHandlerCallback = nil;
+    _subscriptionInfoRequestCallback = nil;
+    _voicePlayRequestCallback = nil;
     
     _aiEventCallback = nil;
     _aiSettingUpdateCallback = nil;
@@ -177,7 +184,10 @@
         return;
     }
     // 开始初始化SDK
-    if (_deviceInfo && [_deviceInfo.Id isEqual:deviceInfo.Id] && [_deviceInfo.currentLocale isEqual:deviceInfo.currentLocale]) {
+    if (_deviceInfo &&
+        [_deviceInfo.Id isEqual:deviceInfo.Id] &&
+        [_deviceInfo.currentLocale isEqual:deviceInfo.currentLocale] &&
+        _deviceInfo.platformType == deviceInfo.platformType) {
         [AiLogger i:@"两次设备信息一致，直接return"];
         return;
     }
@@ -189,6 +199,11 @@
 - (AiDeviceInfo *) getDeviceInfo
 {
     return _deviceInfo;
+}
+
+- (id<AiDevicePlatformStrategy>)devicePlatformStrategy
+{
+    return [AiDevicePlatformStrategyFactory strategyForPlatformType:self.deviceInfo.platformType];
 }
 
 - (void) cleanDeviceInfo
@@ -397,6 +412,16 @@
     [self.translateState next];
 }
 
+- (void) textToVoiceCompleted:(NSString *_Nullable)filePath
+                         code:(NSInteger)code
+                          msg:(NSString *_Nullable)msg
+{
+    [[HwBluetoothSDK sharedInstance] setAiVoicePlayResultWithCode:code msg:msg];
+    if (self.deviceInfo != nil && self.deviceInfo.Id.length > 0) {
+        [self sendDeviceSubscriptionInfo:self.deviceInfo.Id];
+    }
+}
+
 - (void) textToAgentResultCompleted:(NSString *)result
                                code:(NSInteger)code
                                 msg:(NSString *)msg
@@ -469,6 +494,37 @@
     }
 }
 
+- (void) textToImageCompleted_JL:(UIImage *)image
+                         code:(NSInteger)code
+                          msg:(NSString *)msg
+{
+    if ([self.callback respondsToSelector:@selector(aiImageDone:code:errorMsg:)]) {
+        [self.callback aiImageDone:image code:code errorMsg:msg];
+    }
+    
+    if (code != 0) {
+        [AiLogger e:@"textToImageCompleted failed: code: %@, msg: %@", @(code), msg];
+        [[HwBluetoothSDK sharedInstance] setAiWatchfacePreviewWithPreviewName:nil code:(int)code msg:[self errorMsgWithCode:code]];
+        [self cancelAll];
+        return;
+    } else {
+        if (image == nil || self.watchfaceState == nil) {
+            [AiLogger e:@"textToImageCompleted failed: image is nil or watchfaceState is nil"];
+            [[HwBluetoothSDK sharedInstance] setAiWatchfacePreviewWithPreviewName:nil code:(int)AiErrorModelError msg:[self errorMsgWithCode:AiErrorModelError]];
+            [self cancelAll];
+            return;
+        }
+    }
+    
+    self.jlImageToPreviewHandler = [[JLImageToPreviewHandler alloc] initWithImage:image deviceInfo:self.deviceInfo needSyncToDevice:YES];
+    [self.watchfaceState next];
+    self.watchfaceState.resultImage = image;
+    [self.jlImageToPreviewHandler start];
+    if ([self.callback respondsToSelector:@selector(aiStartSendingPreview)]) {
+        [self.callback aiStartSendingPreview];
+    }
+}
+
 - (void) imageToPreviewCompleted:(UIImage *)image
                             code:(NSInteger)code
                              msg:(NSString *)msg
@@ -487,6 +543,13 @@
 - (void) previewSyncToDeviceCompleted:(NSInteger)code
                                   msg:(NSString *)msg
 {
+    [self previewSyncToDeviceCompleted:code msg:msg isCanceled:NO];
+}
+
+- (void) previewSyncToDeviceCompleted:(NSInteger)code
+                                  msg:(NSString *)msg
+                           isCanceled:(BOOL)isCanceled
+{
     
     if ([self.callback respondsToSelector:@selector(aiSentPreview:errorMsg:)]) {
         [self.callback aiSentPreview:code errorMsg:msg];
@@ -500,6 +563,10 @@
         return;
     }
     [AiLogger i:@"previewSyncToDeviceCompleted"];
+    if (isCanceled) {
+        [AiLogger i:@"preview sync completed after cancellation"];
+        return;
+    }
     [self.watchfaceState next];
 }
 - (void) watchfaceSyncProgressUpdated:(CGFloat)progress
@@ -510,7 +577,15 @@
 }
 - (void) watchfaceSyncToDeviceCompleted:(SlifiCustomWatchface *)watchface
                                    code:(NSInteger)code
-                                    msg:(NSString *)msg
+                                   msg:(NSString *)msg
+{
+    [self watchfaceSyncToDeviceCompleted:watchface code:code msg:msg isCanceled:NO];
+}
+
+- (void) watchfaceSyncToDeviceCompleted:(SlifiCustomWatchface *)watchface
+                                   code:(NSInteger)code
+                                   msg:(NSString *)msg
+                            isCanceled:(BOOL)isCanceled
 {
     self.isAiWatchfaceWorking = NO;
     if ([self.callback respondsToSelector:@selector(aiSentWatchface:code:errorMsg:)]) {
@@ -523,6 +598,10 @@
         return;
     }
     [[HwBluetoothSDK sharedInstance] setAiWatchfaceResultWithWatchfaceName:watchface.name code:0 msg:nil];
+    if (isCanceled) {
+        [AiLogger i:@"watchface sync completed after cancellation"];
+        return;
+    }
     [self.watchfaceState next];
     if (code != 0) {
         [AiLogger e:@"安装表盘失败：code: %@, msg: %@", @(code), msg];
@@ -545,6 +624,9 @@
 
 - (void) addDeviceEventListeners
 {
+    
+    [AiLogger i:@"addDeviceEventListeners -- start"];
+    
     __weak AiSDK *weakSelf = self;
     _aiAnswerEnterOrExitCallback = ^(BOOL enter) {
         if (weakSelf.working) {
@@ -580,7 +662,7 @@
     _startRecordingCallback = ^(int type, int language, int outputLanguage) {
         [AiLogger i:@"startRecording, type: %@, language: %@", @(type), @(language)];
         if (weakSelf.working) {
-            [weakSelf didRequestStartRecording:type language:language];
+            [weakSelf didRequestStartRecording:type language:language outputLanguage:outputLanguage];
         }
 //        if (language >= 0) {
 //            weakSelf.defaultErrorMessageProvider.deviceLanguageCode = language;
@@ -672,6 +754,12 @@
     _aiGenerateAgentResultRequestCallback = ^{
         [weakSelf didRequestAgentResult];
     };
+    _voicePlayRequestCallback = ^(NSInteger state, NSInteger lan, NSInteger volumn, NSString *crc) {
+        [weakSelf voicePlayRequestHandleWithState:state language:lan volumn:volumn crc:crc];
+    };
+    _subscriptionInfoRequestCallback = ^(NSString *mac) {
+        [weakSelf subscriptionInfoRequestHandle:mac];
+    };
     
     [[HwBluetoothSDK sharedInstance] addAiAnswerEnterOrExitListener:_aiAnswerEnterOrExitCallback];
     
@@ -690,6 +778,10 @@
     [[HwBluetoothSDK sharedInstance] addGenerateAiAgentResultRequestListener:_aiGenerateAgentResultRequestCallback];
     [[HwBluetoothSDK sharedInstance] addGenerateAiMeetingRequestListener:_aiGenerateMeetingRequestCallback];
     [[HwBluetoothSDK sharedInstance] addAiEventListener:_aiEventCallback];
+    [[HwBluetoothSDK sharedInstance] addAiVoicePlayRequestListener:_voicePlayRequestCallback];
+    [[HwBluetoothSDK sharedInstance] addAiSubscriptionInfoRequestListener:_subscriptionInfoRequestCallback];
+    
+    [AiLogger i:@"addDeviceEventListeners -- end"];
 }
 
 - (void) removeDeviceEventListeners
@@ -710,6 +802,8 @@
     [[HwBluetoothSDK sharedInstance] removeGenerateAiAgentResultRequestListener:_aiGenerateAgentResultRequestCallback];
     [[HwBluetoothSDK sharedInstance] removeGenerateAiMeetingRequestListener:_aiGenerateMeetingRequestCallback];
     [[HwBluetoothSDK sharedInstance] removeAiEventListener:_aiEventCallback];
+    [[HwBluetoothSDK sharedInstance] removeAiSubscriptionInfoRequestListener:_subscriptionInfoRequestCallback];
+    [[HwBluetoothSDK sharedInstance] removeAiVoicePlayRequestListener:_voicePlayRequestCallback];
     
     _aiAnswerEnterOrExitCallback = nil;
     _aiWatchfaceEnterOrExitCallback = nil;
@@ -726,6 +820,9 @@
     _aiGenerateHealthAnalysisRequestCallback = nil;
     _aiGenerateAgentResultRequestCallback = nil;
     _aiGenerateMeetingRequestCallback = nil;
+    
+    _voicePlayRequestCallback = nil;
+    _subscriptionInfoRequestCallback = nil;
 }
 
 - (void) appDidEnterBackground:(NSNotification *)noti
@@ -963,6 +1060,7 @@
     [AiLogger i:@"didRequestWatchface"];
     if (self.watchfaceState == nil || self.watchfaceState.resultImage == nil) {
         [[HwBluetoothSDK sharedInstance] setAiWatchfaceResultWithWatchfaceName:nil code:(int) self.watchfaceState.code msg:[self errorMsgWithCode:self.watchfaceState.code]];
+        [AiLogger i:@"watchfaceState == %@ ，resultImage == %@",self.watchfaceState,self.watchfaceState.resultImage];
         return;
     }
     [self.watchfaceState next];
@@ -970,7 +1068,9 @@
         [self.callback aiStartSendingWatchface];
     }
     self.isAiWatchfaceWorking = YES;
-    self.imageToWatchfaceHandler = [[DefaultImageToWatchfaceHandler alloc] initWithImage:self.watchfaceState.resultImage deviceInfo:self.deviceInfo];
+    
+    self.imageToWatchfaceHandler = [self.devicePlatformStrategy createWatchfaceHandlerWithImage:self.watchfaceState.resultImage
+                                                                                      deviceInfo:self.deviceInfo];
     [self.imageToWatchfaceHandler start];
 }
 
@@ -982,11 +1082,12 @@
 
 - (void) didRequestStartRecording:(NSInteger)type
                          language:(NSInteger)langugage
+                   outputLanguage:(NSInteger)outputLanguage
 {
     [self cancelAll];
     self.type = type;
     self.lastResultText = nil;
-    [AiLogger i:@"didRequestStartRecording: %@, langugage: %@", @(type), @(langugage)];
+    [AiLogger i:@"didRequestStartRecording: %@, langugage: %@, outputLanguage: %@", @(type), @(langugage), @(outputLanguage)];
     // 0: watchface, 1: qa
     if (type == HwAiTypeQnI) {
         self.answerState = [[AiAnswerState alloc] init];
@@ -997,6 +1098,12 @@
     }
     else if (type == HwAiTypeTranslate) {
         self.translateState = [[AiTranslateState alloc] init];
+        if (outputLanguage >= 0) {
+            if (!self.textToTranslateResultHandler) {
+                self.textToTranslateResultHandler = [[DefaultTextToTranslateResultHandler alloc] init];
+            }
+            [self.textToTranslateResultHandler changeInputLanguage:langugage outputLanguage:outputLanguage];
+        }
     }
     else {
         self.agentState = [[AiAgentState alloc] init];
@@ -1010,12 +1117,13 @@
 {
     [[HwBluetoothSDK sharedInstance] setEndRecordingResultWithCode:0 msg:nil];
     [self.voiceToTextHandler stopRecording];
-    
+    [AiLogger i:@"didRequestEndRecording, answerState.code: %@,watchfaceState.code:%@, answerState.msg: %@,watchfaceState.msg:%@,type: %@", @(self.answerState.code),@(self.watchfaceState.code), self.answerState.msg,self.watchfaceState.msg, @(self.type)];
     if (self.type == 1) {
         if (self.answerState == nil) {
             return;
         }
         if (self.answerState.state == AiAnswerProgressStateFailed) {
+            [AiLogger i:@"<<AiAnswerProgressStateFailed, 设置setRecordToTextResultWithResult给固件了>>"];
             [[HwBluetoothSDK sharedInstance] setRecordToTextResultWithResult:nil code:(int)self.answerState.code msg:self.answerState.msg];
             [self cancelAll];
             return;
@@ -1026,11 +1134,12 @@
             return;
         }
         if (self.watchfaceState.state == AiWatchfaceProgressStateFailed) {
-            [[HwBluetoothSDK sharedInstance] setRecordToTextResultWithResult:nil code:(int)self.answerState.code msg:self.answerState.msg];
+            [AiLogger i:@"<<AiWatchfaceProgressStateFailed, 设置setRecordToTextResultWithResult给固件了>>"];
+            [[HwBluetoothSDK sharedInstance] setRecordToTextResultWithResult:nil code:(int)self.watchfaceState.code msg:self.watchfaceState.msg];
             [self cancelAll];
             return;
         }
-        [self.answerState next];
+        [self.watchfaceState next];
     }
 }
 
@@ -1051,6 +1160,7 @@
         orderInfo.Id = fisrt.orderId;
         orderInfo.price = fisrt.orderPrice;
         orderInfo.orderStatus = fisrt.orderStatus;
+        orderInfo.orderCurrency = fisrt.orderCurrency;
         orderInfo.orderNum = fisrt.orderNum;
         orderInfo.orderType = fisrt.orderType;
         orderInfo.startTime = fisrt.startTime;
@@ -1063,12 +1173,160 @@
     }];
 }
 
+- (void) getOrderInfo2WithMac:(NSString *)mac
+                     callback:(void(^)(AiOrderInfo *orderInfo, NSString *_Nullable errorMsg))callback
+{
+    NSString *Id = [mac stringByReplacingOccurrencesOfString:@":" withString:@""];
+    Id = [Id lowercaseStringWithLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en"]];
+    __weak typeof(self) weakSelf = self;
+    [[AFlash shared] queryProductsSubscriptionWithWid:Id onSuccess:^(NSArray<ProductsSubscription *> *list) {
+        if (list.count == 0) {
+            [AiLogger i:@"没有订单信息"];
+            // callback(nil, @"No Subscription Products");
+            AiOrderInfo *orderInfo = [[AiOrderInfo alloc] init];
+            callback(orderInfo, nil);
+            return;
+        }
+        
+        NSInteger leftCount = 0;
+        NSInteger type = 0;
+        NSTimeInterval endTime = 0;
+        
+        for (int i = 0; i < list.count; i ++) {
+            ProductsSubscription *sub = [list objectAtIndex:i];
+            
+            if (sub.productSource != 1) {
+                [AiLogger i:@"不是用户订阅"];
+                continue;
+            }
+            
+            type = sub.productType;
+            if (sub.remainingNum >= 0) {
+                leftCount += sub.remainingNum;
+                endTime = MAX(endTime, sub.expireAt);
+            } else {
+                leftCount = -1;
+                endTime = sub.expireAt;
+                break;
+            }
+        }
+        
+        AiOrderInfo *orderInfo = [[AiOrderInfo alloc] init];
+        orderInfo.orderNum = leftCount;
+        orderInfo.orderType = type;
+        orderInfo.endTime = endTime;
+        callback(orderInfo, nil);
+    } onFailure:^(ErrorCode *error) {
+        NSString *msg = [weakSelf errorMsgWithCode:[error.code integerValue]];
+        callback(nil, msg);
+    }];
+}
+
+- (void) getAiExerciseAnalyzeWithType:(int)type
+                                 data:(NSDictionary *)data
+                             callback:(void(^)(AiExerciseAnalyzeModel *exerciseAnalyzeModel, NSString *_Nullable errorMsg))callback
+{
+    NSString *requestId = [NSString stringWithFormat:@"%@", @([[NSDate date] timeIntervalSince1970])];
+    NSString *wid = [[AiSDK sharedInstance] getDeviceInfo].Id;
+    
+    __weak typeof(self) weakSelf = self;
+    [[AFlash shared] analyzeDataWithRequestId:requestId wid:wid thirdUuid:nil data:[self exerciseAnalyzeDataToJsonData:data] onSuccess:^(NSString * _Nonnull requestId, NSString * _Nonnull content, SubscriptionInfo * _Nullable subscriptionInfo) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf) {
+            AiExerciseAnalyzeModel *exerciseAnalyzeModel = [self analysisCompleted:content];
+            callback(exerciseAnalyzeModel, nil);
+        }
+        
+    } onFailure:^(NSString * _Nonnull requestId, ErrorCode * _Nonnull errorCode) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf) {
+            NSString *msg = [weakSelf errorMsgWithCode:[errorCode.code integerValue]];
+            callback(nil, msg);
+        }
+    }];
+}
+
+- (AiExerciseAnalyzeModel *)analysisCompleted:(NSString *)text
+{
+    [AiLogger i:@"运动分析返回的内容：%@", text];
+    if (text.length == 0) {
+
+        [AiLogger i:@"运动分析返回的内容：是空的"];
+        return nil;
+    }
+    
+    NSString *jsonStr = [text stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    
+    [AiLogger i:@"替换无用字符之后的结果：%@", jsonStr];
+    
+    NSData *jsonData = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error = nil;
+
+    id jsonObject = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                    options:kNilOptions
+                                                      error:&error];
+
+    NSDictionary *jsonDict = (NSDictionary *) jsonObject;
+    if (jsonDict == nil) {
+        [AiLogger i:@"转为jsonDict之后的结果：%@", jsonStr];
+        return nil;;
+    }
+    
+    NSArray *trainingHighlights = jsonDict[@"trainingHighlights"];
+    NSDictionary *trainingHighlightsDict = trainingHighlights.firstObject;
+    AiExerciseAnalyzeModel *result = [[AiExerciseAnalyzeModel alloc] init];
+    result.trainingHighlights = trainingHighlightsDict[@"content"];
+
+    NSArray *basicAnalysis = jsonDict[@"basicAnalysis"];
+    for (int i = 0; i < basicAnalysis.count; i++) {
+        NSDictionary *basicDict = basicAnalysis[i];
+        if ([basicDict[@"category"] isEqualToString:@"exerciseDuration"]) {
+            result.exerciseDurationAnalysis = basicDict[@"analysis"];
+        } else if ([basicDict[@"category"] isEqualToString:@"calorieConsumption"]) {
+            result.calorieConsumptionAnalysis = basicDict[@"analysis"];
+        } else if ([basicDict[@"category"] isEqualToString:@"heartRate"]) {
+            result.heartRateAnalysis = basicDict[@"analysis"];
+        } else if ([basicDict[@"category"] isEqualToString:@"trainingEffect"]) {
+            result.trainingEffectAnalysis = basicDict[@"analysis"];
+        } else if ([basicDict[@"category"] isEqualToString:@"recoveryTime"]) {
+            result.recoveryTimeAnalysis = basicDict[@"analysis"];
+        }
+    }
+    
+    NSArray *summarySuggestions = jsonDict[@"summarySuggestions"];
+    NSDictionary *summarySuggestionsDict = trainingHighlights.firstObject;
+    result.summarySuggestions = summarySuggestionsDict[@"content"];
+    
+    return result;
+}
+
+- (NSData *) exerciseAnalyzeDataToJsonData:(NSDictionary *)day
+{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:@(38) forKey:@"analysisType"];
+    NSMutableArray *data = [NSMutableArray array];
+    [data addObject:day];
+    [dict setObject:data forKey:@"data"];
+    [AiLogger i:@"运动数据：%@", dict];
+    // 转换为JSON Data
+    NSError *error = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict
+                                                     options:NSJSONWritingPrettyPrinted
+                                                       error:&error];
+
+    if (!jsonData) {
+        NSLog(@"Error creating JSON: %@", error);
+        jsonData = [NSData data];
+    }
+    return jsonData;
+}
 
 - (void) cancelAll
 {
     [self.voiceToTextHandler cancel];
     [self.textToImageHandler cancel];
     [self.imageToPreviewHandler cancel];
+    [self.jlImageToPreviewHandler cancel];
     [self.imageToWatchfaceHandler cancel];
     [self.textToAgentResultHandler cancel];
     [self.textToTranslateResultHandler cancel];
@@ -1112,6 +1370,71 @@
     return name;
 }
 
+- (void) voicePlayRequestHandleWithState:(NSInteger)state
+                                language:(NSInteger)language
+                                  volumn:(NSInteger)volumn
+                                     crc:(NSString *)crc
+{
+    [AiLogger i:@"voicePlayRequestHandleWithState: %@, language: %@, volumn: %@, crc: %@", @(state), @(language), @(volumn), crc];
+    if (self.textToVoiceHandler) {
+        if ([self.textToVoiceHandler isHandling:self.lastResultText]) {
+            [AiLogger i:@"Is Converting text: %@", self.lastResultText];
+            return;
+        }
+        if ([self.textToVoiceHandler isPlaying:self.lastResultText]) {
+            [AiLogger i:@"Is Playing text: %@", self.lastResultText];
+            return;
+        }
+        [self.textToVoiceHandler stop];
+    }
+    if (state == 0) {
+        [self.textToVoiceHandler stop];
+        return;
+    }
+    if (!self.lastResultText) {
+        [AiLogger i:@"lastResultText is null"];
+        return;
+    }
+    self.textToVoiceHandler = [[DefaultTextToVoiceHandler alloc] init];
+    [self.textToVoiceHandler handle:self.lastResultText state:state language:language volumn:volumn crc:crc];
+}
+
+- (void) sendDeviceSubscriptionInfo:(NSString *) mac
+{
+    [self subscriptionInfoRequestHandle:mac];
+}
+
+- (void) subscriptionInfoRequestHandle:(NSString *)mac
+{
+    [AiLogger i:@"请求订阅信息：%@", mac];
+    NSString *Id = [mac stringByReplacingOccurrencesOfString:@":" withString:@""];
+    Id = [Id lowercaseStringWithLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en"]];
+    [self getOrderInfo2WithMac:Id callback:^(AiOrderInfo * _Nonnull orderInfo, NSString * _Nullable errorMsg) {
+        [AiLogger i:@"返回订单信息：%@, errorMsg: %@", orderInfo, errorMsg];
+        NSInteger type = 0;
+        if (orderInfo.orderNum >= 0) {
+            type = 1;
+        }
+        else if (orderInfo.orderType == 0) {
+            type = 2;
+        }
+        else if (orderInfo.orderType == 1) {
+            type = 3;
+        }
+        else if (orderInfo.orderType == 2) {
+            type = 4;
+        }
+        if (orderInfo.endTime <= 0) {
+            type = 0;
+        }
+        [[HwBluetoothSDK sharedInstance] setAiSubscriptionInfoWithType:type
+                                                             startTime:orderInfo.startTime
+                                                               endTime:orderInfo.endTime
+                                                             leftCount:orderInfo.orderNum];
+    }];
+}
+
+
 - (void) setAiWatchfaceNameProvider:(id<IAiWatchfaceNameProvider>)nameProvider
 {
     self.watchfaceNameProvider = nameProvider;
@@ -1120,6 +1443,12 @@
 - (void) setAiErrorMessageProvider:(id<IAiErrorMessageProvider>)messageProvider
 {
     self.errorMessageProvider = messageProvider;
+}
+
+- (void)setWorking:(BOOL)working {
+    _working = working;
+    
+    [AiLogger i:@"working: %@", working ? @"为true" : @"为false"];
 }
 
 @end

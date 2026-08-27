@@ -18,10 +18,18 @@ NS_ASSUME_NONNULL_BEGIN
 + (UIImage *) generateFitSizePreViewImage:(UIImage *)source
                                     width:(CGFloat)width
                                    height:(CGFloat)height;
++ (UIImage *) generateJLFitSizePreViewImage:(UIImage *)source
+                                      width:(CGFloat)width
+                                     height:(CGFloat)height;
 + (UIImage *) generateFitSizeRoundedImage:(UIImage *)source
                                     width:(CGFloat)width
                                    height:(CGFloat)height
                              cornerRadius:(CGFloat)cornerRadius;
++ (UIImage *) generateFitSizeRoundedImage:(UIImage *)source
+                                    width:(CGFloat)width
+                                   height:(CGFloat)height
+                             cornerRadius:(CGFloat)cornerRadius
+                                   opaque:(BOOL)opaque;
 + (NSString *) exportSifliBin:(UIImage *)image
                      fileName:(NSString *)fileName;
 + (UIImage *)scaleImage:(UIImage *)image toSize:(CGSize)size;

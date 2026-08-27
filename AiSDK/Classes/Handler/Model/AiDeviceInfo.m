@@ -13,7 +13,10 @@
 - (AiDeviceInfo *) init
 {
     self = [super init];
-    self.supportedLocales = @[@"zh-CN",@"en-US",@"de-DE",@"es-ES",@"fr-FR",@"it-IT",@"hi-IN",@"pl-PL",@"ru-RU",@"cs-CZ",@"vi-VN",@"id-ID",@"tr-TR",@"pt-PT",@"th-TH",@"ar-AE",@"bn-IN",@"he-IL",@"km-KH",@"fa-IR",@"ja-JP",@"ms-MY",@"uk-UA",@"nl-NL",@"ko-KR"];
+    
+    self.platformType = HWPlatformTypeSifli;
+    
+    self.supportedLocales = @[@"zh-CN",@"en-US",@"de-DE",@"es-ES",@"fr-FR",@"it-IT",@"hi-IN",@"pl-PL",@"ru-RU",@"cs-CZ",@"vi-VN",@"id-ID",@"tr-TR",@"pt-PT",@"th-TH",@"ar-AE",@"bn-IN",@"he-IL",@"km-KH",@"fa-IR",@"ja-JP",@"ms-MY",@"uk-UA",@"nl-NL",@"ko-KR", @"sk-SK", @"hu-HU", @"ro-RO", @"sl-SI", @"bg-BG", @"hr-HR", @"el-GR", @"da-DK", @"hy-AM", @"ga-IE", @"ka-GE", @"kk-KZ", @"uZ-UZ", @"te-IN", @"ta-IN", @"or-IN", @"mr-IN", @"kn-IN", @"ml-IN", @"gu-IN"];
     return self;
 }
 - (AiDeviceInfo *) initWithId:(NSString *)Id
@@ -38,7 +41,8 @@
     self.thumbnailHeight = thumbnailHeight;
     self.thumbnailCornerRadius = thumbnailCornerRadius;
     self.currentLocale = currentLocale;
-    self.supportedLocales = @[@"zh-CN",@"en-US",@"de-DE",@"es-ES",@"fr-FR",@"it-IT",@"hi-IN",@"pl-PL",@"ru-RU",@"cs-CZ",@"vi-VN",@"id-ID",@"tr-TR",@"pt-PT",@"th-TH",@"ar-AE",@"bn-IN",@"he-IL",@"km-KH",@"fa-IR",@"ja-JP",@"ms-MY",@"uk-UA",@"nl-NL",@"ko-KR"];
+    self.platformType = HWPlatformTypeSifli;
+    self.supportedLocales = @[@"zh-CN",@"en-US",@"de-DE",@"es-ES",@"fr-FR",@"it-IT",@"hi-IN",@"pl-PL",@"ru-RU",@"cs-CZ",@"vi-VN",@"id-ID",@"tr-TR",@"pt-PT",@"th-TH",@"ar-AE",@"bn-IN",@"he-IL",@"km-KH",@"fa-IR",@"ja-JP",@"ms-MY",@"uk-UA",@"nl-NL",@"ko-KR", @"sk-SK", @"hu-HU", @"ro-RO", @"sl-SI", @"bg-BG", @"hr-HR", @"el-GR", @"da-DK", @"hy-AM", @"ga-IE", @"ka-GE", @"kk-KZ", @"uZ-UZ", @"te-IN", @"ta-IN", @"or-IN", @"mr-IN", @"kn-IN", @"ml-IN", @"gu-IN"];
     return self;
 }
 
@@ -70,6 +74,7 @@
         (self.thumbnailWidth == other.thumbnailWidth) &&
         (self.thumbnailHeight == other.thumbnailHeight) &&
         (self.thumbnailCornerRadius == other.thumbnailCornerRadius) &&
+        (self.platformType == other.platformType) &&
         ((self.currentLocale == other.currentLocale) || [self.currentLocale isEqualToString:other.currentLocale]) &&
         ((self.supportedLocales == other.supportedLocales) || [self.supportedLocales isEqualToArray:other.supportedLocales]);
     
@@ -89,6 +94,7 @@
         self.thumbnailWidth ^
         self.thumbnailHeight ^
         self.thumbnailCornerRadius ^
+        self.platformType ^
         [self.currentLocale hash] ^
         [self.supportedLocales hash];
 }

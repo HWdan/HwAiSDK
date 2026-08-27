@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSInteger orderType;
 @property (nonatomic) NSTimeInterval startTime;
 @property (nonatomic) NSTimeInterval endTime;
+@property (nonatomic, copy) NSString *orderCurrency;
+
 
 @end
 

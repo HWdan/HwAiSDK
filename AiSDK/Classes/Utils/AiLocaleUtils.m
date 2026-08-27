@@ -12,7 +12,7 @@
 + (NSString *) fitLocale:(NSString *)lan
 {
     if ([lan hasPrefix:@"zh"]) {
-        if ([lan hasPrefix:@"zh-Hant"]) {
+        if ([lan hasPrefix:@"zh-Hant"] || [lan hasPrefix:@"zh-TW"] || [lan hasPrefix:@"zh-HK"]) {
             return @"zh-TW";
         } else {
             return @"zh-CN";
@@ -65,9 +65,60 @@
         return @"nl-NL";
     } else if ([lan hasPrefix:@"ko"]) {
         return @"ko-KR";
-    } else {
-        return @"en-US";
+    } else if ([lan hasPrefix:@"sk"]) {
+        return @"sk-SK";
+    } else if ([lan hasPrefix:@"hu"]) {
+        return @"hu-HU";
+    } else if ([lan hasPrefix:@"ro"]) {
+        return @"ro-RO";
+    } else if ([lan hasPrefix:@"sl"]) {
+        return @"sl-SI";
+    } else if ([lan hasPrefix:@"bg"]) {
+        return @"bg-BG";
+    } else if ([lan hasPrefix:@"hr"]) {
+        return @"hr-HR";
+    } else if ([lan hasPrefix:@"el"]) {
+        return @"el-GR";
+    } else if ([lan hasPrefix:@"da"]) {
+        return @"da-DK";
+    } else if ([lan hasPrefix:@"hy"]) {
+        return @"hy-AM";
+    } else if ([lan hasPrefix:@"ga"]) {
+        return @"ga-IE";
+    } else if ([lan hasPrefix:@"ka"]) {
+        return @"ka-GE";
+    } else if ([lan hasPrefix:@"kk"]) {
+        return @"kk-KZ";
+    } else if ([lan hasPrefix:@"uz"]) {
+        return @"uz-UZ";
+    } else if ([lan hasPrefix:@"te"]) {
+        return @"te-IN";
+    } else if ([lan hasPrefix:@"ta"]) {
+        return @"ta-IN";
+    } else if ([lan hasPrefix:@"or"]) {
+        return @"or-IN";
+    } else if ([lan hasPrefix:@"mr"]) {
+        return @"mr-IN";
+    } else if ([lan hasPrefix:@"kn"]) {
+        return @"kn-IN";
+    } else if ([lan hasPrefix:@"ml"]) {
+        return @"ml-IN";
+    } else if ([lan hasPrefix:@"gu"]) {
+        return @"gu-IN";
+    } else if ([lan hasPrefix:@"sr"]) {
+        return @"sr-RS";
+    } else if ([lan hasPrefix:@"sv"]) {
+        return @"sv-SE";
+    } else if ([lan hasPrefix:@"be"]) {
+        
+    } else if ([lan hasPrefix:@"ckb"]) {
+        
+    } else if ([lan hasPrefix:@"mk"]) {
+        return @"mk-MK";
+    } else if ([lan hasPrefix:@"sq"]) {
+        return @"sq-AL";
     }
+    return @"en-US";
 }
 
 @end

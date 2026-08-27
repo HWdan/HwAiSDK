@@ -6,8 +6,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "HwBluetoothSDK/HwBluetoothSDK.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class UIColor;
 
 @interface AiDeviceInfo : NSObject
 
@@ -26,6 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) UIColor *previewBorderColor;
 @property(nonatomic, copy) NSString *currentLocale;
 @property(nonatomic, copy) NSArray<NSString *> *supportedLocales;
+@property(nonatomic, assign) HWPlatformType platformType;
+
 
 - (AiDeviceInfo *) init;
 - (AiDeviceInfo *) initWithId:(NSString *)Id

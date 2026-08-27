@@ -11,7 +11,7 @@
 #import "AiSDK.h"
 #import "AiLogger.h"
 #import "AiFileUtils.h"
-#import "HwBluetoothSDK/HwBluetoothSDK.h"
+#import "HwBluetoothSDK.h"
 #import "WatchfaceSDK/WatchfaceSDK-Swift.h"
 
 @interface DefaultImageToWatchfaceHandler()
@@ -51,10 +51,10 @@
                 code:(NSInteger)code
             errorMsg:(NSString *)errorMsg
 {
-    if (self.isCanceled) {
-        return;
-    }
-    [[AiSDK sharedInstance] watchfaceSyncToDeviceCompleted:self.watchface code:code msg:errorMsg];
+    [[AiSDK sharedInstance] watchfaceSyncToDeviceCompleted:self.watchface
+                                                       code:code
+                                                        msg:errorMsg
+                                                 isCanceled:self.isCanceled];
     _watchface = nil;
     _backgroundImage = nil;
     _deviceInfo = nil;
@@ -81,6 +81,7 @@
     }
     NSString *deviceUUID = device.peripheral.identifier.UUIDString;
     
+    [AiLogger i:@"DefaultImageToWatchfaceHandler--Start sending watchface..."];
     [[SifliWatchfaceSDK getInstance] setCustomWatchfaceWithDevIdentifier:deviceUUID watchface:watchface compressSuccessCallback:^(BOOL success) {
         if (!success) {
             [AiLogger e:@"zip watchface failed"];
@@ -91,9 +92,10 @@
     } progressCallback:^(NSInteger progress) {
         CGFloat p = ((CGFloat)progress) / 100.0;
         [[AiSDK sharedInstance] watchfaceSyncProgressUpdated:p];
+        [AiLogger i:@"watchface progress:%f",p];
     } finishCallback:^(BOOL success, NSString *message, NSInteger code, NSNumber *devCode) {
         if (!success) {
-            [AiLogger e:@"sync preview to device failed: %@", @(code)];
+            [AiLogger e:@"sync preview to device failed: %@,message:%@", @(code),message];
             [self generateDone:nil code:AiErrorMakeQjsWatchfaceFailed errorMsg:[[AiSDK sharedInstance] errorMsgWithCode:AiErrorMakeQjsWatchfaceFailed]];
             return;
         } else {
