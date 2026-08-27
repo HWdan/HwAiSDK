@@ -12,6 +12,9 @@
 #import "HwBluetoothCenter+PhoneSchedule.h"
 #import "HwBluetoothCenter+StandingSetting.h"
 #import "HwBluetoothCenter+Ota.h"
+#import "HwOtaV2Service.h"
+#import "HwMultipleFileTransferModel.h"
+#import "HwMultipleFileTransferService.h"
 #import "HwBluetoothCenter+FileDifferenceOta.h"
 #import "HwBluetoothCenter+Expand.h"
 #import "HwBluetoothCenter+StatusSetting.h"
@@ -105,6 +108,8 @@ typedef NS_ENUM(NSInteger, HWPlatformType) {
 + (HwBluetoothSDK *_Nonnull) sharedInstance;
 
 #pragma mark - SDK init
+@property (nonatomic, strong, readonly, nullable) HwOtaV2Service *otaV2Service;
+@property (nonatomic, strong, readonly) HwMultipleFileTransferService *multipleFileTransferService;
 /**
  Initialize the SDK. The SDK initializes some parameters and statuses and starts listening for status changes.
  */
@@ -1172,6 +1177,8 @@ typedef void (^HwHeartrateAlarmCallback)(HwHeartrateAlarm *_Nullable hrAlarm, NS
 - (void) deleteStressWithCallback:(HwBoolCallback _Nullable)callback;
 // 删除血氧详情
 - (void) deleteBloodOxygenWithCallback:(HwBoolCallback _Nullable)callback;
+// 删除hrv详情
+- (void) deleteHrvWithCallback:(HwBoolCallback _Nullable)callback;
 
 #pragma mark - 用户相关API接口[API port]
 #pragma mark - 用户信息[user's information]
@@ -1681,5 +1688,3 @@ typedef void (^HwBtConnectionStateCallback)(BOOL connected);
 - (void) removeAiSubscriptionInfoRequestListener:(HwAiSubscriptionInfoRequestCallback _Nonnull)callback;
 - (void) removeAllAiSubscriptionInfoRequestListeners;
 @end
-
-
