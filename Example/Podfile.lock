@@ -55,7 +55,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   AiSDK:
-    :commit: 65e00fd284f98ac2473ecd2c780557c122f6befd
+    :commit: 0c8766a0a5ab8a7bb94868b1933de533e1b91284
     :git: https://github.com/HWdan/HwAiSDK.git
   WatchfaceSDK:
     :commit: 4ddc2f1d7b007233306c2244752a7c5fa6c275b1
@@ -63,7 +63,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   AFNetworking: 3bd23d814e976cd148d7d44c3ab78017b744cd58
-  AiSDK: 4e8828603cc7278c39187b11504606a258ba8069
+  AiSDK: ab7e1cef8072829a33b80ed7497cef2bfeac676b
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   ReactiveObjC: 011caa393aa0383245f2dcf9bf02e86b80b36040
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef

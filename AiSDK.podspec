@@ -33,9 +33,9 @@ None
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
  s.dependency 'AFNetworking', '~> 4.0.1'
- # s.dependency 'HwBluetoothSDK'
+  s.dependency 'HwBluetoothSDK'
  s.dependency 'WatchfaceSDK'
  s.dependency 'SSZipArchive'
- s.vendored_frameworks = 'NativeLib.xcframework','HwBluetoothSDK.framework', 'JLBmpConvertKit.xcframework'
+ s.vendored_frameworks = 'NativeLib.xcframework', 'JLBmpConvertKit.xcframework'
  s.static_framework = true
 end
