@@ -99,38 +99,20 @@
         [AiLogger i:@"AiVoiceToTextService getRecordFile 已取消"];
         return;
     }
-
-    if ([AiSDK sharedInstance].getDeviceInfo.isJLProtocol) {
-        [[HwBluetoothSDK sharedInstance] getJLAiRecordDataWithCallback:^(NSData *data, NSError *error) {
-            if (error) {
-                [self done:nil code:error.code errorMsg:error.localizedDescription];
-            } else {
-                if (data.length == 0) {
-                    [self done:nil code:AiErrorRecordVoiceIsEmpty errorMsg:[[AiSDK sharedInstance] errorMsgWithCode:AiErrorRecordVoiceIsEmpty]];
-                    return;
-                }
-                [self voiceToText:data];
-                // 下面这个保存只是debug用的
-                [self saveMp3Data:data];
-            }
-        }];
-    } else {
-        [[HwBluetoothSDK sharedInstance] getAiRecordDataWithCallback:^(NSData *data, NSError *error) {
-            if (error) {
-                [self done:nil code:error.code errorMsg:error.localizedDescription];
-            } else {
-                if (data.length == 0) {
-                    [self done:nil code:AiErrorRecordVoiceIsEmpty errorMsg:[[AiSDK sharedInstance] errorMsgWithCode:AiErrorRecordVoiceIsEmpty]];
-                    return;
-                }
-                [self voiceToText:data];
-                // 下面这个保存只是debug用的
-                [self saveMp3Data:data];
-            }
-        }];
-    }
     
-    
+    [[AiSDK sharedInstance].devicePlatformStrategy requestRecordDataWithCallback:^(NSData *data, NSError *error) {
+        if (error) {
+            [self done:nil code:error.code errorMsg:error.localizedDescription];
+            return;
+        }
+        if (data.length == 0) {
+            [self done:nil code:AiErrorRecordVoiceIsEmpty errorMsg:[[AiSDK sharedInstance] errorMsgWithCode:AiErrorRecordVoiceIsEmpty]];
+            return;
+        }
+        [self voiceToText:data];
+        // 下面这个保存只是debug用的
+        [self saveMp3Data:data];
+    }];
 }
 
 - (void) saveMp3Data:(NSData *)data
