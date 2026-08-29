@@ -20,6 +20,7 @@
 #import "HwVO2max.h"
 #import "HwBodyState.h"
 #import "HwCommonDefines.h"
+#import "HwStanding.h"
 
 extern NSString * _Nonnull HwKeySportIndex;
 // cache key for sport state at timestamp
@@ -199,6 +200,7 @@ typedef void (^HwBpsCallback)(NSArray<HwBloodPressure *> * _Nullable bpArr, NSEr
                                                    callback:(HwHealthDataCountForLSCallback _Nonnull)callback;
 - (HwBluetoothTask *_Nullable) getBpNumWithCallback:(HwBpCountCallback _Nonnull)callback;
 - (HwBluetoothTask *_Nullable) getPAINumWithCallback:(HwBCIntegerCallback _Nonnull)callback;
+- (HwBluetoothTask *_Nullable) getStandingDataNumWithCallback:(HwBCIntegerCallback _Nonnull)callback;
 - (HwBluetoothTask *_Nullable) getVO2maxNumWithCallback:(HwBCIntegerCallback _Nonnull)callback;
 
 - (HwBluetoothTask *_Nullable) getSportsWithStartTime:(NSTimeInterval)startTime
@@ -245,6 +247,9 @@ typedef void (^HwBpsCallback)(NSArray<HwBloodPressure *> * _Nullable bpArr, NSEr
 
 - (HwBluetoothTask *_Nullable) getNewestHeartrateWithCallback:(HwNewestHeartRateCallback _Nullable)callback;
 
+- (HwBluetoothTask *_Nullable) getStandingDatasWithCount:(NSInteger)count
+                                                callback:(HwStandingDatasCallback _Nonnull)callback;
+- (HwBluetoothTask *_Nullable) delStandingDatasWithCallback:(HwBoolCallback _Nullable)callback;
 /*! @brief sport detail data
  
  Get the sport detail data stored on the device

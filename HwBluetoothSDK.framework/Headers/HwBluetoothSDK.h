@@ -964,6 +964,9 @@ Start to bind with watch
 - (void) getVO2maxsWithCallback:(HwVO2maxsCallback _Nonnull)callback;
 - (void) delVO2maxsWithCallback:(HwBoolCallback _Nullable)callback;
 
+- (void) getStandingDatasWithCallback:(HwStandingDatasCallback _Nonnull)callback;
+- (void) delStandingDatasWithCallback:(HwBoolCallback _Nullable)callback;
+
 /*! @brief
  Get the number of health data in the watch,
  including: number of activity data, number of heart rate data, number of sleep data, number of blood oxygen data, number of pressure data
