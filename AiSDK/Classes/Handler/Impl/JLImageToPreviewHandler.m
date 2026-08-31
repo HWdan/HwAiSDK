@@ -9,11 +9,11 @@
 #import "AiDeviceInfo.h"
 #import "AiImageUtils.h"
 #import "AiSDK.h"
+#import "AiSDK+BmpConverterInternal.h"
 #import "AiLogger.h"
 #import "AiFileUtils.h"
-#import "HwBluetoothSDK/HwBluetoothSDK.h"
+#import "HwBluetoothSDK.h"
 #import "WatchfaceSDK/WatchfaceSDK-Swift.h"
-#import "JLBmpConvertKit/JLBmpConvertKit.h"
 
 @interface JLImageToPreviewHandler()
 
@@ -115,11 +115,14 @@
                                                          opaque:true];
     NSData *imageData = UIImageJPEGRepresentation(resizeImage, 1);
     
-    JLBmpConvertOption *opt = [[JLBmpConvertOption alloc] init];
-    opt.convertType = JLBmpConvertType707N_ARGB;
-    opt.pixelformat = JLBmpPixelformat_Auto;
-    JLImageConvertResult *result = [JLBmpConvert convert:opt ImageData:imageData];
-    trModel.fileData = result.outFileData;
+    NSData *convertedData = [[AiSDK sharedInstance] convertBmpImageData:imageData];
+    if (convertedData == nil) {
+        [AiLogger e:@"JieLi bitmap conversion failed. Register the converter on AiSDK before transfer."];
+        [self syncToDeviceDone:AiErrorMakeQjsWatchfaceFailed
+                      errorMsg:[[AiSDK sharedInstance] errorMsgWithCode:AiErrorMakeQjsWatchfaceFailed]];
+        return;
+    }
+    trModel.fileData = convertedData;
     
     trModel.fileName = @"aipw";
     [fileModelArr addObject:trModel];

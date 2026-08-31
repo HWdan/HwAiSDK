@@ -12,7 +12,7 @@
 #import "AiFileUtils.h"
 #import <AVFoundation/AVFoundation.h>
 #import "VolumeManager.h"
-#import "HwBluetoothSDK/NSData+HwBLE.h"
+#import "NSData+HwBLE.h"
 //#import <NativeLib/NativeLib.h>
 //#import <NativeLib/NativeLib-Swift.h>
 @import NativeLib;

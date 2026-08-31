@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'AiSDK'
-  s.version          = '1.3.3'
+  s.version          = '1.3.2'
   s.swift_version    = '5.0'
   s.summary          = 'Huawo AiSDK.'
   s.description      = <<-DESC
@@ -25,6 +25,7 @@ None
   s.ios.deployment_target = '9.0'
 
   s.source_files = 'AiSDK/Classes/**/*'
+  s.private_header_files = 'AiSDK/Classes/Handler/AiSDK+BmpConverterInternal.h'
   
   s.resource_bundles = {
     'AiSDK' => ['AiSDK/Assets/*.png']
@@ -33,9 +34,8 @@ None
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
  s.dependency 'AFNetworking', '~> 4.0.1'
-#  s.dependency 'HwBluetoothSDK'
+ s.dependency 'HwBluetoothSDK'
  s.dependency 'WatchfaceSDK'
  s.dependency 'SSZipArchive'
- s.vendored_frameworks = 'NativeLib.xcframework', 'HwBluetoothSDK.framework', 'JLBmpConvertKit.xcframework'
- s.static_framework = true
+ s.vendored_frameworks = 'NativeLib.xcframework'
 end
