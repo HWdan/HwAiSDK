@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'AiSDK'
-  s.version          = '1.3.2'
+  s.version          = '1.3.4'
   s.swift_version    = '5.0'
   s.summary          = 'Huawo AiSDK.'
   s.description      = <<-DESC
@@ -38,4 +38,5 @@ None
  s.dependency 'WatchfaceSDK'
  s.dependency 'SSZipArchive'
  s.vendored_frameworks = 'NativeLib.xcframework'
+ s.static_framework = true
 end
