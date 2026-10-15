@@ -1,8 +1,22 @@
 # AiSDK
 
-1.在Podfile添加：
-  pod 'AiSDK', :git => 'https://github.com/HWdan/HwAiSDK.git', :branch => 'main'
-  pod 'WatchfaceSDK', :git => 'https://github.com/HWdan/WatchfaceSDK.git', :branch => 'main'
+支持 iOS 12.0 及以上版本，使用 arm64 真机运行。
+
+1.在 Podfile 添加：
+
+```ruby
+source 'http://gitlab.hanshuang.ltd/oa/v2/ios-podspecs.git'
+source 'https://cdn.cocoapods.org/'
+
+platform :ios, '12.0'
+use_frameworks!
+
+# 添加到 App 的 target 中
+pod 'AiSDK', :git => 'https://github.com/HWdan/HwAiSDK.git', :branch => 'main'
+pod 'WatchfaceSDK', :git => 'https://github.com/HWdan/WatchfaceSDK.git', :branch => 'main'
+```
+
+执行 `pod install` 安装依赖。
   
 
 2.初始化- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions：
@@ -154,3 +168,42 @@
     }
         
 }
+
+## App 健康报告
+
+支持由 App 主动请求睡眠生物钟、运动洞察和身体状况报告。
+使用前申请 OAS 渠道参数，并在调用 `setDeviceInfo:` 前完成配置：
+
+```objc
+#import <AiSDK/AiSDK-Swift.h>
+#import <AiSDK/AiSDK+HealthAgents.h>
+
+[[AiOASClient shared] configureWithChannelId:channelId
+                                    appKey:appKey
+                                   appUuid:userId
+                                appChannel:appChannel];
+```
+
+配置后，按上面的设备信息设置流程调用 `setDeviceInfo:`。
+
+| 功能 | 接口 | 入参类型 |
+| --- | --- | --- |
+| 睡眠生物钟 | `generateSleepChronotype:completion:` | `AiSleepChronotypeInput` |
+| 运动洞察 | `generateExerciseInsight:completion:` | `AiExerciseInsightInput` |
+| 身体状况 | `generateBodyStatus:completion:` | `AiBodyStatusInput` |
+
+参数、单位和返回字段见 [AiHealthAgentModel.h](AiSDK/Classes/Handler/Model/AiHealthAgentModel.h)。
+结果通过 completion 在主线程返回，同时提供结果对象或 `NSError`。
+
+睡眠报告通过 `period` 指定日（0）、周（1）、月（2），通过 `use12HourClock` 选择时间制式。
+入睡和起床时间分别使用 `HH:mm:ss` 或 `hh:mm:ss AM/PM` 格式，缺失日期填字符串 `"0"`。
+
+## 健康分析结果回传
+
+健康分析结果默认回传手表。如仅需在 App 展示，在设置设备信息时配置：
+
+```objc
+deviceInfo.healthAnalysisAppOnly = YES;
+```
+
+结果通过 `aiHealthAnalysisDone:code:errorMsg:` 回调获取。

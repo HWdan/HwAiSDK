@@ -73,4 +73,9 @@ static id<ILog> myLog = nil;
     }
 }
 
++ (void)eMessage:(NSString *)message
+{
+    [self e:@"%@", message];
+}
+
 @end

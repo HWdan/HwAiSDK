@@ -683,3 +683,6 @@ Example/Pods/WatchfaceSDK/WatchfaceSDK/Classes/OTA/QjsStorageUtils.swift
 Example/Pods/WatchfaceSDK/WatchfaceSDK/Classes/Watchface/QjsCallback.swift
 Example/Pods/WatchfaceSDK/WatchfaceSDK/Classes/Watchface/SifliWatchfaceSDK.swift
 Example/Pods/WatchfaceSDK/WatchfaceSDK/Classes/Watchface/Custom/widget/QjsWidget.swift
+
+# Per-developer OAS credentials
+Example/OASConfig.local.plist

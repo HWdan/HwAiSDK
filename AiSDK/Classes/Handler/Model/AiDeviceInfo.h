@@ -30,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy) NSString *currentLocale;
 @property(nonatomic, copy) NSArray<NSString *> *supportedLocales;
 @property(nonatomic, assign) HWPlatformType platformType;
+@property(nonatomic, assign) BOOL healthAnalysisAppOnly;
 
 
 - (AiDeviceInfo *) init;

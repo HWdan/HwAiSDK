@@ -27,11 +27,9 @@
     
     // 判断目标区域的宽高比与原图的宽高比，来确定裁剪的大小
     if (targetAspectRatio > imageAspectRatio) {
-        // 目标区域的宽高比大于原图的宽高比，按高度缩放
-        cropWidth = originalSize.height * targetAspectRatio;
-    } else {
-        // 目标区域的宽高比小于或等于原图的宽高比，按宽度缩放
         cropHeight = originalSize.width / targetAspectRatio;
+    } else {
+        cropWidth = originalSize.height * targetAspectRatio;
     }
     
     // 计算裁剪区域的起始点（保证裁剪区域在图片中心）
@@ -227,11 +225,9 @@
     
     // 判断目标区域的宽高比与原图的宽高比，来确定裁剪的大小
     if (targetAspectRatio > imageAspectRatio) {
-        // 目标区域的宽高比大于原图的宽高比，按高度缩放
-        cropWidth = originalSize.height * targetAspectRatio;
-    } else {
-        // 目标区域的宽高比小于或等于原图的宽高比，按宽度缩放
         cropHeight = originalSize.width / targetAspectRatio;
+    } else {
+        cropWidth = originalSize.height * targetAspectRatio;
     }
     
     // 计算裁剪区域的起始点（保证裁剪区域在图片中心）
@@ -287,11 +283,9 @@
     
     // 判断目标区域的宽高比与原图的宽高比，来确定裁剪的大小
     if (targetAspectRatio > imageAspectRatio) {
-        // 目标区域的宽高比大于原图的宽高比，按高度缩放
-        cropWidth = originalSize.height * targetAspectRatio;
-    } else {
-        // 目标区域的宽高比小于或等于原图的宽高比，按宽度缩放
         cropHeight = originalSize.width / targetAspectRatio;
+    } else {
+        cropWidth = originalSize.height * targetAspectRatio;
     }
     
     // 计算裁剪区域的起始点（保证裁剪区域在图片中心）

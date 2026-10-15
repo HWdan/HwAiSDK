@@ -170,7 +170,7 @@
                                                       error:&error];
 
     NSDictionary *jsonDict = (NSDictionary *) jsonObject;
-    if (jsonDict == nil) {
+    if (![jsonDict isKindOfClass:[NSDictionary class]]) {
         [self failed:AiErrorMeetingParseJsonError msg:[[AiSDK sharedInstance] errorMsgWithCode:AiErrorMeetingParseJsonError]];
         return;
     }

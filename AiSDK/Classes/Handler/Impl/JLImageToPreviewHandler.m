@@ -94,6 +94,22 @@
             });
             return;
         }
+        if (self.deviceInfo.needPreviewBorder) {
+            UIImage *preview = self.background;
+            CGFloat borderWidth = self.deviceInfo.previewBorderWidth > 0 ? self.deviceInfo.previewBorderWidth : 1.0;
+            UIColor *borderColor = self.deviceInfo.previewBorderColor ?: UIColor.whiteColor;
+            CGRect bounds = CGRectMake(0, 0, preview.size.width, preview.size.height);
+            UIGraphicsBeginImageContextWithOptions(preview.size, YES, preview.scale);
+            [preview drawInRect:bounds];
+            // 描边完全落在圆角内部，避免下发前再次裁圆角时被裁掉。
+            UIBezierPath *border = [UIBezierPath bezierPathWithRoundedRect:CGRectInset(bounds, borderWidth / 2.0, borderWidth / 2.0)
+                                                            cornerRadius:MAX(0, self.deviceInfo.thumbnailCornerRadius - borderWidth / 2.0)];
+            border.lineWidth = borderWidth;
+            [borderColor setStroke];
+            [border stroke];
+            self.background = UIGraphicsGetImageFromCurrentImageContext() ?: preview;
+            UIGraphicsEndImageContext();
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
             [self makePreviewDone:self.background code:0 errorMsg:nil];
         });

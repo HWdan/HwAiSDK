@@ -6,6 +6,7 @@
 //
 
 #import "AiSDK.h"
+#import <AiSDK/AiSDK-Swift.h>
 #import "HwBluetoothSDK/HwBluetoothSDK.h"
 //#import <NativeLib/NativeLib.h>
 //#import <NativeLib/NativeLib-Swift.h>
@@ -183,14 +184,25 @@
     if (!deviceInfo) {
         return;
     }
+    // OAS uses its own channel only for the three new health agents.
+    NSString *resolution = [NSString stringWithFormat:@"%ld*%ld", (long)deviceInfo.width, (long)deviceInfo.height];
+    [[AiOASClient shared] initializeDevice:deviceInfo.Id ?: @"" resolution:resolution
+                                language:[AiLocaleUtils fitLocale:deviceInfo.currentLocale]
+                              completion:^(NSError *error) {
+        if (error) [AiLogger e:@"OAS init failed: %@", error.localizedDescription];
+        else [AiLogger i:@"OAS initialized"];
+    }];
     // 开始初始化SDK
     if (_deviceInfo &&
         [_deviceInfo.Id isEqual:deviceInfo.Id] &&
         [_deviceInfo.currentLocale isEqual:deviceInfo.currentLocale] &&
         _deviceInfo.platformType == deviceInfo.platformType) {
+        _deviceInfo.healthAnalysisAppOnly = deviceInfo.healthAnalysisAppOnly;
         [AiLogger i:@"两次设备信息一致，直接return"];
         return;
     }
+    [self cancelAll];
+    self.textToAnswerHandler = nil;
     _deviceInfo = deviceInfo;
     self.defaultErrorMessageProvider.deviceLanguageCode = [HwLanguageUtil getLanguageWithLocale:deviceInfo.currentLocale];
     [self.sdkInitHandler initSDK:_deviceInfo];
@@ -208,6 +220,7 @@
 
 - (void) cleanDeviceInfo
 {
+    [[AiOASClient shared] resetDevice];
     _deviceInfo = nil;
 }
 
@@ -612,6 +625,7 @@
 
 - (NSString *) errorMsgWithCode:(NSInteger)code
 {
+    if (code == 0) return nil;
     NSString *msg = [self.defaultErrorMessageProvider messageForCode:code];
     if (!msg && [self.errorMessageProvider respondsToSelector:@selector(messageForCode:)]) {
         msg = [self.errorMessageProvider messageForCode:code];
@@ -1022,7 +1036,30 @@
 - (void) didRequestHealthAnalysis:(HwHealthData *)healthData
 {
     [AiLogger i:@"didRequestHealthAnalysis"];
-    self.healthAnalysisResultHandler = [[DefaultHealthAnalysisResultHandler alloc] init];
+    // 基础资料不算健康数据；空载荷或七天指标全空时不提交 AI。
+    BOOL hasHealthData = NO;
+    for (HwHealthDailyData *daily in healthData.dailyDataList) {
+        hasHealthData = daily.step > 0 || daily.sleep > 0 || daily.PAI > 0
+            || (daily.minHr > 0 && daily.maxHr > 0 && daily.avgHr > 0)
+            || (daily.minSpO2 > 0 && daily.maxSpO2 > 0 && daily.avgSpO2 > 0)
+            || (daily.minStress > 0 && daily.maxStress > 0 && daily.avgStress > 0)
+            || (daily.minBP.systolic > 0 && daily.minBP.diastolic > 0)
+            || (daily.maxBP.systolic > 0 && daily.maxBP.diastolic > 0)
+            || (daily.avgBP.systolic > 0 && daily.avgBP.diastolic > 0);
+        if (hasHealthData) break;
+    }
+    if (!hasHealthData) {
+        NSInteger code = AiErrorHealthDataNull;
+        NSString *msg = [self errorMsgWithCode:code];
+        if (!self.deviceInfo.healthAnalysisAppOnly) {
+            [[HwBluetoothSDK sharedInstance] setAiHealthAnalysisResultWithResult:nil code:(int)code msg:msg];
+        }
+        [self healthAnalysisResultCompleted:nil code:code msg:msg];
+        return;
+    }
+    DefaultHealthAnalysisResultHandler *handler = [[DefaultHealthAnalysisResultHandler alloc] init];
+    handler.appOnly = self.deviceInfo.healthAnalysisAppOnly;
+    self.healthAnalysisResultHandler = handler;
     [self.healthAnalysisResultHandler analysis:healthData];
 }
 
@@ -1267,7 +1304,7 @@
                                                       error:&error];
 
     NSDictionary *jsonDict = (NSDictionary *) jsonObject;
-    if (jsonDict == nil) {
+    if (![jsonDict isKindOfClass:[NSDictionary class]]) {
         [AiLogger i:@"转为jsonDict之后的结果：%@", jsonStr];
         return nil;;
     }
@@ -1323,6 +1360,7 @@
 
 - (void) cancelAll
 {
+    [self.textToAnswerHandler cancel];
     [self.voiceToTextHandler cancel];
     [self.textToImageHandler cancel];
     [self.imageToPreviewHandler cancel];
@@ -1411,6 +1449,7 @@
     Id = [Id lowercaseStringWithLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en"]];
     [self getOrderInfo2WithMac:Id callback:^(AiOrderInfo * _Nonnull orderInfo, NSString * _Nullable errorMsg) {
         [AiLogger i:@"返回订单信息：%@, errorMsg: %@", orderInfo, errorMsg];
+        if (!orderInfo || errorMsg.length) return;
         NSInteger type = 0;
         if (orderInfo.orderNum >= 0) {
             type = 1;

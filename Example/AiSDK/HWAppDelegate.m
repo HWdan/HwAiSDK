@@ -8,12 +8,18 @@
 
 #import "HWAppDelegate.h"
 #import "HwMainVC.h"
+#import <AiSDK/AiSDK-Swift.h>
 #import "HwBluetoothSDK/HwBluetoothSDK.h"
 
 @implementation HWAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSString *configPath = [[NSBundle mainBundle] pathForResource:@"OASConfig" ofType:@"plist"];
+    NSDictionary *config = configPath ? [NSDictionary dictionaryWithContentsOfFile:configPath] : @{};
+    [[AiOASClient shared] configureWithChannelId:config[@"channelId"] ?: @""
+                                        appKey:config[@"appKey"] ?: @""
+                                       appUuid:config[@"appUuid"] appChannel:config[@"appChannel"]];
     [[HwBluetoothSDK sharedInstance] initSDK];
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     HwMainVC *vc = [[HwMainVC alloc] init];

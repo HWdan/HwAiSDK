@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DefaultHealthAnalysisResultHandler : NSObject<IHealthAnalysisResultHandler>
 
+@property(nonatomic, assign) BOOL appOnly;
+
 @end
 
 NS_ASSUME_NONNULL_END

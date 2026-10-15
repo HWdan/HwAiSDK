@@ -67,7 +67,7 @@
     }
     [AiLogger i:@"健康分析返回的内容：%@", text];
     if (text.length == 0) {
-        [[HwBluetoothSDK sharedInstance] setAiMeetingResult:nil type:0 code:(int)AiErrorMeetingSummaryEmpty msg:[[AiSDK sharedInstance] errorMsgWithCode:AiErrorMeetingSummaryEmpty]];
+        [self failed:AiErrorHealthAnalysisResultNull msg:[[AiSDK sharedInstance] errorMsgWithCode:AiErrorHealthAnalysisResultNull]];
         return;
     }
     
@@ -84,7 +84,7 @@
                                                       error:&error];
 
     NSDictionary *jsonDict = (NSDictionary *) jsonObject;
-    if (jsonDict == nil) {
+    if (![jsonDict isKindOfClass:[NSDictionary class]]) {
         [self failed:AiErrorHealthAnalysisResultNull msg:[[AiSDK sharedInstance] errorMsgWithCode:AiErrorHealthAnalysisResultNull]];
         return;
     }
@@ -119,7 +119,7 @@
         summary = @"";
     }
     result.summary = summary;
-    [[HwBluetoothSDK sharedInstance] setAiHealthAnalysisResultWithResult:result code:0 msg:nil];
+    if (!self.appOnly) [[HwBluetoothSDK sharedInstance] setAiHealthAnalysisResultWithResult:result code:0 msg:nil];
     [[AiSDK sharedInstance] healthAnalysisResultCompleted:result code:0 msg:nil];
 }
 
@@ -132,7 +132,7 @@
     }
     msg = [[AiSDK sharedInstance] errorMsgWithCode:code];
     [AiLogger e:@"HealthAnalysisResult Failed: %@, %@", @(code), msg];
-    [[HwBluetoothSDK sharedInstance] setAiHealthAnalysisResultWithResult:nil code:(int)code msg:msg];
+    if (!self.appOnly) [[HwBluetoothSDK sharedInstance] setAiHealthAnalysisResultWithResult:nil code:(int)code msg:msg];
     [[AiSDK sharedInstance] healthAnalysisResultCompleted:nil code:code msg:msg];
 }
 

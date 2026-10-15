@@ -22,7 +22,7 @@ None
   s.source           = { :git => 'https://gitee.com/huawo-wear/ai-sdk.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '9.0'
+  s.ios.deployment_target = '12.0'
 
   s.source_files = 'AiSDK/Classes/**/*'
   s.private_header_files = 'AiSDK/Classes/Handler/AiSDK+BmpConverterInternal.h'
@@ -37,6 +37,9 @@ None
  s.dependency 'HwBluetoothSDK'
  s.dependency 'WatchfaceSDK'
  s.dependency 'SSZipArchive'
+ s.dependency 'OAS', '2.5.0'
  s.vendored_frameworks = 'NativeLib.xcframework'
+ # NativeLib was built with LLVM profiling and requires its runtime in the host.
+ s.user_target_xcconfig = { 'OTHER_LDFLAGS' => '$(inherited) -fprofile-instr-generate' }
  s.static_framework = true
 end

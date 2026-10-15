@@ -19,6 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (void) w:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
 + (void) e:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
 
+// Swift cannot call the variadic Objective-C logging methods.
++ (void)eMessage:(NSString *)message NS_SWIFT_NAME(e(_:));
+
 @end
 
 NS_ASSUME_NONNULL_END
