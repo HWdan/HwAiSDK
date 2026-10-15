@@ -1,0 +1,11 @@
+framework module OAOpus {
+    umbrella header "OAOpus.h"
+    
+    export *
+    
+}
+
+module OAOpus.Swift {
+  header "OAOpus-Swift.h"
+  requires objc
+}

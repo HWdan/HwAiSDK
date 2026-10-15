@@ -1,0 +1,1566 @@
+{
+  "ABIRoot": {
+    "kind": "Root",
+    "name": "OAS",
+    "printedName": "OAS",
+    "children": [
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "OAS"
+      },
+      {
+        "kind": "Import",
+        "name": "OAContracts",
+        "printedName": "OAContracts",
+        "declKind": "Import",
+        "moduleName": "OAS"
+      },
+      {
+        "kind": "Import",
+        "name": "OACore",
+        "printedName": "OACore",
+        "declKind": "Import",
+        "moduleName": "OAS"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "AgentController",
+        "printedName": "AgentController",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "delegate",
+            "printedName": "delegate",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "WeakStorage",
+                "printedName": "(any OAContracts.AgentDelegate)?"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@OAS@objc(cs)AgentController(py)delegate",
+            "mangledName": "$s3OAS15AgentControllerC8delegate11OAContracts0B8Delegate_pSgvp",
+            "moduleName": "OAS",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "ReferenceOwnership",
+              "AccessControl",
+              "ObjC"
+            ],
+            "ownership": 1,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(any OAContracts.AgentDelegate)?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "AgentDelegate",
+                        "printedName": "any OAContracts.AgentDelegate",
+                        "usr": "c:@M@OAContracts@objc(pl)AgentDelegate"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@OAS@objc(cs)AgentController(im)delegate",
+                "mangledName": "$s3OAS15AgentControllerC8delegate11OAContracts0B8Delegate_pSgvg",
+                "moduleName": "OAS",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(any OAContracts.AgentDelegate)?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "AgentDelegate",
+                        "printedName": "any OAContracts.AgentDelegate",
+                        "usr": "c:@M@OAContracts@objc(pl)AgentDelegate"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@OAS@objc(cs)AgentController(im)setDelegate:",
+                "mangledName": "$s3OAS15AgentControllerC8delegate11OAContracts0B8Delegate_pSgvs",
+                "moduleName": "OAS",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:3OAS15AgentControllerC8delegate11OAContracts0B8Delegate_pSgvM",
+                "mangledName": "$s3OAS15AgentControllerC8delegate11OAContracts0B8Delegate_pSgvM",
+                "moduleName": "OAS",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(agentConfig:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "AgentController",
+                "printedName": "OAS.AgentController",
+                "usr": "c:@M@OAS@objc(cs)AgentController"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "AgentConfig",
+                "printedName": "OAContracts.AgentConfig",
+                "usr": "c:@M@OAContracts@objc(cs)AgentConfig"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@OAS@objc(cs)AgentController(im)initWithAgentConfig:",
+            "mangledName": "$s3OAS15AgentControllerC11agentConfigAC11OAContracts0bE0C_tcfc",
+            "moduleName": "OAS",
+            "objc_name": "initWithAgentConfig:",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Function",
+            "name": "run",
+            "printedName": "run(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "AgentRequest",
+                "printedName": "OAContracts.AgentRequest",
+                "usr": "c:@M@OAContracts@objc(cs)AgentRequest"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@OAS@objc(cs)AgentController(im)run:",
+            "mangledName": "$s3OAS15AgentControllerC3runySS11OAContracts0B7RequestCF",
+            "moduleName": "OAS",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "startRecognition",
+            "printedName": "startRecognition(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "RecognitionConfig",
+                "printedName": "OAContracts.RecognitionConfig",
+                "usr": "c:@M@OAContracts@objc(cs)RecognitionConfig"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@OAS@objc(cs)AgentController(im)startRecognition:",
+            "mangledName": "$s3OAS15AgentControllerC16startRecognitionySS11OAContracts0E6ConfigCF",
+            "moduleName": "OAS",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "stopRecognition",
+            "printedName": "stopRecognition()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@OAS@objc(cs)AgentController(im)stopRecognition",
+            "mangledName": "$s3OAS15AgentControllerC15stopRecognitionyyF",
+            "moduleName": "OAS",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "write",
+            "printedName": "write(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Data",
+                "printedName": "Foundation.Data",
+                "usr": "s:10Foundation4DataV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@OAS@objc(cs)AgentController(im)write:",
+            "mangledName": "$s3OAS15AgentControllerC5writeyy10Foundation4DataVF",
+            "moduleName": "OAS",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment",
+              "ObjC"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "destroy",
+            "printedName": "destroy()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@OAS@objc(cs)AgentController(im)destroy",
+            "mangledName": "$s3OAS15AgentControllerC7destroyyyF",
+            "moduleName": "OAS",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "AgentController",
+                "printedName": "OAS.AgentController",
+                "usr": "c:@M@OAS@objc(cs)AgentController"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@OAS@objc(cs)AgentController(im)init",
+            "mangledName": "$s3OAS15AgentControllerCACycfc",
+            "moduleName": "OAS",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "init",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Override"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@OAS@objc(cs)AgentController",
+        "mangledName": "$s3OAS15AgentControllerC",
+        "moduleName": "OAS",
+        "declAttributes": [
+          "AccessControl",
+          "ObjCMembers",
+          "ObjC"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "OAS"
+      },
+      {
+        "kind": "Import",
+        "name": "OAContracts",
+        "printedName": "OAContracts",
+        "declKind": "Import",
+        "moduleName": "OAS"
+      },
+      {
+        "kind": "Import",
+        "name": "OACore",
+        "printedName": "OACore",
+        "declKind": "Import",
+        "moduleName": "OAS"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "AsrController",
+        "printedName": "AsrController",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "delegate",
+            "printedName": "delegate",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "WeakStorage",
+                "printedName": "(any OAContracts.AsrDelegate)?"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@OAS@objc(cs)AsrController(py)delegate",
+            "mangledName": "$s3OAS13AsrControllerC8delegate11OAContracts0B8Delegate_pSgvp",
+            "moduleName": "OAS",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "ReferenceOwnership",
+              "AccessControl",
+              "ObjC"
+            ],
+            "ownership": 1,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(any OAContracts.AsrDelegate)?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "AsrDelegate",
+                        "printedName": "any OAContracts.AsrDelegate",
+                        "usr": "c:@M@OAContracts@objc(pl)AsrDelegate"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@OAS@objc(cs)AsrController(im)delegate",
+                "mangledName": "$s3OAS13AsrControllerC8delegate11OAContracts0B8Delegate_pSgvg",
+                "moduleName": "OAS",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(any OAContracts.AsrDelegate)?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "AsrDelegate",
+                        "printedName": "any OAContracts.AsrDelegate",
+                        "usr": "c:@M@OAContracts@objc(pl)AsrDelegate"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@OAS@objc(cs)AsrController(im)setDelegate:",
+                "mangledName": "$s3OAS13AsrControllerC8delegate11OAContracts0B8Delegate_pSgvs",
+                "moduleName": "OAS",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:3OAS13AsrControllerC8delegate11OAContracts0B8Delegate_pSgvM",
+                "mangledName": "$s3OAS13AsrControllerC8delegate11OAContracts0B8Delegate_pSgvM",
+                "moduleName": "OAS",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(asrConfig:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "AsrController",
+                "printedName": "OAS.AsrController",
+                "usr": "c:@M@OAS@objc(cs)AsrController"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "AsrConfig",
+                "printedName": "OAContracts.AsrConfig",
+                "usr": "c:@M@OAContracts@objc(cs)AsrConfig"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@OAS@objc(cs)AsrController(im)initWithAsrConfig:",
+            "mangledName": "$s3OAS13AsrControllerC9asrConfigAC11OAContracts0bE0C_tcfc",
+            "moduleName": "OAS",
+            "objc_name": "initWithAsrConfig:",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Function",
+            "name": "startRecognition",
+            "printedName": "startRecognition()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@OAS@objc(cs)AsrController(im)startRecognition",
+            "mangledName": "$s3OAS13AsrControllerC16startRecognitionSSyF",
+            "moduleName": "OAS",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "stopRecognition",
+            "printedName": "stopRecognition()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@OAS@objc(cs)AsrController(im)stopRecognition",
+            "mangledName": "$s3OAS13AsrControllerC15stopRecognitionyyF",
+            "moduleName": "OAS",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "write",
+            "printedName": "write(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Data",
+                "printedName": "Foundation.Data",
+                "usr": "s:10Foundation4DataV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@OAS@objc(cs)AsrController(im)write:",
+            "mangledName": "$s3OAS13AsrControllerC5writeyy10Foundation4DataVF",
+            "moduleName": "OAS",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "destroy",
+            "printedName": "destroy()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@OAS@objc(cs)AsrController(im)destroy",
+            "mangledName": "$s3OAS13AsrControllerC7destroyyyF",
+            "moduleName": "OAS",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "AsrController",
+                "printedName": "OAS.AsrController",
+                "usr": "c:@M@OAS@objc(cs)AsrController"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@OAS@objc(cs)AsrController(im)init",
+            "mangledName": "$s3OAS13AsrControllerCACycfc",
+            "moduleName": "OAS",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "init",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Override"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@OAS@objc(cs)AsrController",
+        "mangledName": "$s3OAS13AsrControllerC",
+        "moduleName": "OAS",
+        "declAttributes": [
+          "AccessControl",
+          "ObjCMembers",
+          "ObjC"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "OAContracts",
+        "printedName": "OAContracts",
+        "declKind": "Import",
+        "moduleName": "OAS",
+        "declAttributes": [
+          "Exported"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "OAS"
+      },
+      {
+        "kind": "Import",
+        "name": "OAContracts",
+        "printedName": "OAContracts",
+        "declKind": "Import",
+        "moduleName": "OAS"
+      },
+      {
+        "kind": "Import",
+        "name": "OACore",
+        "printedName": "OACore",
+        "declKind": "Import",
+        "moduleName": "OAS"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "OTek",
+        "printedName": "OTek",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "setDebug",
+            "printedName": "setDebug(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "DebugMode",
+                "printedName": "OAContracts.DebugMode",
+                "usr": "c:@M@OAContracts@E@DebugMode"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@OAS@objc(cs)OTek(cm)setDebug:",
+            "mangledName": "$s3OAS4OTekC8setDebugyy11OAContracts0D4ModeOFZ",
+            "moduleName": "OAS",
+            "static": true,
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment",
+              "ObjC"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "setUnaryDeadlineAfter",
+            "printedName": "setUnaryDeadlineAfter(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int64",
+                "printedName": "Swift.Int64",
+                "usr": "s:s5Int64V"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@OAS@objc(cs)OTek(cm)setUnaryDeadlineAfter:",
+            "mangledName": "$s3OAS4OTekC21setUnaryDeadlineAfterySbs5Int64VFZ",
+            "moduleName": "OAS",
+            "static": true,
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "DiscardableResult",
+              "RawDocComment",
+              "ObjC"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "initialize",
+            "printedName": "initialize(config:onSuccess:onFailure:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "InitConfig",
+                "printedName": "OAContracts.InitConfig",
+                "usr": "c:@M@OAContracts@objc(cs)InitConfig"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "() -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Swift.Int, Swift.String) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Tuple",
+                    "printedName": "(Swift.Int, Swift.String)",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int",
+                        "printedName": "Swift.Int",
+                        "usr": "s:Si"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@OAS@objc(cs)OTek(cm)initializeWithConfig:onSuccess:onFailure:",
+            "mangledName": "$s3OAS4OTekC10initialize6config9onSuccess0E7Failurey11OAContracts10InitConfigC_yycySi_SStctFZ",
+            "moduleName": "OAS",
+            "static": true,
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment",
+              "ObjC"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "queryProducts",
+            "printedName": "queryProducts(onSuccess:onFailure:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "([OAContracts.ProductInfo]) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Array",
+                    "printedName": "[OAContracts.ProductInfo]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ProductInfo",
+                        "printedName": "OAContracts.ProductInfo",
+                        "usr": "c:@M@OAContracts@objc(cs)ProductInfo"
+                      }
+                    ],
+                    "usr": "s:Sa"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Swift.Int, Swift.String) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Tuple",
+                    "printedName": "(Swift.Int, Swift.String)",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int",
+                        "printedName": "Swift.Int",
+                        "usr": "s:Si"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@OAS@objc(cs)OTek(cm)queryProductsOnSuccess:onFailure:",
+            "mangledName": "$s3OAS4OTekC13queryProducts9onSuccess0E7FailureyySay11OAContracts11ProductInfoCGc_ySi_SStctFZ",
+            "moduleName": "OAS",
+            "static": true,
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment",
+              "ObjC"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "loadAgents",
+            "printedName": "loadAgents(language:pageNum:pageSize:onSuccess:onFailure:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Swift.Int32, Swift.Int32, [OAContracts.AgentInfo]) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Tuple",
+                    "printedName": "(Swift.Int32, Swift.Int32, [OAContracts.AgentInfo])",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int32",
+                        "printedName": "Swift.Int32",
+                        "usr": "s:s5Int32V"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int32",
+                        "printedName": "Swift.Int32",
+                        "usr": "s:s5Int32V"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Array",
+                        "printedName": "[OAContracts.AgentInfo]",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "AgentInfo",
+                            "printedName": "OAContracts.AgentInfo",
+                            "usr": "c:@M@OAContracts@objc(cs)AgentInfo"
+                          }
+                        ],
+                        "usr": "s:Sa"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Swift.Int, Swift.String) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Tuple",
+                    "printedName": "(Swift.Int, Swift.String)",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int",
+                        "printedName": "Swift.Int",
+                        "usr": "s:Si"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@OAS@objc(cs)OTek(cm)loadAgentsWithLanguage:pageNum:pageSize:onSuccess:onFailure:",
+            "mangledName": "$s3OAS4OTekC10loadAgents8language7pageNum0F4Size9onSuccess0I7FailureySS_S2iys5Int32V_AKSay11OAContracts9AgentInfoCGtcySi_SStctFZ",
+            "moduleName": "OAS",
+            "static": true,
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment",
+              "ObjC"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "loadDepotAgents",
+            "printedName": "loadDepotAgents(language:pageNum:pageSize:depotType:onSuccess:onFailure:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "DepotType",
+                "printedName": "OAContracts.DepotType",
+                "usr": "c:@M@OAContracts@E@DepotType"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Swift.Int32, Swift.Int32, [OAContracts.AgentInfo]) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Tuple",
+                    "printedName": "(Swift.Int32, Swift.Int32, [OAContracts.AgentInfo])",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int32",
+                        "printedName": "Swift.Int32",
+                        "usr": "s:s5Int32V"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int32",
+                        "printedName": "Swift.Int32",
+                        "usr": "s:s5Int32V"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Array",
+                        "printedName": "[OAContracts.AgentInfo]",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "AgentInfo",
+                            "printedName": "OAContracts.AgentInfo",
+                            "usr": "c:@M@OAContracts@objc(cs)AgentInfo"
+                          }
+                        ],
+                        "usr": "s:Sa"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Swift.Int, Swift.String) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Tuple",
+                    "printedName": "(Swift.Int, Swift.String)",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int",
+                        "printedName": "Swift.Int",
+                        "usr": "s:Si"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@OAS@objc(cs)OTek(cm)loadDepotAgentsWithLanguage:pageNum:pageSize:depotType:onSuccess:onFailure:",
+            "mangledName": "$s3OAS4OTekC15loadDepotAgents8language7pageNum0G4Size9depotType9onSuccess0L7FailureySS_S2i11OAContracts0dK0Oys5Int32V_AOSayAK9AgentInfoCGtcySi_SStctFZ",
+            "moduleName": "OAS",
+            "static": true,
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment",
+              "ObjC"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "loadAgentDetail",
+            "printedName": "loadAgentDetail(language:agentCode:onSuccess:onFailure:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(OAContracts.AgentInfo) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "AgentInfo",
+                    "printedName": "OAContracts.AgentInfo",
+                    "usr": "c:@M@OAContracts@objc(cs)AgentInfo"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Swift.Int, Swift.String) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Tuple",
+                    "printedName": "(Swift.Int, Swift.String)",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int",
+                        "printedName": "Swift.Int",
+                        "usr": "s:Si"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@OAS@objc(cs)OTek(cm)loadAgentDetailWithLanguage:agentCode:onSuccess:onFailure:",
+            "mangledName": "$s3OAS4OTekC15loadAgentDetail8language9agentCode9onSuccess0I7FailureySS_SSy11OAContracts0D4InfoCcySi_SStctFZ",
+            "moduleName": "OAS",
+            "static": true,
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment",
+              "ObjC"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "operateAgent",
+            "printedName": "operateAgent(operateType:agentCodes:onSuccess:onFailure:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "OperateType",
+                "printedName": "OAContracts.OperateType",
+                "usr": "c:@M@OAContracts@E@OperateType"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[Swift.String]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sa"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Swift.Bool) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Swift.Int, Swift.String) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Tuple",
+                    "printedName": "(Swift.Int, Swift.String)",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int",
+                        "printedName": "Swift.Int",
+                        "usr": "s:Si"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@OAS@objc(cs)OTek(cm)operateAgentWithOperateType:agentCodes:onSuccess:onFailure:",
+            "mangledName": "$s3OAS4OTekC12operateAgent0C4Type10agentCodes9onSuccess0H7Failurey11OAContracts07OperateE0O_SaySSGySbcySi_SStctFZ",
+            "moduleName": "OAS",
+            "static": true,
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment",
+              "ObjC"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "OTek",
+                "printedName": "OAS.OTek",
+                "usr": "c:@M@OAS@objc(cs)OTek"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@OAS@objc(cs)OTek(im)init",
+            "mangledName": "$s3OAS4OTekCACycfc",
+            "moduleName": "OAS",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "init",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Override"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@OAS@objc(cs)OTek",
+        "mangledName": "$s3OAS4OTekC",
+        "moduleName": "OAS",
+        "isOpen": true,
+        "declAttributes": [
+          "AccessControl",
+          "ObjCMembers",
+          "RawDocComment",
+          "ObjC"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          }
+        ]
+      }
+    ],
+    "json_format_version": 8
+  },
+  "ConstValues": []
+}

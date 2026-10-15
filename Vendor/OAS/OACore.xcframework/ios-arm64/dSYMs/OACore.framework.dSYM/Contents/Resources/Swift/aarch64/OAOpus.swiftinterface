@@ -1,0 +1,356 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.0.3 effective-5.10 (swiftlang-6.0.3.1.10 clang-1600.0.30.1)
+// swift-module-flags: -target arm64-apple-ios12.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name OAOpus
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface
+import AVFoundation
+import CommonCrypto
+import CoreAudio
+import Darwin
+import Foundation
+@_exported import OAOpus
+import Swift
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@_inheritsConvenienceInitializers @objc public class OTOpusLogger : ObjectiveC.NSObject {
+  @objc public static var isEnabled: Swift.Bool
+  @objc public enum LogLevel : Swift.Int {
+    case debug = 0
+    case info = 1
+    case warning = 2
+    case error = 3
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  @objc public static var logLevel: OAOpus.OTOpusLogger.LogLevel
+  @objc(setLogLevelValue:) public static func setLogLevelValue(_ level: OAOpus.OTOpusLogger.LogLevel)
+  @objc(currentLogLevel) public static func currentLogLevel() -> OAOpus.OTOpusLogger.LogLevel
+  @objc(debugWithMessage:) public static func debugMessage(_ message: Swift.String)
+  @objc(infoWithMessage:) public static func infoMessage(_ message: Swift.String)
+  @objc(warningWithMessage:) public static func warningMessage(_ message: Swift.String)
+  @objc(errorWithMessage:) public static func errorMessage(_ message: Swift.String)
+  @objc override dynamic public init()
+  @objc deinit
+}
+public enum ByteOrder {
+  case littleEndian
+  case bigEndian
+  public static func == (a: OAOpus.ByteOrder, b: OAOpus.ByteOrder) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum OpusPacketFraming {
+  case lengthPrefix(headerBytes: Swift.Int, byteOrder: OAOpus.ByteOrder)
+  case fixedSize(Swift.Int)
+  case fixedSizeWithFilter(Swift.Int)
+}
+public enum OpusConfig {
+  public static let defaultBitrate: Swift.Int
+  public static let durationMs: Swift.Double
+}
+@objc public enum OpusImportModeType : Swift.Int {
+  case auto
+  case fixedSize
+  case fixedSizeWithFilter
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @objcMembers public class OpusImportConfig : ObjectiveC.NSObject {
+  @objc final public let modeType: OAOpus.OpusImportModeType
+  @objc final public let fixedSize: Swift.Int
+  @objc final public let needFilter: Swift.Bool
+  @objc public static func autoMode() -> OAOpus.OpusImportConfig
+  @objc public static func fixedSizeMode(size: Swift.Int) -> OAOpus.OpusImportConfig
+  @objc public static func fixedSizeWithFilterMode(size: Swift.Int) -> OAOpus.OpusImportConfig
+  @objc required public init(modeType: OAOpus.OpusImportModeType, fixedSize: Swift.Int, needFilter: Swift.Bool)
+  @objc deinit
+}
+public enum OpusImportMode {
+  case auto
+  case fixedSize(Swift.Int)
+  case fixedSizeWithFilter(Swift.Int)
+  public func toConfig() -> OAOpus.OpusImportConfig
+}
+@objc public enum Endianness : Swift.Int {
+  case little = 0
+  case big = 1
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @objcMembers @objc public class OTInputFormat : ObjectiveC.NSObject {
+  @objc public var sampleRate: Swift.Int32
+  @objc public var bitDepth: Swift.Int
+  @objc public var channelCount: Swift.Int32
+  @objc public var endianness: OAOpus.Endianness
+  @objc public var frameDuration: Swift.Int
+  @objc public var bitrate: Swift.Int32
+  @objc override dynamic public init()
+  @objc public init(sampleRate: Swift.Int32, bitDepth: Swift.Int, channelCount: Swift.Int32, endianness: OAOpus.Endianness = .little, frameDuration: Swift.Int = 20, bitrate: Swift.Int32 = 64000)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objcMembers @objc public class OTOutputFormat : ObjectiveC.NSObject {
+  @objc public var sampleRate: Swift.Int32
+  @objc final public let bitDepth: Swift.Int
+  @objc public var channelCount: Swift.Int32
+  @objc public var frameDuration: Swift.Int
+  @objc override dynamic public init()
+  @objc public init(sampleRate: Swift.Int32, channelCount: Swift.Int32, frameDuration: Swift.Int = 20, bitrate: Swift.Int32 = 32000)
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers public class OTOggOpusWriter : ObjectiveC.NSObject {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objcMembers @objc public class OTOggOpusFixedPacketMuxer : ObjectiveC.NSObject {
+  @objc public static func OAOpusMuxFixedPacketRawOpusDataToOgg(_ rawOpusData: Foundation.Data, inputSampleRate: Swift.Int32, inputChannels: Swift.Int32 = 1, outputBitrate: Swift.Int32 = 32000, packetSize: Swift.Int = 40, frameDurationMs: Swift.Int = 20, preSkip48k: Swift.Int32 = 0, vendor: Swift.String = "OTOggOpusMuxer/1.0") -> Foundation.Data?
+  @objc public static func OAOpusResampleOpusStreamToTargetSampleRate(_ rawOpusData: Foundation.Data, inputSampleRate: Swift.Int32, outputSampleRate: Swift.Int32 = 48000, outputBitrate: Swift.Int32 = 32000, channels: Swift.Int32 = 1, packetSize: Swift.Int = 40, frameDurationMs: Swift.Int = 20) -> Foundation.Data?
+  @objc public static func OAOpusConvertRawPCMTo48KMono16BitDepthOGG(_ rawPCMData: Foundation.Data, inputChannels: Swift.Int32, inputBitDepth: Swift.Int32, inputSampleRate: Swift.Int32, inputIsBigEndian: Swift.Bool = false, outputBitrate: Swift.Int32 = 32000, frameDurationMs: Swift.Int = 20, preSkip48k: Swift.Int32 = 0, vendor: Swift.String = "OTOggOpusMuxer/1.0") -> Foundation.Data?
+  @objc public static func OAOpusFilterAndDecodeFirmwareRawOpusTo48KMono16BitDepthOGG(_ rawData: Foundation.Data, inputSampleRate: Swift.Int32, inputChannel: Swift.Int32, mode: OAOpus.OpusImportConfig = .autoMode(), outputBitrate: Swift.Int32 = 32000, frameDurationMs: Swift.Int = 20) -> Foundation.Data?
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objcMembers @objc public class OTOggOpusStreamDecoder : ObjectiveC.NSObject {
+  @objc public var onPCMDecoded: ((Foundation.Data) -> Swift.Void)?
+  @objc public var onPCMDecodedWithDuration: ((Foundation.Data, Foundation.TimeInterval) -> Swift.Void)?
+  @objc public var onDecodingFinished: (() -> Swift.Void)?
+  @objc public var onDecodingFinishedWithDuration: ((Foundation.TimeInterval) -> Swift.Void)?
+  @objc override dynamic public init()
+  @objc public func feedOggData(_ oggData: Foundation.Data) -> [Foundation.Data]
+  @objc public func flush() -> [Foundation.Data]
+  @objc public func clearBuffer()
+  @objc public var bufferSize: Swift.Int {
+    @objc get
+  }
+  @objc public func destroy()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objcMembers @objc public class OTOpusAudioConverter : ObjectiveC.NSObject {
+  @objc override convenience dynamic public init()
+  @objc public init(sampleRate: Swift.Int32 = 48_000, channelCount: Swift.Int32 = 1, bitrate: Swift.Int32 = 64_000)
+  @objc public func convertOpusToPCM(opusData: Foundation.Data, targetFormat: OAOpus.OTInputFormat) -> Foundation.Data?
+  @objc public func convertOpusToPCM(opusData: Foundation.Data, targetFormat: OAOpus.OTInputFormat, framing: OAOpus.OTOpusPacketFraming, packetSize: Swift.Int = 0) -> Foundation.Data?
+  @objc public func destroy()
+  @objc deinit
+}
+public enum OTOpusStreamEncoderError : Foundation.LocalizedError {
+  case unsupportedBitDepth(Swift.Int)
+  case invalidChannelCount(Swift.Int)
+  case pcmNormalizationFailed(any Swift.Error)
+  case encodingFailed
+  case invalidSampleRate(Swift.Int)
+  case invalidFrameDuration(Swift.Int)
+  case invalidBitrate(Swift.Int)
+  case invalidComplexity(Swift.Int)
+  case invalidPcmRange(offset: Swift.Int, length: Swift.Int, dataCount: Swift.Int)
+  case encoderConfigurationFailed(name: Swift.String, code: Swift.Int32)
+  case initializationFailed
+  case encoderClosed
+  case reentrantOperation
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+@objcMembers @objc public class OTOpusStreamEncoder : ObjectiveC.NSObject {
+  @objc public var onOpusPacketEncoded: ((Foundation.Data) -> Swift.Void)?
+  @objc public var enableRealtimeOutput: Swift.Bool
+  @objc public init(inputFormat: OAOpus.OTInputFormat, frameDurationMs: Swift.Int = 20)
+  @nonobjc public static func createThrowing(inputFormat: OAOpus.OTInputFormat, frameDurationMs: Swift.Int = 20) throws -> OAOpus.OTOpusStreamEncoder
+  @objc public func feedPCMData(_ pcmData: Foundation.Data) -> [Foundation.Data]
+  @nonobjc public func feedPCMDataThrowing(_ pcmData: Foundation.Data) throws -> [Foundation.Data]
+  @objc(feedPCMData:offset:length:) public func feedPCMData(_ pcmData: Foundation.Data, offset: Swift.Int, length: Swift.Int) -> [Foundation.Data]
+  @nonobjc public func feedPCMDataThrowing(_ pcmData: Foundation.Data, offset: Swift.Int, length: Swift.Int) throws -> [Foundation.Data]
+  @objc public func flush() -> Foundation.Data?
+  @objc public func flush(padWithSilence: Swift.Bool) -> Foundation.Data?
+  @nonobjc public func flushThrowing(padWithSilence: Swift.Bool = true) throws -> Foundation.Data?
+  @nonobjc public func flushPacketsThrowing(padWithSilence: Swift.Bool = true) throws -> [Foundation.Data]
+  @objc public func setBitrate(_ bitrate: Swift.Int32) -> Swift.Bool
+  @nonobjc public func setBitrateThrowing(_ bitrate: Swift.Int32) throws
+  @objc public func setComplexity(_ complexity: Swift.Int32) -> Swift.Bool
+  @nonobjc public func setComplexityThrowing(_ complexity: Swift.Int32) throws
+  @objc public func setInBandFECEnabled(_ enabled: Swift.Bool) -> Swift.Bool
+  @nonobjc public func setInBandFECEnabledThrowing(_ enabled: Swift.Bool) throws
+  @objc public func clearBuffer()
+  @objc public var bufferSize: Swift.Int {
+    @objc get
+  }
+  @objc public func destroy()
+  @objc public static func createVoiceEncoder() -> OAOpus.OTOpusStreamEncoder
+  @objc public static func createHighQualityEncoder() -> OAOpus.OTOpusStreamEncoder
+  @objc deinit
+}
+@objc @objcMembers final public class OTFileAudioFormat : ObjectiveC.NSObject {
+  @objc final public let sampleRate: Swift.Int
+  @objc final public let channels: Swift.Int
+  @objc final public let bitsPerSample: Swift.Int
+  @objc final public let pathExtension: Swift.String
+  @objc public init(sampleRate: Swift.Int, channels: Swift.Int, bitsPerSample: Swift.Int, pathExtension: Swift.String)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers final public class OTOggOpusFileConverter : ObjectiveC.NSObject {
+  @objc public static func oggToPcmWithFileBytes(_ oggBytes: Foundation.Data) throws -> OAOpus.OTPCMData
+  @objc public static func oggToWavWithFileBytes(_ oggBytes: Foundation.Data) throws -> Foundation.Data
+  @objc public static func oggToWavWithFileBytes(_ oggBytes: Foundation.Data, maxOutputBytes: Swift.Int) throws -> Foundation.Data
+  @objc public static func pcmToOggOpusWithFileBytes(_ pcmData: Foundation.Data, sampleRate: Swift.Int, channels: Swift.Int, bitrate: Swift.Int = OpusConfig.defaultBitrate) throws -> Foundation.Data
+  @objc public static func rawOpusToOggOpusWithFileBytes(_ rawOpusData: Foundation.Data, sampleRate: Swift.Int, channels: Swift.Int, framing: OAOpus.OTOpusPacketFraming = .packetPerWrite, packetSize: Swift.Int = 0, frameDurationMs: Swift.Int = 20) throws -> Foundation.Data
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers final public class OTOggOpusFilePipeline : ObjectiveC.NSObject {
+  @objc public static func decodeOggFile(atPath inputPath: Swift.String, outputWavPath: Swift.String) throws -> OAOpus.OTFileAudioFormat
+  @objc public static func normalizePCMFile(atPath inputPath: Swift.String, outputWavPath: Swift.String, sampleRate: Swift.Int, channels: Swift.Int, bitsPerSample: Swift.Int) throws -> OAOpus.OTFileAudioFormat
+  @objc public static func normalizeWavFile(atPath inputPath: Swift.String, outputWavPath: Swift.String) throws -> OAOpus.OTFileAudioFormat
+  @objc public static func transcodeWavFileTo48KOgg(atPath inputPath: Swift.String, outputOggPath: Swift.String, bitrate: Swift.Int = 32_000) throws -> OAOpus.OTFileAudioFormat
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers final public class OTOpusFileUtils : ObjectiveC.NSObject {
+  @objc public static func parseWavBytes(_ wavBytes: Foundation.Data) throws -> OAOpus.OTPCMData
+  @objc override dynamic public init()
+  @objc deinit
+}
+public enum OTOpusPublicError : Foundation.LocalizedError {
+  case emptyInput(Swift.String)
+  case malformedWav(Swift.String)
+  case unsupportedWav(Swift.String)
+  case invalidPCM(Swift.String)
+  case invalidArgument(Swift.String)
+  case oggParse(Swift.String)
+  case opusDecode(Swift.String)
+  case outputTooLarge(Swift.String)
+  case opusEncode(Swift.String)
+  case resample(Swift.String)
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+@objc @objcMembers final public class OTPCMData : ObjectiveC.NSObject {
+  @objc final public let data: Foundation.Data
+  @objc final public let sampleRate: Swift.Int
+  @objc final public let channels: Swift.Int
+  @objc final public let bitsPerSample: Swift.Int
+  @objc public init(data: Foundation.Data, sampleRate: Swift.Int, channels: Swift.Int, bitsPerSample: Swift.Int = 16)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @objcMembers @objc final public class OTRawOpusStreamEndResult : ObjectiveC.NSObject {
+  @objc final public let totalDurationMs: Foundation.TimeInterval
+  @objc final public let discardedTrailingBytes: Swift.Int
+  @objc final public let discardReason: Swift.String?
+  @objc deinit
+}
+@objcMembers @objc final public class OTRawOpusStreamDecoder : ObjectiveC.NSObject {
+  @objc public static let maxBufferedBytes: Swift.Int
+  @objc public static let maxOpusPacketBytes: Swift.Int
+  @objc public static let maxPacketsPerFeed: Swift.Int
+  @objc final public let outputSampleRate: Swift.Int32
+  @objc final public let outputChannels: Swift.Int32
+  @objc final public let framing: OAOpus.OTOpusPacketFraming
+  @objc final public let packetSize: Swift.Int
+  @objc public init(outputSampleRate: Swift.Int32 = 16_000, outputChannels: Swift.Int32 = 1, framing: OAOpus.OTOpusPacketFraming = .packetPerWrite, packetSize: Swift.Int = 0, onPCMDecoded: @escaping (Foundation.Data, Foundation.TimeInterval) -> Swift.Void) throws
+  @objc deinit
+  @objc final public func setOutputGain(_ gainQ8: Swift.Int16) throws
+  @objc final public func feed(_ data: Foundation.Data) throws
+  @objc final public func end() throws -> OAOpus.OTRawOpusStreamEndResult
+  @objc final public func decodeLostPacket(frameSize: Swift.Int) throws -> Foundation.Data
+  @objc final public func reset() throws
+  @objc final public func close()
+}
+@objc public enum OTOpusPacketFraming : Swift.Int {
+  case packetPerWrite = 0
+  case lengthPrefixed = 1
+  case fixedSize = 2
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objcMembers @objc final public class OTOpusPacketFramer : ObjectiveC.NSObject {
+  @objc public static let maxBufferedBytes: Swift.Int
+  @objc public static let maxPacketsPerFeed: Swift.Int
+  @objc public init(mode: OAOpus.OTOpusPacketFraming = .packetPerWrite, packetSize: Swift.Int = 0)
+  @objc final public func feed(_ data: Foundation.Data) -> [Foundation.Data]
+  @objc final public func feedThrowing(_ data: Foundation.Data) throws -> [Foundation.Data]
+  @objc final public func finish() -> [Foundation.Data]
+  @objc final public func finishThrowing() throws -> [Foundation.Data]
+  @objc final public func reset()
+  @objc final public func resetThrowing() throws
+  @objc final public func close()
+  @objc deinit
+}
+@objcMembers @objc final public class OTRawOpusStreamTranscoder : ObjectiveC.NSObject {
+  @objc public init(inputSampleRate: Swift.Int32, inputChannels: Swift.Int32, outputSampleRate: Swift.Int32 = 48000, outputChannels: Swift.Int32 = 1, outputBitrate: Swift.Int32 = 16000, frameDurationMs: Swift.Int = 20, framing: OAOpus.OTOpusPacketFraming = .packetPerWrite, packetSize: Swift.Int = 0)
+  @objc convenience public init(validatingInputSampleRate inputSampleRate: Swift.Int32, inputChannels: Swift.Int32, outputSampleRate: Swift.Int32 = 48000, outputChannels: Swift.Int32 = 1, outputBitrate: Swift.Int32 = 16000, frameDurationMs: Swift.Int = 20, framing: OAOpus.OTOpusPacketFraming = .packetPerWrite, packetSize: Swift.Int = 0) throws
+  @objc deinit
+  @objc final public func feed(_ data: Foundation.Data) -> [Foundation.Data]
+  @objc final public func feedThrowing(_ data: Foundation.Data) throws -> [Foundation.Data]
+  @objc final public func finish() -> [Foundation.Data]
+  @objc final public func finishThrowing() throws -> [Foundation.Data]
+  @objc final public func reset()
+  @objc final public func resetThrowing() throws
+  @objc final public func close()
+  @objc public static func lengthPrefixedPacket(_ packet: Foundation.Data) -> Foundation.Data
+  @objc public static func lengthPrefixedPacketThrowing(_ packet: Foundation.Data) throws -> Foundation.Data
+}
+@_inheritsConvenienceInitializers @objcMembers @objc public class OpusLib : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc public static func enableLog()
+  @objc public static func disableLog()
+  @objc public static func setLogEnabled(_ enabled: Swift.Bool)
+  @objc public static func isLogEnabled() -> Swift.Bool
+  @objc public static func setLogLevel(_ level: OAOpus.OTOpusLogger.LogLevel)
+  @objc public static func currentLogLevel() -> OAOpus.OTOpusLogger.LogLevel
+  @objc public func createStreamEncoder(inputFormat: OAOpus.OTInputFormat, frameDurationMs: Swift.Int, callback: @escaping (Foundation.Data) -> Swift.Void) -> Swift.Bool
+  @nonobjc public func createStreamEncoderThrowing(inputFormat: OAOpus.OTInputFormat, frameDurationMs: Swift.Int, callback: @escaping (Foundation.Data) -> Swift.Void) throws
+  @objc public func createStreamEncoderWithFormat(_ inputFormat: OAOpus.OTInputFormat, callback: @escaping (Foundation.Data) -> Swift.Void) -> Swift.Bool
+  @objc public func createVoiceEncoder(callback: @escaping (Foundation.Data) -> Swift.Void) -> Swift.Bool
+  @objc public func feedPCMDataToEncoder(_ pcmData: Foundation.Data) -> [Foundation.Data]
+  @nonobjc public func feedPCMDataToEncoderThrowing(_ pcmData: Foundation.Data) throws -> [Foundation.Data]
+  @objc public func feedPCMDataToEncoder(_ pcmData: Foundation.Data, offset: Swift.Int, length: Swift.Int) -> [Foundation.Data]
+  @objc public func flushStreamEncoder() -> Foundation.Data?
+  @nonobjc public func flushStreamEncoderThrowing() throws -> Foundation.Data?
+  @objc public func flushStreamEncoder(padWithSilence: Swift.Bool) -> Foundation.Data?
+  @objc public func setStreamEncoderBitrate(_ bitrate: Swift.Int32) -> Swift.Bool
+  @objc public func setStreamEncoderComplexity(_ complexity: Swift.Int32) -> Swift.Bool
+  @objc public func setStreamEncoderInBandFECEnabled(_ enabled: Swift.Bool) -> Swift.Bool
+  @objc public func clearStreamEncoderBuffer()
+  @objc public var streamEncoderBufferSize: Swift.Int {
+    @objc get
+  }
+  @objc public func destroyStreamEncoder()
+  @objc public func createOggOpusDecoder(callback: @escaping (Foundation.Data) -> Swift.Void) -> Swift.Bool
+  @objc public func createOggOpusDecoderWithFinishCallback(onDecoded: @escaping (Foundation.Data) -> Swift.Void, onFinished: @escaping () -> Swift.Void) -> Swift.Bool
+  @objc public func createOggOpusDecoderWithFinishCallback(onDecoded: @escaping (Foundation.Data) -> Swift.Void, onFinished: @escaping () -> Swift.Void, onFinishedWithDuration: @escaping (Foundation.TimeInterval) -> Swift.Void) -> Swift.Bool
+  @objc public func createOggOpusDecoderWithFinishCallback(onDecodedWithDuration: @escaping (Foundation.Data, Foundation.TimeInterval) -> Swift.Void, onFinishedWithDuration: @escaping (Foundation.TimeInterval) -> Swift.Void) -> Swift.Bool
+  @objc public func feedOggDataToDecoder(_ oggData: Foundation.Data) -> [Foundation.Data]
+  @objc public func flushOggDecoder() -> [Foundation.Data]
+  @objc public func clearOggDecoderBuffer()
+  @objc public var oggDecoderBufferSize: Swift.Int {
+    @objc get
+  }
+  @objc public func destroyOggDecoder()
+  @objc deinit
+}
+extension OAOpus.OTOpusLogger.LogLevel : Swift.Equatable {}
+extension OAOpus.OTOpusLogger.LogLevel : Swift.Hashable {}
+extension OAOpus.OTOpusLogger.LogLevel : Swift.RawRepresentable {}
+extension OAOpus.ByteOrder : Swift.Equatable {}
+extension OAOpus.ByteOrder : Swift.Hashable {}
+extension OAOpus.OpusImportModeType : Swift.Equatable {}
+extension OAOpus.OpusImportModeType : Swift.Hashable {}
+extension OAOpus.OpusImportModeType : Swift.RawRepresentable {}
+extension OAOpus.Endianness : Swift.Equatable {}
+extension OAOpus.Endianness : Swift.Hashable {}
+extension OAOpus.Endianness : Swift.RawRepresentable {}
+extension OAOpus.OTOpusPacketFraming : Swift.Equatable {}
+extension OAOpus.OTOpusPacketFraming : Swift.Hashable {}
+extension OAOpus.OTOpusPacketFraming : Swift.RawRepresentable {}

@@ -686,3 +686,6 @@ Example/Pods/WatchfaceSDK/WatchfaceSDK/Classes/Watchface/Custom/widget/QjsWidget
 
 # Per-developer OAS credentials
 Example/OASConfig.local.plist
+
+# Include the complete vendored OAS frameworks.
+!/Vendor/OAS/**

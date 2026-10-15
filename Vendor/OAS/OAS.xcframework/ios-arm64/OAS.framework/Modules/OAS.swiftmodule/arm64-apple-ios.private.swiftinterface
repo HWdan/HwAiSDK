@@ -1,0 +1,50 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.0.3 effective-5.10 (swiftlang-6.0.3.1.10 clang-1600.0.30.1)
+// swift-module-flags: -target arm64-apple-ios12.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name OAS
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface
+import Foundation
+@_exported import OAContracts
+import OACore
+@_exported import OAS
+import Swift
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@objc @objcMembers public class AgentController : ObjectiveC.NSObject {
+  @objc weak public var delegate: (any OAContracts.AgentDelegate)? {
+    @objc get
+    @objc set
+  }
+  @objc public init(agentConfig: OAContracts.AgentConfig)
+  @objc public func run(_ request: OAContracts.AgentRequest) -> Swift.String
+  @objc public func startRecognition(_ recognitionConfig: OAContracts.RecognitionConfig) -> Swift.String
+  @objc public func stopRecognition()
+  @objc public func write(_ data: Foundation.Data)
+  @objc public func destroy()
+  @objc deinit
+}
+@objc @objcMembers public class AsrController : ObjectiveC.NSObject {
+  @objc weak public var delegate: (any OAContracts.AsrDelegate)? {
+    @objc get
+    @objc set
+  }
+  @objc public init(asrConfig: OAContracts.AsrConfig)
+  @objc public func startRecognition() -> Swift.String
+  @objc public func stopRecognition()
+  @objc public func write(_ data: Foundation.Data)
+  @objc public func destroy()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers open class OTek : ObjectiveC.NSObject {
+  @objc open class func setDebug(_ mode: OAContracts.DebugMode)
+  @objc @discardableResult
+  open class func setUnaryDeadlineAfter(_ timeoutMs: Swift.Int64) -> Swift.Bool
+  @objc open class func initialize(config: OAContracts.InitConfig, onSuccess: @escaping () -> Swift.Void, onFailure: @escaping (_ code: Swift.Int, _ message: Swift.String) -> Swift.Void)
+  @objc open class func queryProducts(onSuccess: @escaping (_ productInfos: [OAContracts.ProductInfo]) -> Swift.Void, onFailure: @escaping (_ code: Swift.Int, _ message: Swift.String) -> Swift.Void)
+  @objc open class func loadAgents(language: Swift.String, pageNum: Swift.Int, pageSize: Swift.Int, onSuccess: @escaping (_ currentPage: Swift.Int32, _ totalPage: Swift.Int32, _ agentInfos: [OAContracts.AgentInfo]) -> Swift.Void, onFailure: @escaping (_ code: Swift.Int, _ message: Swift.String) -> Swift.Void)
+  @objc open class func loadDepotAgents(language: Swift.String, pageNum: Swift.Int, pageSize: Swift.Int, depotType: OAContracts.DepotType, onSuccess: @escaping (_ currentPage: Swift.Int32, _ totalPage: Swift.Int32, _ agentInfos: [OAContracts.AgentInfo]) -> Swift.Void, onFailure: @escaping (_ code: Swift.Int, _ message: Swift.String) -> Swift.Void)
+  @objc open class func loadAgentDetail(language: Swift.String, agentCode: Swift.String, onSuccess: @escaping (_ agentInfo: OAContracts.AgentInfo) -> Swift.Void, onFailure: @escaping (_ code: Swift.Int, _ message: Swift.String) -> Swift.Void)
+  @objc open class func operateAgent(operateType: OAContracts.OperateType, agentCodes: [Swift.String], onSuccess: @escaping (_ status: Swift.Bool) -> Swift.Void, onFailure: @escaping (_ code: Swift.Int, _ message: Swift.String) -> Swift.Void)
+  @objc override dynamic public init()
+  @objc deinit
+}

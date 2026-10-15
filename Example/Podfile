@@ -1,4 +1,3 @@
-source 'http://gitlab.hanshuang.ltd/oa/v2/ios-podspecs.git'
 source 'https://github.com/CocoaPods/Specs.git'
 source 'https://github.com/sususu/LYSpecs.git'
 

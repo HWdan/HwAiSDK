@@ -15,11 +15,11 @@ Pod::Spec.new do |s|
 None
                        DESC
 
-  s.homepage         = 'https://gitee.com/huawo-wear/ai-sdk.git'
+  s.homepage         = 'https://github.com/HWdan/HwAiSDK.git'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'sujiang' => 'sujiang@huawo-wear.com' }
-  s.source           = { :git => 'https://gitee.com/huawo-wear/ai-sdk.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/HWdan/HwAiSDK.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '12.0'
@@ -37,8 +37,8 @@ None
  s.dependency 'HwBluetoothSDK'
  s.dependency 'WatchfaceSDK'
  s.dependency 'SSZipArchive'
- s.dependency 'OAS', '2.5.0'
- s.vendored_frameworks = 'NativeLib.xcframework'
+ s.vendored_frameworks = 'NativeLib.xcframework', 'Vendor/OAS/*.xcframework'
+ s.preserve_paths = 'Vendor/OAS/LICENSES', 'Vendor/OAS/VERSION'
  # NativeLib was built with LLVM profiling and requires its runtime in the host.
  s.user_target_xcconfig = { 'OTHER_LDFLAGS' => '$(inherited) -fprofile-instr-generate' }
  s.static_framework = true

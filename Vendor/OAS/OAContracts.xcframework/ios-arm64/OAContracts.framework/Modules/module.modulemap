@@ -1,0 +1,11 @@
+framework module OAContracts {
+  umbrella header "OAContracts.h"
+  export *
+
+  module * { export * }
+}
+
+module OAContracts.Swift {
+  header "OAContracts-Swift.h"
+  requires objc
+}

@@ -1,0 +1,692 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.0.3 effective-5.10 (swiftlang-6.0.3.1.10 clang-1600.0.30.1)
+// swift-module-flags: -target arm64-apple-ios12.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name OAContracts
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface
+import Foundation
+@_exported import OAContracts
+import Swift
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@objc public protocol AgentDelegate : ObjectiveC.NSObjectProtocol {
+  @objc func onRecognitionStopped()
+  @objc func onResult(_ result: OAContracts.AgentResult)
+  @objc func onError(_ error: OAContracts.AgentError)
+}
+@objc @objcMembers public class AgentConfig : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let agentCode: Swift.String
+  @objc final public let inputLanguage: Swift.String
+  @objc public init(agentCode: Swift.String, inputLanguage: Swift.String)
+  required public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  @objc deinit
+}
+@objc @objcMembers public class AgentError : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let messageId: Swift.String
+  @objc final public let code: Swift.Int
+  @objc final public let message: Swift.String
+  @objc public init(messageId: Swift.String, code: Swift.Int, message: Swift.String = "")
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@_inheritsConvenienceInitializers @objcMembers @objc public class AgentInfo : ObjectiveC.NSObject, Swift.Codable {
+  @objc dynamic public var agentCode: Swift.String
+  @objc dynamic public var agentName: Swift.String
+  @objc dynamic public var icon: Swift.String
+  @objc dynamic public var presetGreet: Swift.String
+  @objc dynamic public var presetQuiz: [Swift.String]
+  dynamic public var inputTypes: [OAContracts.InputType]
+  @objc dynamic public var agentType: OAContracts.AgentType
+  @objc dynamic public var payMark: Swift.String
+  @objc dynamic public var payType: OAContracts.PayType
+  @objc public init(agentCode: Swift.String, agentName: Swift.String, icon: Swift.String, presetGreet: Swift.String, presetQuiz: [Swift.String], inputTypes: [Foundation.NSNumber], agentType: OAContracts.AgentType, payMark: Swift.String, payType: OAContracts.PayType)
+  @objc override dynamic public init()
+  public init(agentCode: Swift.String, agentName: Swift.String, icon: Swift.String, presetGreet: Swift.String, presetQuiz: [Swift.String], inputTypes: [OAContracts.InputType], agentType: OAContracts.AgentType, payMark: Swift.String, payType: OAContracts.PayType)
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc public enum TTSFormat : Swift.Int, Swift.Codable {
+  case ogg = 12
+  case wav = 14
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @objcMembers public class TTSConfig : ObjectiveC.NSObject {
+  @objc final public let ttsVoice: Swift.String
+  @objc final public let ttsEnable: Swift.Bool
+  @objc final public let ttsFormat: OAContracts.TTSFormat
+  @objc public init(ttsVoice: Swift.String = "", ttsEnable: Swift.Bool = true, ttsFormat: OAContracts.TTSFormat = .wav)
+  @objc public class func builder() -> OAContracts.TTSConfig.Builder
+  @_inheritsConvenienceInitializers @objc(TTSConfigBuilder) @objcMembers public class Builder : ObjectiveC.NSObject {
+    @objc override dynamic public init()
+    @discardableResult
+    @objc public func setTtsVoice(_ ttsVoice: Swift.String) -> OAContracts.TTSConfig.Builder
+    @discardableResult
+    @objc public func setTtsEnable(_ ttsEnable: Swift.Bool) -> OAContracts.TTSConfig.Builder
+    @discardableResult
+    @objc public func setTtsFormat(_ ttsFormat: OAContracts.TTSFormat) -> OAContracts.TTSConfig.Builder
+    @objc public func build() -> OAContracts.TTSConfig
+    @objc deinit
+  }
+  @objc deinit
+}
+@objc @objcMembers final public class TimeoutPolicy : ObjectiveC.NSObject {
+  @objc public static let defaultFirstResponseTimeoutMs: Swift.Int64
+  @objc public static let defaultStreamIdleTimeoutMs: Swift.Int64
+  @objc final public let firstResponseTimeoutMs: Swift.Int64
+  @objc final public let streamIdleTimeoutMs: Swift.Int64
+  @objc final public let maxDurationMs: Foundation.NSNumber?
+  @objc public init(firstResponseTimeoutMs: Swift.Int64 = TimeoutPolicy.defaultFirstResponseTimeoutMs, streamIdleTimeoutMs: Swift.Int64 = TimeoutPolicy.defaultStreamIdleTimeoutMs, maxDurationMs: Foundation.NSNumber? = nil)
+  @objc final public class func builder() -> OAContracts.TimeoutPolicy.Builder
+  @_inheritsConvenienceInitializers @objc(TimeoutPolicyBuilder) @objcMembers final public class Builder : ObjectiveC.NSObject {
+    @objc @discardableResult
+    final public func setFirstResponseTimeout(_ ms: Swift.Int64) -> OAContracts.TimeoutPolicy.Builder
+    @objc @discardableResult
+    final public func setStreamIdleTimeout(_ ms: Swift.Int64) -> OAContracts.TimeoutPolicy.Builder
+    @objc @discardableResult
+    final public func setMaxDuration(_ ms: Swift.Int64) -> OAContracts.TimeoutPolicy.Builder
+    @objc @discardableResult
+    final public func clearMaxDuration() -> OAContracts.TimeoutPolicy.Builder
+    @objc final public func build() -> OAContracts.TimeoutPolicy
+    @objc override dynamic public init()
+    @objc deinit
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class AgentRequest : ObjectiveC.NSObject {
+  @objc final public let inputType: OAContracts.InputType
+  @objc final public let inputFormat: OAContracts.InputFormat
+  @objc final public let data: Foundation.Data
+  @objc final public let contextId: Swift.String
+  @objc final public let outputLanguage: Swift.String
+  @objc final public let ratio: OAContracts.Ratio
+  @objc final public let ttsConfig: OAContracts.TTSConfig?
+  @objc final public let audioFileSetting: OAContracts.AudioFileSetting?
+  @objc final public let timeoutPolicy: OAContracts.TimeoutPolicy
+  @objc public class func builder() -> OAContracts.AgentRequest.Builder
+  @_inheritsConvenienceInitializers @objc(AgentRequestBuilder) @objcMembers public class Builder : ObjectiveC.NSObject {
+    @objc override dynamic public init()
+    @discardableResult
+    @objc public func setInputType(_ type: OAContracts.InputType) -> OAContracts.AgentRequest.Builder
+    @discardableResult
+    @objc public func setInputFormat(_ format: OAContracts.InputFormat) -> OAContracts.AgentRequest.Builder
+    @discardableResult
+    @objc public func setData(_ data: Foundation.Data) -> OAContracts.AgentRequest.Builder
+    @discardableResult
+    @objc public func setContextId(_ contextId: Swift.String) -> OAContracts.AgentRequest.Builder
+    @discardableResult
+    @objc public func setOutputLanguage(_ language: Swift.String) -> OAContracts.AgentRequest.Builder
+    @discardableResult
+    @available(*, deprecated, message: "Use setDrawResolution(_:) instead.")
+    @objc public func setRatio(_ ratio: OAContracts.Ratio) -> OAContracts.AgentRequest.Builder
+    @discardableResult
+    @objc public func setDrawResolution(_ resolution: OAContracts.Ratio) -> OAContracts.AgentRequest.Builder
+    @discardableResult
+    @objc public func setTtsConfig(_ ttsConfig: OAContracts.TTSConfig?) -> OAContracts.AgentRequest.Builder
+    @discardableResult
+    @objc public func setAudioFileSetting(_ setting: OAContracts.AudioFileSetting?) -> OAContracts.AgentRequest.Builder
+    @objc @discardableResult
+    public func setTimeoutPolicy(_ timeoutPolicy: OAContracts.TimeoutPolicy?) -> OAContracts.AgentRequest.Builder
+    @objc public func build() -> OAContracts.AgentRequest
+    @objc deinit
+  }
+  @objc deinit
+}
+@objc @objcMembers public class AgentResult : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let messageId: Swift.String
+  @objc final public let sourceType: OAContracts.SourceType
+  @objc final public let outputType: OAContracts.OutputType
+  @objc final public let outputFormat: OAContracts.OutputFormat
+  @objc final public let data: Foundation.Data
+  @objc final public let contextId: Swift.String
+  @objc final public let status: Swift.Int
+  @objc final public let lid: Swift.String
+  @objc public var utteranceId: Swift.String
+  @objc public var ttsWordTimestamps: [OAContracts.TtsWordTimestamp] {
+    get
+  }
+  @objc public var durationMs: Swift.Double
+  @objc public init(messageId: Swift.String, sourceType: OAContracts.SourceType, outputType: OAContracts.OutputType, outputFormat: OAContracts.OutputFormat, data: Foundation.Data, contextId: Swift.String, status: Swift.Int = 0, lid: Swift.String, utteranceId: Swift.String, durationMs: Foundation.TimeInterval)
+  @objc convenience public init(messageId: Swift.String, sourceType: OAContracts.SourceType, outputType: OAContracts.OutputType, outputFormat: OAContracts.OutputFormat, data: Foundation.Data, contextId: Swift.String, status: Swift.Int = 0, lid: Swift.String, utteranceId: Swift.String, durationMs: Foundation.TimeInterval, ttsWordTimestamps: [OAContracts.TtsWordTimestamp])
+  required convenience public init(from decoder: any Swift.Decoder) throws
+  @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc override dynamic public var hash: Swift.Int {
+    @objc get
+  }
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+@objc @_inheritsConvenienceInitializers @objcMembers final public class TtsTextSynchronizer : ObjectiveC.NSObject {
+  @objc override convenience dynamic public init()
+  @objc public init(maxMessages: Swift.Int, maxWordsPerMessage: Swift.Int, maxTextCharsPerMessage: Swift.Int)
+  @objc public static func timelineKey(messageId: Swift.String, utteranceId: Swift.String) -> Swift.String
+  @objc @discardableResult
+  final public func appendWords(messageId: Swift.String, words: [OAContracts.TtsWordTimestamp]) -> Swift.Bool
+  @objc final public func wordAt(messageId: Swift.String, positionUs: Swift.Int64) -> OAContracts.TtsWordTimestamp?
+  @objc final public func words(messageId: Swift.String) -> [OAContracts.TtsWordTimestamp]
+  @objc final public func clear(messageId: Swift.String)
+  @objc final public func clearAll()
+  @objc deinit
+}
+@objc @objcMembers final public class TtsWordTimestamp : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let sequence: Swift.UInt64
+  @objc final public let text: Swift.String
+  @objc final public let audioOffsetUs: Swift.UInt64
+  @objc final public let durationUs: Swift.UInt64
+  @objc public init(sequence: Swift.UInt64, text: Swift.String, audioOffsetUs: Swift.UInt64, durationUs: Swift.UInt64)
+  @objc final public var isValid: Swift.Bool {
+    @objc get
+  }
+  @objc override final public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc override final public var hash: Swift.Int {
+    @objc get
+  }
+  @objc deinit
+  final public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+@objc public protocol AsrDelegate : ObjectiveC.NSObjectProtocol {
+  @objc func onRecognitionStopped()
+  @objc func onResult(_ asrResult: OAContracts.AsrResult)
+  @objc func onError(_ asrError: OAContracts.AsrError)
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class AsrConfig : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let agentCode: Swift.String
+  @objc final public let inputLanguage: Swift.String
+  @objc final public let audioSetting: OAContracts.AudioSetting
+  @objc(AsrConfigBuilder) @objcMembers public class Builder : ObjectiveC.NSObject {
+    @objc public init(agentCode: Swift.String, inputLanguage: Swift.String)
+    @discardableResult
+    @objc public func setAudioSetting(_ setting: OAContracts.AudioSetting) -> OAContracts.AsrConfig.Builder
+    @objc public func build() -> OAContracts.AsrConfig
+    @objc deinit
+  }
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc @objcMembers public class AsrError : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let messageId: Swift.String
+  @objc final public let code: Swift.Int
+  @objc final public let message: Swift.String
+  @objc public init(messageId: Swift.String, code: Swift.Int, message: Swift.String)
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc @objcMembers public class AsrResult : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let messageId: Swift.String
+  @objc final public let outputType: OAContracts.OutputType
+  @objc final public let status: Swift.Int
+  @objc final public let text: Swift.String
+  @objc public init(messageId: Swift.String, outputType: OAContracts.OutputType, status: Swift.Int, text: Swift.String)
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc public enum AgentType : Swift.Int, Swift.Codable {
+  case chat = 0
+  case draw = 1
+  case imgRecognition = 2
+  case stt = 3
+  case sttStream = 4
+  case tts = 5
+  case translate = 6
+  case meeting = 7
+  case health = 8
+  case setting = 99
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum DebugMode : Swift.Int, Swift.Codable {
+  case all
+  case print
+  case simple
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum DepotType : Swift.Int, Swift.Codable {
+  case depot = 0
+  case home = 1
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers final public class ErrorCode : ObjectiveC.NSObject {
+  @objc public static let INITIALIZE_FAILED_CODE: Swift.Int
+  @objc public static let INITIALIZE_FAILED_MESSAGE: Swift.String
+  @objc public static let FAILED_TO_START_ASR_CODE: Swift.Int
+  @objc public static let FAILED_TO_START_ASR_MESSAGE: Swift.String
+  @objc public static let FAILED_TO_STOP_ASR_CODE: Swift.Int
+  @objc public static let FAILED_TO_STOP_ASR_MESSAGE: Swift.String
+  @objc public static let REQUEST_TOO_LARGE_CODE: Swift.Int
+  @objc public static let REQUEST_TOO_LARGE_MESSAGE: Swift.String
+  @objc public static let UNABLE_TO_ACCESS_SERVER_CODE: Swift.Int
+  @objc public static let UNABLE_TO_ACCESS_SERVER_MESSAGE: Swift.String
+  @objc public static let REQUEST_TIMEOUT_CODE: Swift.Int
+  @objc public static let REQUEST_TIMEOUT_MESSAGE: Swift.String
+  @objc public static let NETWORK_UNAVAILABLE_CODE: Swift.Int
+  @objc public static let NETWORK_UNAVAILABLE_MESSAGE: Swift.String
+  @objc public static let AUTHENTICATION_FAILED_CODE: Swift.Int
+  @objc public static let AUTHENTICATION_FAILED_MESSAGE: Swift.String
+  @objc public static let REQUEST_CANCELLED_CODE: Swift.Int
+  @objc public static let REQUEST_CANCELLED_MESSAGE: Swift.String
+  @objc public static let FIRST_RESPONSE_TIMEOUT_CODE: Swift.Int
+  @objc public static let FIRST_RESPONSE_TIMEOUT_MESSAGE: Swift.String
+  @objc public static let STREAM_IDLE_TIMEOUT_CODE: Swift.Int
+  @objc public static let STREAM_IDLE_TIMEOUT_MESSAGE: Swift.String
+  @objc public static let MAX_DURATION_EXCEEDED_CODE: Swift.Int
+  @objc public static let MAX_DURATION_EXCEEDED_MESSAGE: Swift.String
+  @objc public static let UPSTREAM_RESPONSE_TIMEOUT_CODE: Swift.Int
+  @objc public static let UPSTREAM_RESPONSE_TIMEOUT_MESSAGE: Swift.String
+  @objc public static let CONNECTION_CLOSED_CODE: Swift.Int
+  @objc public static let CONNECTION_CLOSED_MESSAGE: Swift.String
+  @objc public static let SERVICE_UNAVAILABLE_CODE: Swift.Int
+  @objc public static let SERVICE_UNAVAILABLE_MESSAGE: Swift.String
+  @objc public static let TLS_CONNECTION_FAILED_CODE: Swift.Int
+  @objc public static let TLS_CONNECTION_FAILED_MESSAGE: Swift.String
+  @objc public static let AUDIO_SEND_BUFFER_EXCEEDED_CODE: Swift.Int
+  @objc public static let AUDIO_SEND_BUFFER_EXCEEDED_MESSAGE: Swift.String
+  @objc public static let RESPONSE_BUFFER_EXCEEDED_CODE: Swift.Int
+  @objc public static let RESPONSE_BUFFER_EXCEEDED_MESSAGE: Swift.String
+  @objc public static let RESPONSE_CONSUMER_STALLED_CODE: Swift.Int
+  @objc public static let RESPONSE_CONSUMER_STALLED_MESSAGE: Swift.String
+  @objc public static let RESPONSE_PROTOCOL_ERROR_CODE: Swift.Int
+  @objc public static let RESPONSE_PROTOCOL_ERROR_MESSAGE: Swift.String
+  @objc public static let RESPONSE_MISSING_CODE: Swift.Int
+  @objc public static let RESPONSE_MISSING_MESSAGE: Swift.String
+  @objc public static let RESPONSE_PROCESSING_FAILED_CODE: Swift.Int
+  @objc public static let RESPONSE_PROCESSING_FAILED_MESSAGE: Swift.String
+  @objc public static let OPTIONAL_MODULE_MISSING_CODE: Swift.Int
+  @objc public static let OPTIONAL_MODULE_MISSING_MESSAGE: Swift.String
+  @objc public static let UNSUPPORTED_AUDIO_FORMAT_CODE: Swift.Int
+  @objc public static let UNSUPPORTED_AUDIO_FORMAT_MESSAGE: Swift.String
+  @objc public static let INVALID_REQUEST_PARAM_CODE: Swift.Int
+  @objc public static let INVALID_REQUEST_PARAM_MESSAGE: Swift.String
+  @objc public static let AUDIO_EMPTY_CODE: Swift.Int
+  @objc public static let INPUT_ERROR: Swift.Int
+  @objc public static let UNKNOWN_ERROR_CODE: Swift.Int
+  @objc public static let UNKNOWN_ERROR_MESSAGE: Swift.String
+  @objc deinit
+}
+@objc public enum InputFormat : Swift.Int, Swift.Codable {
+  case text = 0
+  case wav = 14
+  case ogg = 12
+  case pcm = 10
+  case opus = 11
+  case png = 20
+  case jpeg = 21
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum InputType : Swift.Int, Swift.Codable {
+  case textBlockBytes = 0
+  case audioStreamBytes = 10
+  case audioFileBytes = 11
+  case audioFileUrl = 12
+  case imgFileBytes = 20
+  case imgFileUrl = 21
+  public var value: Swift.Int {
+    get
+  }
+  public init(from decoder: any Swift.Decoder) throws
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum OperateType : Swift.Int, Swift.Codable {
+  case add = 0
+  case delete = 1
+  case sort = 2
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum OutputFormat : Swift.Int, Swift.Codable {
+  case text = 0
+  case pcm = 10
+  case wav = 14
+  case ogg = 12
+  case png = 20
+  case jpeg = 21
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum OutputType : Swift.Int, Swift.Codable {
+  case textBlockBytes = 0
+  case textStreamBytes = 1
+  case textStaticStreamBytes = 2
+  case textLid = 9
+  case audioStreamBytes = 10
+  case audioFileBytes = 11
+  case imgFileBytes = 20
+  case imgFileUrl = 21
+  case agentReady = 105
+  case ttsWordTimestamps = 127
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum PayType : Swift.Int, Swift.Codable {
+  case num = 0
+  case time = 1
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @objcMembers public class Ratio : ObjectiveC.NSObject {
+  @objc final public let value: Swift.String
+  @objc public init(_ value: Swift.String)
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc public static let r320: OAContracts.Ratio
+  @objc public static let r512: OAContracts.Ratio
+  @objc public static let r768: OAContracts.Ratio
+  @objc public static func of(width: Swift.Int, height: Swift.Int) -> OAContracts.Ratio
+  public static func == (lhs: OAContracts.Ratio, rhs: OAContracts.Ratio) -> Swift.Bool
+  @objc override dynamic public var hash: Swift.Int {
+    @objc get
+  }
+  @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class RecognitionConfig : ObjectiveC.NSObject {
+  @objc final public let audioSetting: OAContracts.AudioSetting
+  @objc final public let contextId: Swift.String
+  @objc final public let outputLanguage: Swift.String
+  @objc final public let ratio: OAContracts.Ratio
+  @objc final public let ttsConfig: OAContracts.TTSConfig?
+  @objc final public let timeoutPolicy: OAContracts.TimeoutPolicy
+  @objc public class func builder() -> OAContracts.RecognitionConfig.Builder
+  @_inheritsConvenienceInitializers @objc(RecognitionConfigBuilder) @objcMembers public class Builder : ObjectiveC.NSObject {
+    @objc override dynamic public init()
+    @discardableResult
+    @objc public func setAudioSetting(_ setting: OAContracts.AudioSetting) -> OAContracts.RecognitionConfig.Builder
+    @discardableResult
+    @objc public func setContextId(_ contextId: Swift.String) -> OAContracts.RecognitionConfig.Builder
+    @discardableResult
+    @objc public func setOutputLanguage(_ language: Swift.String) -> OAContracts.RecognitionConfig.Builder
+    @discardableResult
+    @available(*, deprecated, message: "Use setDrawResolution(_:) instead.")
+    @objc public func setRatio(_ ratio: OAContracts.Ratio) -> OAContracts.RecognitionConfig.Builder
+    @discardableResult
+    @objc public func setDrawResolution(_ resolution: OAContracts.Ratio) -> OAContracts.RecognitionConfig.Builder
+    @discardableResult
+    @objc public func setTtsConfig(_ ttsConfig: OAContracts.TTSConfig?) -> OAContracts.RecognitionConfig.Builder
+    @discardableResult
+    @objc public func setTimeoutPolicy(_ policy: OAContracts.TimeoutPolicy?) -> OAContracts.RecognitionConfig.Builder
+    @objc public func build() -> OAContracts.RecognitionConfig
+    @objc deinit
+  }
+  @objc deinit
+}
+@objc public enum SourceType : Swift.Int, Swift.Codable {
+  case agent = 0
+  case stt = 1
+  case tts = 2
+  case imageRecognition = 3
+  case fileRecognition = 4
+  case agentReasoning = 5
+  case agentThinking = 6
+  case agentInternetSearch = 7
+  case hint = 8
+  public var value: Swift.Int {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum AudioCodec : Swift.Int, Swift.Codable {
+  case pcm = 10
+  case opus = 11
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum OpusPacketFraming : Swift.Int, Swift.Codable {
+  case packetPerWrite = 0
+  case lengthPrefixed = 1
+  case fixedSize = 2
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @objcMembers final public class OpusStreamSetting : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let packetFraming: OAContracts.OpusPacketFraming
+  @objc final public let packetSize: Swift.Int
+  @objc final public var isValid: Swift.Bool {
+    @objc get
+  }
+  @objc public init(packetFraming: OAContracts.OpusPacketFraming = .packetPerWrite, packetSize: Swift.Int = 0)
+  required public init(from decoder: any Swift.Decoder) throws
+  @objc public static func validating(packetFraming: OAContracts.OpusPacketFraming = .packetPerWrite, packetSize: Swift.Int = 0) throws -> OAContracts.OpusStreamSetting
+  @objc public static func packetPerWrite() -> OAContracts.OpusStreamSetting
+  @objc public static func lengthPrefixed() -> OAContracts.OpusStreamSetting
+  @objc public static func fixedSize(packetSize: Swift.Int) -> OAContracts.OpusStreamSetting
+  @objc deinit
+  final public func encode(to encoder: any Swift.Encoder) throws
+}
+@objc @objcMembers final public class AudioSetting : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let codec: OAContracts.AudioCodec
+  @objc final public let sampleRate: Swift.Int
+  @objc final public let channelCount: Swift.Int
+  @objc final public let bitDepth: Swift.Int
+  @objc final public let opusSetting: OAContracts.OpusStreamSetting?
+  @objc final public var isValid: Swift.Bool {
+    @objc get
+  }
+  @objc final public var validationMessage: Swift.String? {
+    @objc get
+  }
+  @objc public init(codec: OAContracts.AudioCodec, sampleRate: Swift.Int, channelCount: Swift.Int, bitDepth: Swift.Int = 16, opusSetting: OAContracts.OpusStreamSetting? = nil)
+  required public init(from decoder: any Swift.Decoder) throws
+  @objc final public func validate() throws
+  @objc public static func validating(codec: OAContracts.AudioCodec, sampleRate: Swift.Int, channelCount: Swift.Int, bitDepth: Swift.Int = 16, opusSetting: OAContracts.OpusStreamSetting? = nil) throws -> OAContracts.AudioSetting
+  @objc public static func pcm(sampleRate: Swift.Int, channelCount: Swift.Int, bitDepth: Swift.Int = 16) -> OAContracts.AudioSetting
+  @objc public static func opus(sampleRate: Swift.Int, channelCount: Swift.Int, bitDepth: Swift.Int = 16, opusSetting: OAContracts.OpusStreamSetting = .packetPerWrite()) -> OAContracts.AudioSetting
+  @objc deinit
+  final public func encode(to encoder: any Swift.Encoder) throws
+}
+@objc @objcMembers final public class AudioFileSetting : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let sampleRate: Swift.Int
+  @objc final public let channelCount: Swift.Int
+  @objc final public let bitDepth: Swift.Int
+  @objc final public let opusSetting: OAContracts.OpusStreamSetting?
+  @objc public init(sampleRate: Swift.Int, channelCount: Swift.Int, bitDepth: Swift.Int = 16, opusSetting: OAContracts.OpusStreamSetting? = nil)
+  required public init(from decoder: any Swift.Decoder) throws
+  @objc final public func validate() throws
+  @objc final public var validationMessage: Swift.String? {
+    @objc get
+  }
+  @objc public static func validating(sampleRate: Swift.Int, channelCount: Swift.Int, bitDepth: Swift.Int = 16, opusSetting: OAContracts.OpusStreamSetting? = nil) throws -> OAContracts.AudioFileSetting
+  @objc final public var isValidPCM: Swift.Bool {
+    @objc get
+  }
+  @objc final public var isValidOpus: Swift.Bool {
+    @objc get
+  }
+  @objc public static func pcm(sampleRate: Swift.Int, channelCount: Swift.Int, bitDepth: Swift.Int = 16) -> OAContracts.AudioFileSetting
+  @objc public static func opus(sampleRate: Swift.Int, channelCount: Swift.Int, bitDepth: Swift.Int = 16, opusSetting: OAContracts.OpusStreamSetting = .packetPerWrite()) -> OAContracts.AudioFileSetting
+  @objc deinit
+  final public func encode(to encoder: any Swift.Encoder) throws
+}
+@objc @objcMembers final public class OptionalModuleError : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let moduleName: Swift.String
+  @objc final public let dependencyNotation: Swift.String
+  @objc final public let capability: Swift.String
+  @objc final public let code: Swift.Int
+  @objc final public let message: Swift.String
+  @objc public init(moduleName: Swift.String, dependencyNotation: Swift.String, capability: Swift.String)
+  @objc deinit
+  final public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+@objc @_inheritsConvenienceInitializers @objcMembers final public class OAContractsSmoke : ObjectiveC.NSObject {
+  @objc public static func moduleName() -> Swift.String
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers final public class DeviceConfig : ObjectiveC.NSObject {
+  @objc final public let deviceId: Swift.String
+  @objc final public let resolution: Swift.String
+  @objc final public let systemLanguage: Swift.String
+  @objc(DeviceConfigBuilder) @objcMembers public class Builder : ObjectiveC.NSObject {
+    @objc public init(deviceId: Swift.String)
+    @discardableResult
+    @objc public func setResolution(_ resolution: Swift.String) -> OAContracts.DeviceConfig.Builder
+    @discardableResult
+    @objc public func setSystemLanguage(_ language: Swift.String) -> OAContracts.DeviceConfig.Builder
+    @objc public func build() -> OAContracts.DeviceConfig
+    @objc deinit
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers final public class InitConfig : ObjectiveC.NSObject {
+  @objc final public let channelId: Swift.String
+  @objc final public let appKey: Swift.String
+  @objc final public let deviceConfig: OAContracts.DeviceConfig
+  @objc final public let appUuid: Swift.String
+  @objc final public let appChannel: Swift.String
+  @objc(InitConfigBuilder) @objcMembers public class Builder : ObjectiveC.NSObject {
+    @objc public init(channelId: Swift.String, appKey: Swift.String, deviceConfig: OAContracts.DeviceConfig)
+    @discardableResult
+    @objc public func setAppUuid(_ appUuid: Swift.String) -> OAContracts.InitConfig.Builder
+    @discardableResult
+    @objc public func setAppChannel(_ appChannel: Swift.String) -> OAContracts.InitConfig.Builder
+    @objc public func build() -> OAContracts.InitConfig
+    @objc deinit
+  }
+  @objc deinit
+}
+@objc @objcMembers final public class ProductInfo : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let source: Swift.Int
+  @objc final public let type: Swift.Int
+  @objc final public let remNum: Swift.Int
+  @objc final public let expireAt: Swift.Int64
+  @objc final public let payMark: Swift.String
+  @objc final public let payAccount: Swift.String
+  @objc public init(source: Swift.Int, type: Swift.Int, remNum: Swift.Int, expireAt: Swift.Int64, payMark: Swift.String, payAccount: Swift.String)
+  @objc deinit
+  final public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+@objc public enum StorageType : Swift.Int, Swift.Codable {
+  case ali = 0
+  case aws = 1
+  public var value: Swift.Int {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class StorageInfo : ObjectiveC.NSObject, Swift.Codable {
+  @objc dynamic public var type: OAContracts.StorageType
+  @objc dynamic public var endpoint: Swift.String
+  @objc dynamic public var key: Swift.String
+  @objc dynamic public var secret: Swift.String
+  @objc dynamic public var bucket: Swift.String
+  @objc dynamic public var cdn: Swift.String
+  @objc public init(type: OAContracts.StorageType, endpoint: Swift.String, key: Swift.String, secret: Swift.String, bucket: Swift.String, cdn: Swift.String)
+  @objc override dynamic public init()
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+}
+public enum AudioConfigurationValidationError : Foundation.LocalizedError, Swift.Equatable {
+  case invalidSampleRate(Swift.Int)
+  case invalidChannelCount(Swift.Int)
+  case invalidBitDepth(Swift.Int)
+  case invalidFixedPacketSize(Swift.Int)
+  public var errorDescription: Swift.String? {
+    get
+  }
+  public static func == (a: OAContracts.AudioConfigurationValidationError, b: OAContracts.AudioConfigurationValidationError) -> Swift.Bool
+}
+public enum AudioConfigurationValidator {
+  public static func validatePacketFraming(usesFixedPacketSize: Swift.Bool, packetSize: Swift.Int) throws
+  public static func validate(sampleRate: Swift.Int, channelCount: Swift.Int, bitDepth: Swift.Int, usesFixedPacketSize: Swift.Bool, packetSize: Swift.Int) throws
+}
+extension OAContracts.TTSFormat : Swift.Equatable {}
+extension OAContracts.TTSFormat : Swift.Hashable {}
+extension OAContracts.TTSFormat : Swift.RawRepresentable {}
+extension OAContracts.AgentType : Swift.Equatable {}
+extension OAContracts.AgentType : Swift.Hashable {}
+extension OAContracts.AgentType : Swift.RawRepresentable {}
+extension OAContracts.DebugMode : Swift.Equatable {}
+extension OAContracts.DebugMode : Swift.Hashable {}
+extension OAContracts.DebugMode : Swift.RawRepresentable {}
+extension OAContracts.DepotType : Swift.Equatable {}
+extension OAContracts.DepotType : Swift.Hashable {}
+extension OAContracts.DepotType : Swift.RawRepresentable {}
+extension OAContracts.InputFormat : Swift.Equatable {}
+extension OAContracts.InputFormat : Swift.Hashable {}
+extension OAContracts.InputFormat : Swift.RawRepresentable {}
+extension OAContracts.InputType : Swift.Equatable {}
+extension OAContracts.InputType : Swift.Hashable {}
+extension OAContracts.InputType : Swift.RawRepresentable {}
+extension OAContracts.OperateType : Swift.Equatable {}
+extension OAContracts.OperateType : Swift.Hashable {}
+extension OAContracts.OperateType : Swift.RawRepresentable {}
+extension OAContracts.OutputFormat : Swift.Equatable {}
+extension OAContracts.OutputFormat : Swift.Hashable {}
+extension OAContracts.OutputFormat : Swift.RawRepresentable {}
+extension OAContracts.OutputType : Swift.Equatable {}
+extension OAContracts.OutputType : Swift.Hashable {}
+extension OAContracts.OutputType : Swift.RawRepresentable {}
+extension OAContracts.PayType : Swift.Equatable {}
+extension OAContracts.PayType : Swift.Hashable {}
+extension OAContracts.PayType : Swift.RawRepresentable {}
+extension OAContracts.SourceType : Swift.Equatable {}
+extension OAContracts.SourceType : Swift.Hashable {}
+extension OAContracts.SourceType : Swift.RawRepresentable {}
+extension OAContracts.AudioCodec : Swift.Equatable {}
+extension OAContracts.AudioCodec : Swift.Hashable {}
+extension OAContracts.AudioCodec : Swift.RawRepresentable {}
+extension OAContracts.OpusPacketFraming : Swift.Equatable {}
+extension OAContracts.OpusPacketFraming : Swift.Hashable {}
+extension OAContracts.OpusPacketFraming : Swift.RawRepresentable {}
+extension OAContracts.StorageType : Swift.Equatable {}
+extension OAContracts.StorageType : Swift.Hashable {}
+extension OAContracts.StorageType : Swift.RawRepresentable {}

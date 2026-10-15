@@ -1,0 +1,11 @@
+framework module OAS {
+  umbrella header "OAS.h"
+  export *
+
+  module * { export * }
+}
+
+module OAS.Swift {
+  header "OAS-Swift.h"
+  requires objc
+}

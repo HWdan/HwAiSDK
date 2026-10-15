@@ -5,7 +5,6 @@
 1.在 Podfile 添加：
 
 ```ruby
-source 'http://gitlab.hanshuang.ltd/oa/v2/ios-podspecs.git'
 source 'https://cdn.cocoapods.org/'
 
 platform :ios, '12.0'
@@ -16,7 +15,7 @@ pod 'AiSDK', :git => 'https://github.com/HWdan/HwAiSDK.git', :branch => 'main'
 pod 'WatchfaceSDK', :git => 'https://github.com/HWdan/WatchfaceSDK.git', :branch => 'main'
 ```
 
-执行 `pod install` 安装依赖。
+执行 `pod install` 安装依赖。OAS 2.5.0 及其依赖已随 AiSDK 提供，无需额外添加厂商 Pod 源。
   
 
 2.初始化- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions：
