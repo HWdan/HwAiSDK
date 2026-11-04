@@ -12,7 +12,7 @@
 #import "AiSDK+BmpConverterInternal.h"
 #import "AiLogger.h"
 #import "AiFileUtils.h"
-#import "HwBluetoothSDK.h"
+#import "HwBluetoothSDK/HwBluetoothSDK.h"
 #import "WatchfaceSDK/WatchfaceSDK-Swift.h"
 
 @interface JLImageToPreviewHandler()
