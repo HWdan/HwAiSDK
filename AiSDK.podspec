@@ -34,10 +34,10 @@ None
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
  s.dependency 'AFNetworking', '~> 4.0.1'
- s.dependency 'HwBluetoothSDK'
+# s.dependency 'HwBluetoothSDK'
  s.dependency 'WatchfaceSDK'
  s.dependency 'SSZipArchive'
- s.vendored_frameworks = 'NativeLib.xcframework', 'Vendor/OAS/*.xcframework'
+ s.vendored_frameworks = 'HwBluetoothSDK.framework','NativeLib.xcframework', 'Vendor/OAS/*.xcframework'
  s.preserve_paths = 'Vendor/OAS/LICENSES', 'Vendor/OAS/VERSION'
  # NativeLib was built with LLVM profiling and requires its runtime in the host.
  s.user_target_xcconfig = { 'OTHER_LDFLAGS' => '$(inherited) -fprofile-instr-generate' }
