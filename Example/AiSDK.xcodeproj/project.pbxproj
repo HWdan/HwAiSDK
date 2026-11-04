@@ -391,7 +391,10 @@
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/WatchfaceSDK/WatchfaceSDK.framework",
 				"${BUILT_PRODUCTS_DIR}/Zip/Zip.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AiSDK/JLBmpConvertKit.framework/JLBmpConvertKit",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AiSDK/OAContracts.framework/OAContracts",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AiSDK/OACore.framework/OACore",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AiSDK/OAOpus.framework/OAOpus",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AiSDK/OAS.framework/OAS",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -402,7 +405,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WatchfaceSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Zip.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JLBmpConvertKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OAContracts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OACore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OAOpus.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OAS.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
