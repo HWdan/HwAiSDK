@@ -22,6 +22,12 @@ struct OASStreamCheck {
         assert(String(data: snapshot.data, encoding: .utf8) == "你好世界。")
         assert(AiOASStream.isComplete(snapshot: true, status: 2))
         assert(AiOASStream.isComplete(snapshot: false, status: 1))
+        var audio = AiOASStream()
+        let wav = Data([0x52, 0x49, 0x46, 0x46, 0xff, 0x00])
+        audio.receive(wav.prefix(3), snapshot: false)
+        audio.receive(wav.suffix(3), snapshot: false)
+        audio.receive(Data(), snapshot: false, status: 1)
+        assert(audio.data == wav)
         print("OAS stream checks passed")
     }
 }

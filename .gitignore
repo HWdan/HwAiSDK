@@ -689,3 +689,6 @@ Example/OASConfig.local.plist
 
 # Include the complete vendored OAS frameworks.
 !/Vendor/OAS/**
+# Ship NativeLib files ignored by global Git rules.
+!/NativeLib.xcframework/**/Info.plist
+!/NativeLib.xcframework/**/*.swiftsourceinfo

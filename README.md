@@ -16,7 +16,23 @@ pod 'WatchfaceSDK', :git => 'https://github.com/HWdan/WatchfaceSDK.git', :branch
 ```
 
 执行 `pod install` 安装依赖。OAS 2.5.0 及其依赖已随 AiSDK 提供，无需额外添加厂商 Pod 源。
-  
+
+支持杰里表盘的 App 需要自行加入 `JLBmpConvertKit.xcframework` 1.2.0（Embed & Sign，iOS 10+），并在启动杰里预览或表盘传输前注册转换器：
+
+```objc
+#import <AiSDK/AiSDK+BmpConverter.h>
+#import <JLBmpConvertKit/JLBmpConvertKit.h>
+
+[[AiSDK sharedInstance] setJLBmpDataConverter:^NSData * _Nullable(NSData *imageData) {
+    JLBmpConvertOption *option = [[JLBmpConvertOption alloc] init];
+    option.convertType = JLBmpConvertType707N_ARGB;
+    option.pixelformat = JLBmpPixelformat_Auto;
+    JLImageConvertResult *result = [JLBmpConvert convert:option ImageData:imageData];
+    return result.outFileData;
+}];
+```
+
+未注册转换器或转换返回 `nil` 时，杰里表盘生成会失败。
 
 2.初始化- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions：
 

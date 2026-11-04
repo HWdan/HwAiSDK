@@ -8,7 +8,7 @@ platform :ios, '12.0'
 target 'AiSDK_Example' do
   pod 'SVProgressHUD'
   pod 'ReactiveObjC'
-  pod 'AiSDK', :git => 'https://github.com/HWdan/HwAiSDK.git', :branch => 'main'
+  pod 'AiSDK', :path => '../'
   pod 'WatchfaceSDK', :git => 'https://github.com/HWdan/WatchfaceSDK.git', :branch => 'main'
   target 'AiSDK_Tests' do
     inherit! :search_paths

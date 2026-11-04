@@ -334,6 +334,12 @@
     });
 }
 
+- (void) aiHealthAnalysisDone:(HwHealthAnalysisResult *_Nullable)result
+                         code:(NSInteger)code
+                     errorMsg:(NSString *_Nullable)errorMsg {
+    
+}
+
 - (void) scrollToBottom
 {
     NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:self.logLines.count - 1 inSection:0];
