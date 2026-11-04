@@ -11,7 +11,11 @@
 
 + (NSString *) fitLocale:(NSString *)lan
 {
-    if ([lan hasPrefix:@"zh"]) {
+    if ([lan hasPrefix:@"lv"]) {
+        return @"lv-LV";
+    } else if ([lan hasPrefix:@"iw"]) {
+        return @"he-IL";
+    } else if ([lan hasPrefix:@"zh"]) {
         if ([lan hasPrefix:@"zh-Hant"] || [lan hasPrefix:@"zh-TW"] || [lan hasPrefix:@"zh-HK"]) {
             return @"zh-TW";
         } else {

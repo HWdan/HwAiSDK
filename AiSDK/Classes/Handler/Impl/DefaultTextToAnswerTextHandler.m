@@ -42,7 +42,7 @@
                     [strongSelf convertComplete:answerTextContent code:0 errorMsg:nil];
                 }
             });
-        
+
         } onFailure:^(NSString * _Nonnull requestId, ErrorCode * _Nonnull errorCode) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             dispatch_async(dispatch_get_main_queue(), ^{

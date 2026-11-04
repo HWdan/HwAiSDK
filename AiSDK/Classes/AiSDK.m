@@ -29,7 +29,6 @@
 #import "AiAgentState.h"
 #import "AiTranslateState.h"
 #import "AiLogger.h"
-#import "DefaultVoiceToTextHandler.h"
 #import "DefaultTextToAnswerTextHandler.h"
 #import "DefaultTextToImageHandler.h"
 #import "DefaultImageToPreviewHandler.h"
@@ -42,6 +41,7 @@
 #import "DefaultTextToTranslateResultHandler.h"
 #import "DefaultMeetingResultHandler.h"
 #import "DefaultHealthAnalysisResultHandler.h"
+#import "AppOnlyHealthAnalysisResultHandler.h"
 #import "DefaultTextToVoiceHandler.h"
 
 @interface AiSDK()
@@ -235,8 +235,6 @@
     [self addDeviceEventListeners];
     [[HwBluetoothSDK sharedInstance] setAppStatus:HwAppStateForeground];
     
-    self.voiceToTextHandler = [[DefaultVoiceToTextHandler alloc] init];
-    [self.voiceToTextHandler prepare];
 }
 
 - (void) stopWorking
@@ -1057,9 +1055,11 @@
         [self healthAnalysisResultCompleted:nil code:code msg:msg];
         return;
     }
-    DefaultHealthAnalysisResultHandler *handler = [[DefaultHealthAnalysisResultHandler alloc] init];
-    handler.appOnly = self.deviceInfo.healthAnalysisAppOnly;
-    self.healthAnalysisResultHandler = handler;
+    if (self.deviceInfo.healthAnalysisAppOnly) {
+        self.healthAnalysisResultHandler = [[AppOnlyHealthAnalysisResultHandler alloc] init];
+    } else {
+        self.healthAnalysisResultHandler = [[DefaultHealthAnalysisResultHandler alloc] init];
+    }
     [self.healthAnalysisResultHandler analysis:healthData];
 }
 
@@ -1146,6 +1146,8 @@
         self.agentState = [[AiAgentState alloc] init];
         self.agentState.type = type;
     }
+    self.voiceToTextHandler = [self.devicePlatformStrategy createVoiceToTextHandler];
+    [self.voiceToTextHandler prepare];
     [self.voiceToTextHandler startRecording:langugage
                                      aiType:type];
 }
@@ -1192,7 +1194,7 @@
             callback(nil, @"Failed!");
             return;
         }
-        
+
         AiOrderInfo *orderInfo = [[AiOrderInfo alloc] init];
         orderInfo.Id = fisrt.orderId;
         orderInfo.price = fisrt.orderPrice;
@@ -1203,7 +1205,7 @@
         orderInfo.startTime = fisrt.startTime;
         orderInfo.endTime = fisrt.endTime;
         callback(orderInfo, nil);
-        
+
     } onFailure:^(ErrorCode *error) {
         NSString *msg = [weakSelf errorMsgWithCode:[error.code integerValue]];
         callback(nil, msg);
@@ -1224,19 +1226,19 @@
             callback(orderInfo, nil);
             return;
         }
-        
+
         NSInteger leftCount = 0;
         NSInteger type = 0;
         NSTimeInterval endTime = 0;
-        
+
         for (int i = 0; i < list.count; i ++) {
             ProductsSubscription *sub = [list objectAtIndex:i];
-            
+
             if (sub.productSource != 1) {
                 [AiLogger i:@"不是用户订阅"];
                 continue;
             }
-            
+
             type = sub.productType;
             if (sub.remainingNum >= 0) {
                 leftCount += sub.remainingNum;
@@ -1247,7 +1249,7 @@
                 break;
             }
         }
-        
+
         AiOrderInfo *orderInfo = [[AiOrderInfo alloc] init];
         orderInfo.orderNum = leftCount;
         orderInfo.orderType = type;
@@ -1273,7 +1275,7 @@
             AiExerciseAnalyzeModel *exerciseAnalyzeModel = [self analysisCompleted:content];
             callback(exerciseAnalyzeModel, nil);
         }
-        
+
     } onFailure:^(NSString * _Nonnull requestId, ErrorCode * _Nonnull errorCode) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
@@ -1414,6 +1416,10 @@
                                      crc:(NSString *)crc
 {
     [AiLogger i:@"voicePlayRequestHandleWithState: %@, language: %@, volumn: %@, crc: %@", @(state), @(language), @(volumn), crc];
+    if (state == 0) {
+        [self.textToVoiceHandler stop];
+        return;
+    }
     if (self.textToVoiceHandler) {
         if ([self.textToVoiceHandler isHandling:self.lastResultText]) {
             [AiLogger i:@"Is Converting text: %@", self.lastResultText];
@@ -1424,10 +1430,6 @@
             return;
         }
         [self.textToVoiceHandler stop];
-    }
-    if (state == 0) {
-        [self.textToVoiceHandler stop];
-        return;
     }
     if (!self.lastResultText) {
         [AiLogger i:@"lastResultText is null"];

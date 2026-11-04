@@ -12,8 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 @class AiSDK;
 @class UIImage;
 @protocol IImageToWatchfaceHandler;
+@protocol IVoiceToText;
 
-typedef void (^AiDeviceRecordDataCallback)(NSData *_Nullable data, NSError *_Nullable error);
 
 /**
  * 将不同设备平台的行为差异集中在策略中。
@@ -26,8 +26,8 @@ typedef void (^AiDeviceRecordDataCallback)(NSData *_Nullable data, NSError *_Nul
 /// 创建与当前平台匹配的表盘发送处理器。
 - (id<IImageToWatchfaceHandler>)createWatchfaceHandlerWithImage:(UIImage *)image
                                                       deviceInfo:(AiDeviceInfo *)deviceInfo;
-/// 从设备读取当前平台格式的录音数据。
-- (void)requestRecordDataWithCallback:(AiDeviceRecordDataCallback)callback;
+/// 创建当前平台的语音转文本处理器。
+- (id<IVoiceToText>)createVoiceToTextHandler;
 /// 将文生图结果分发给当前平台对应的预览处理流程。
 - (void)completeTextToImageWithSDK:(AiSDK *)sdk
                               image:(UIImage *_Nullable)image

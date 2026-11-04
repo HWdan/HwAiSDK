@@ -5,6 +5,7 @@
 
 #import "AiSifliDevicePlatformStrategy.h"
 #import "AiSDK.h"
+#import "SifliVoiceToTextHandler.h"
 #import "DefaultImageToWatchfaceHandler.h"
 #import "HwBluetoothSDK/HwBluetoothSDK.h"
 
@@ -16,9 +17,9 @@
     return [[DefaultImageToWatchfaceHandler alloc] initWithImage:image deviceInfo:deviceInfo];
 }
 
-- (void)requestRecordDataWithCallback:(AiDeviceRecordDataCallback)callback
+- (id<IVoiceToText>)createVoiceToTextHandler
 {
-    [[HwBluetoothSDK sharedInstance] getAiRecordDataWithCallback:callback];
+    return [[SifliVoiceToTextHandler alloc] init];
 }
 
 - (void)completeTextToImageWithSDK:(AiSDK *)sdk

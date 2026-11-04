@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class HwMeeting;
 @class HwHealthAnalysisResult;
+
+
 typedef NS_ENUM(NSInteger, AiStyle) {
     //水墨
     AiStyleInkWater = 1,
@@ -125,6 +127,7 @@ typedef NS_ENUM(NSInteger, AiError) {
  绘制style
  */
 @property(nonatomic, assign) AiStyle aiStyle;
+
 @property(nonatomic, assign) BOOL isAiWatchfaceWorking;
 @property(nonatomic, strong) id<AiSDKCallback> callback;
 

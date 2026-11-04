@@ -104,7 +104,7 @@
         [AiLogger i:@"AiMeeting 已取消"];
         return;
     }
-    
+
     self.requestId = requestId;
     NSString *wid = [[AiSDK sharedInstance] getDeviceInfo].Id;
     [AiLogger i:@"从艾闪请求会议信息，请求ID：%@, wid: %@", requestId, wid];

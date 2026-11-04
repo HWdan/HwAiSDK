@@ -5,6 +5,7 @@
 
 #import "AiJieLiDevicePlatformStrategy.h"
 #import "AiSDK.h"
+#import "JLVoiceToTextHandler.h"
 #import "JLImageToWatchfaceHandler.h"
 #import "HwBluetoothSDK/HwBluetoothSDK.h"
 
@@ -16,9 +17,9 @@
     return [[JLImageToWatchfaceHandler alloc] initWithImage:image deviceInfo:deviceInfo];
 }
 
-- (void)requestRecordDataWithCallback:(AiDeviceRecordDataCallback)callback
+- (id<IVoiceToText>)createVoiceToTextHandler
 {
-    [[HwBluetoothSDK sharedInstance] getJLAiRecordDataWithCallback:callback];
+    return [[JLVoiceToTextHandler alloc] init];
 }
 
 - (void)completeTextToImageWithSDK:(AiSDK *)sdk

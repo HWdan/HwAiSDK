@@ -44,9 +44,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 睡眠时型说明（返回字段 chronotype_intro）。
 /// 示例（节选）：@"根据本次记录的入睡时间23:00:00，按分类规则归为晚晨型。"。
 @property (nonatomic, copy) NSString *chronotypeIntro;
-/// 睡眠计划开始时间（返回字段 sleepPlan_start），HH:mm:ss 或 hh:mm:ss AM/PM，24 小时制允许 24:00:00。示例：@"23:00:00"。
+/// 睡眠计划开始时间（返回字段 sleepPlan_start），HH:mm[:ss] 或 hh:mm[:ss] AM/PM，秒可省略，24 小时制允许 24:00 和 24:00:00。示例：@"23:00:00"。
 @property (nonatomic, copy) NSString *sleepPlanStart;
-/// 睡眠计划结束时间（返回字段 sleepPlan_end），HH:mm:ss 或 hh:mm:ss AM/PM，24 小时制允许 24:00:00。示例：@"07:00:00"。
+/// 睡眠计划结束时间（返回字段 sleepPlan_end），HH:mm[:ss] 或 hh:mm[:ss] AM/PM，秒可省略，24 小时制允许 24:00 和 24:00:00。示例：@"07:00:00"。
 @property (nonatomic, copy) NSString *sleepPlanEnd;
 
 @end

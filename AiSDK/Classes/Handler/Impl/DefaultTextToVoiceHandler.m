@@ -7,6 +7,8 @@
 
 #import "DefaultTextToVoiceHandler.h"
 #import "AiLogger.h"
+#import <AiSDK/AiSDK-Swift.h>
+#import "AiLocaleUtils.h"
 #import "AiSDK/AiSDK.h"
 #import <HwBluetoothSDK/HwBluetoothSDK.h>
 #import "AiFileUtils.h"
@@ -78,6 +80,7 @@ static const uint32_t crc32_table[256] = {
 @property(nonatomic, assign) BOOL converting;
 @property(nonatomic, assign) BOOL playing;
 @property(nonatomic, copy) NSString *myText;
+@property(nonatomic, copy) NSString *speechLanguage;
 
 @end
 
@@ -118,36 +121,27 @@ static const uint32_t crc32_table[256] = {
 - (void)handle:(NSString *)text play:(BOOL)play
 {
     [AiLogger i:@"text to voice: %@", text];
-    NSString *requestId = [NSString stringWithFormat:@"%@", @([[NSDate date] timeIntervalSince1970])];
-    NSString *wid = [[AiSDK sharedInstance] getDeviceInfo].Id;
-    
+    self.isCanceled = NO;
     NSString *dir = [AiFileUtils generateTextToVoicePath];
-    
-    [AiLogger i:@"请求ID：%@, wid: %@, dir: %@, text: %@", requestId, wid, dir, text];
+    NSString *language = self.speechLanguage ?: [AiLocaleUtils fitLocale:[[AiSDK sharedInstance] getDeviceInfo].currentLocale];
     self.converting = YES;
     self.myText = text;
     if (text.length <= 0) {
+        self.converting = NO;
         [self convertComplete:nil code:-1 errorMsg:@"Text is null"];
         return;
     }
     __weak typeof(self) weakSelf = self;
-    [[AFlash shared] textToSpeechWithRequestId:requestId wid:wid thirdUuid:nil text:text fileFormat:@"mp3" onSuccess:^(NSString * _Nonnull requestId, NSData * _Nonnull data) {
+    [[AiOASClient shared] requestSpeechWithText:text language:language completion:^(NSData *data, NSString *contextId, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            NSData *textData = [text dataUsingEncoding:NSUTF8StringEncoding];
-            NSData *crcData = [HwBluetoothCenter crcDataFromData:textData total:4];
-            NSString *crc = [crcData hexString];
-            
-            NSString *filePath = [strongSelf saveMP3Data:data toDirectory:dir withFixedFileName:[NSString stringWithFormat:@"%@.mp3", crc]];
-            strongSelf.converting = NO;
-            [strongSelf convertComplete:filePath code:0 errorMsg:nil];
+        if (!strongSelf || strongSelf.isCanceled) return;
+        strongSelf.converting = NO;
+        NSString *path = nil;
+        if (!error && data.length > 0) {
+            NSString *name = [NSUUID.UUID.UUIDString stringByAppendingPathExtension:@"wav"];
+            path = [strongSelf saveMP3Data:data toDirectory:dir withFixedFileName:name];
         }
-    } onFailure:^(NSString * _Nonnull requestId, ErrorCode * _Nonnull errorCode) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [strongSelf convertComplete:nil code:[errorCode.code integerValue] errorMsg:errorCode.message];
-            strongSelf.converting = NO;
-        }
+        [strongSelf convertComplete:path code:path ? 0 : (error ? error.code : -1) errorMsg:path ? nil : (error.localizedDescription ?: @"Unable to save speech audio")];
     }];
 }
 
@@ -175,15 +169,10 @@ static const uint32_t crc32_table[256] = {
 
 - (void)handle:(NSString *)text state:(NSInteger)state language:(NSInteger)language volumn:(NSInteger)volumn crc:(NSString *)crc
 {
+    self.isCanceled = NO;
+    self.speechLanguage = [AiLocaleUtils fitLocale:[HwLanguageUtil getLocaleWithLanguage:language]];
     [self setSystemVolumnPercent:volumn];
     NSString *dir = [AiFileUtils generateTextToVoicePath];
-    
-    NSString *mp3Path = [dir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp3", crc]];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:mp3Path]) {
-        [self convertComplete:mp3Path code:0 errorMsg:nil];
-        return;
-    }
-    
     NSString *txtPath = [dir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt", crc]];
     if ([[NSFileManager defaultManager] fileExistsAtPath:txtPath]) {
         NSError *error = nil;
@@ -194,17 +183,6 @@ static const uint32_t crc32_table[256] = {
             return;
         }
         [AiLogger e:@"读取失败：%@", error.localizedDescription];
-    }
-    
-    if (text.length > 0) {
-        NSData *tmpData = [text dataUsingEncoding:NSUTF8StringEncoding];
-        NSData *crcData = [HwBluetoothCenter crcDataFromData:tmpData total:4];
-        NSString *hex = [crcData hexString];
-        NSString *mp3Path = [dir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp3", hex]];
-        if ([[NSFileManager defaultManager] fileExistsAtPath:mp3Path]) {
-            [self convertComplete:mp3Path code:0 errorMsg:nil];
-            return;
-        }
     }
     
     [self handle:text play:YES];
@@ -262,6 +240,8 @@ static const uint32_t crc32_table[256] = {
 {
     self.isCanceled = YES;
     [self stopPlaybackAndDeleteFile];
+    self.converting = NO;
+    [self resetSystemVolumn];
 }
 
 - (void)convertComplete:(NSString *)text
@@ -284,7 +264,7 @@ static const uint32_t crc32_table[256] = {
     }
     self.playing = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self playAudioAtPath:text];
+        if (!self.isCanceled) [self playAudioAtPath:text];
     });
 }
 

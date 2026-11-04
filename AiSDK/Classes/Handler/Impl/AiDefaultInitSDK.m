@@ -32,16 +32,16 @@
     if (deviceInfo == nil || deviceInfo.Id == nil || deviceInfo.width == 0 || deviceInfo.supportedLocales == nil) {
         return;
     }
-    
+
     WatchInfo *info = [[WatchInfo alloc] initWithPayModel:PaymentModelLICENSE_PAY wid:deviceInfo.Id];
     NSString *sizeStr = [NSString stringWithFormat:@"%@*%@",@(deviceInfo.width), @(deviceInfo.height)];
     info.resolution = sizeStr;
-    
+
     info.language = [AiLocaleUtils fitLocale:deviceInfo.currentLocale];
     info.supportedLanguages = [deviceInfo.supportedLocales componentsJoinedByString:@","];
-    
+
     NSString *uid = [AiSpUtils getUUID];
-    
+
     __weak typeof(self) weakSelf = self;
     [[AFlash shared] initializeWithRegion:RegionOVERSEAS watchInfos:@[info] onSuccess:^(NSArray<WatchInfo *> * _Nonnull arr) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -80,20 +80,20 @@
     if (deviceInfo == nil || deviceInfo.Id == nil || deviceInfo.width == 0 || deviceInfo.supportedLocales == nil) {
         return;
     }
-    
+
     if (self.tryCount >= 5) {
         return;
     }
-    
+
     WatchInfo *info = [[WatchInfo alloc] initWithPayModel:PaymentModelLICENSE_PAY wid:deviceInfo.Id];
     NSString *sizeStr = [NSString stringWithFormat:@"%@*%@",@(deviceInfo.width), @(deviceInfo.height)];
     info.resolution = sizeStr;
-    
+
     info.language = [AiLocaleUtils fitLocale:deviceInfo.currentLocale];
     info.supportedLanguages = [deviceInfo.supportedLocales componentsJoinedByString:@","];
-    
+
     NSString *uid = [AiSpUtils getUUID];
-    
+
     __weak typeof(self) weakSelf = self;
     [[AFlash shared] initializeWithRegion:RegionOVERSEAS watchInfos:@[info] onSuccess:^(NSArray<WatchInfo *> * _Nonnull arr) {
         __strong typeof(weakSelf) strongSelf = weakSelf;

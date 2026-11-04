@@ -140,7 +140,7 @@ static NSString *const AiHealthAgentsErrorDomain = @"AiHealthAgents";
     if (type < 1 || type > 6) return nil;
     for (NSString *key in @[@"sleepPlan_start", @"sleepPlan_end"]) {
         NSString *time = [self requiredStringForKey:key inDictionary:json];
-        if ([time rangeOfString:@"^((([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]|24:00:00)|(0?[1-9]|1[0-2]):[0-5][0-9]:[0-5][0-9] (AM|PM))$" options:NSRegularExpressionSearch].location == NSNotFound) return nil;
+        if ([time rangeOfString:@"^(([01][0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?|24:00(:00)?|(0?[1-9]|1[0-2]):[0-5][0-9](:[0-5][0-9])? (AM|PM))$" options:NSRegularExpressionSearch].location == NSNotFound) return nil;
     }
     AiSleepChronotypeResult *result = [[AiSleepChronotypeResult alloc] init];
     result.bestTime = [self requiredStringForKey:@"best_time" inDictionary:json];

@@ -1,50 +1,34 @@
 //
-//  AiVoiceToTextService.m
+//  JLVoiceToTextHandler.m
 //  AFNetworking
 //
 //  Created by HuaWo on 2025/1/9.
 //
 
-#import "AiVoiceToTextService.h"
+#import "JLVoiceToTextHandler.h"
 #import "AiLogger.h"
 #import "AiLocaleUtils.h"
 #import "AiSDK/AiSDK.h"
 #import "HwBluetoothSDK/HwBluetoothSDK.h"
-//#import <NativeLib/NativeLib.h>
-//#import <NativeLib/NativeLib-Swift.h>
 @import NativeLib;
 
 #define kRecordTimeout 12
 
-@interface AiVoiceToTextService()
+@interface JLVoiceToTextHandler()
 
-@property(nonatomic, copy) AiVoiceToTextCallback callback;
 @property(nonatomic, assign) BOOL isCanceled;
 @property(nonatomic, assign) NSInteger langugage;
 @property(nonatomic, assign) NSInteger aiType;
 @property(nonatomic, copy) NSString *mp3Path;
+@property(nonatomic, copy) NSString *recordFormat;
 
 @end
 
-@implementation AiVoiceToTextService
-
-- (void)dealloc
-{
-    _callback = nil;
-}
-
-- (AiVoiceToTextService *)initWithCallback:(AiVoiceToTextCallback)callback
-{
-    self = [super init];
-    if (self) {
-        self.callback = callback;
-    }
-    return self;
-}
+@implementation JLVoiceToTextHandler
 
 - (void)cancel
 {
-    [AiLogger i:@"AiVoiceToTextService cancel"];
+    [AiLogger i:@"JLVoiceToTextHandler cancel"];
     self.isCanceled = YES;
 }
 
@@ -53,9 +37,7 @@
     errorMsg:(NSString *)errorMsg
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (self.callback != nil) {
-            self.callback(result, code, errorMsg);
-        }
+        [[AiSDK sharedInstance] voiceToTextCompleted:result code:code msg:errorMsg];
         if (code != 0) {
             [AiLogger i:@"AiVoiceToText Failed: code: %@, msg: %@", @(code), errorMsg];
         } else {
@@ -66,16 +48,16 @@
 
 - (void)prepare
 {
-    [AiLogger i:@"AiVoiceToTextService prepare"];
+    [AiLogger i:@"JLVoiceToTextHandler prepare"];
 }
 
 - (void)destroy {
-    [AiLogger i:@"AiVoiceToTextService destroy"];
+    [AiLogger i:@"JLVoiceToTextHandler destroy"];
 }
 
 - (void)startRecording:(NSInteger)language
                 aiType:(NSInteger)aiType {
-    [AiLogger i:@"AiVoiceToTextService startRecording"];
+    [AiLogger i:@"JLVoiceToTextHandler startRecording"];
     self.isCanceled = NO;
     [self startTimer:kRecordTimeout];
     self.langugage = language;
@@ -84,7 +66,7 @@
 }
 
 - (void)stopRecording {
-    [AiLogger i:@"AiVoiceToTextService stopRecording"];
+    [AiLogger i:@"JLVoiceToTextHandler stopRecording"];
     [self removeTimer];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self getRecordFile];
@@ -94,13 +76,13 @@
 
 - (void) getRecordFile
 {
-    [AiLogger i:@"AiVoiceToTextService getRecordFile"];
+    [AiLogger i:@"JLVoiceToTextHandler getRecordFile"];
     if (self.isCanceled) {
-        [AiLogger i:@"AiVoiceToTextService getRecordFile 已取消"];
+        [AiLogger i:@"JLVoiceToTextHandler getRecordFile 已取消"];
         return;
     }
     
-    [[AiSDK sharedInstance].devicePlatformStrategy requestRecordDataWithCallback:^(NSData *data, NSError *error) {
+    [[HwBluetoothSDK sharedInstance] getJLAiRecordDataWithCallback:^(NSData *data, NSError *error) {
         if (error) {
             [self done:nil code:error.code errorMsg:error.localizedDescription];
             return;
@@ -109,6 +91,8 @@
             [self done:nil code:AiErrorRecordVoiceIsEmpty errorMsg:[[AiSDK sharedInstance] errorMsgWithCode:AiErrorRecordVoiceIsEmpty]];
             return;
         }
+        if (self.isCanceled) return;
+        self.recordFormat = @"opus";
         [self voiceToText:data];
         // 下面这个保存只是debug用的
         [self saveMp3Data:data];
@@ -118,7 +102,7 @@
 - (void) saveMp3Data:(NSData *)data
 {
     NSString *cacheDir = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
-    NSString *fileName = @"record.mp3";
+    NSString *fileName = [@"record" stringByAppendingPathExtension:self.recordFormat];
     NSString *filePath = [cacheDir stringByAppendingPathComponent:fileName];
         
     NSError *error = nil;
@@ -134,7 +118,7 @@
 - (void) voiceToText:(NSData *)voice
 {
     if (self.isCanceled) {
-        [AiLogger i:@"AiVoiceToTextService voiceToText 已取消"];
+        [AiLogger i:@"JLVoiceToTextHandler voiceToText 已取消"];
         return;
     }
     NSString *requestId = [NSString stringWithFormat:@"%@", @([[NSDate date] timeIntervalSince1970])];
@@ -146,14 +130,14 @@
         locale = [AiLocaleUtils fitLocale:languagePrefix];
     }
     
-    NSString *format = @"mp3";
+    NSString *format = self.recordFormat;
     [AiLogger i:@"speechToTextViaLanguageWithRequestId: %@, wid: %@, language: %@", requestId, wid, locale];
     __weak typeof(self) weakSelf = self;
     [[AFlash shared] speechToTextWithRequestId:requestId wid:wid thirdUuid:nil data:voice fileFormat:format language:locale onSuccess:^(NSString * _Nonnull requestId, NSString * _Nonnull text) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
             if (strongSelf.isCanceled) {
-                [AiLogger i:@"AiVoiceToTextService onSuccess 已取消"];
+                [AiLogger i:@"JLVoiceToTextHandler onSuccess 已取消"];
                 return;
             }
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -164,12 +148,12 @@
                 }
             });
         }
-        
+
         } onFailure:^(NSString * _Nonnull requestId, ErrorCode * _Nonnull errorCode) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (strongSelf) {
                 if (strongSelf.isCanceled) {
-                    [AiLogger i:@"AiVoiceToTextService onFailure 已取消"];
+                    [AiLogger i:@"JLVoiceToTextHandler onFailure 已取消"];
                     return;
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{

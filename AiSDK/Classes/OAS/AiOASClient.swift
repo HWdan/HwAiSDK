@@ -118,7 +118,30 @@ private func oaError(_ code: Int, _ message: String) -> NSError {
         Array(active.values).forEach { $0.finish(nil, error: oaError(1204, "OAS request cancelled")) }
     }
 
-    /// Only the three JSON health agents belong to this channel.
+    @objc(requestSpeechWithText:language:completion:)
+    public func requestSpeech(text: String, language: String,
+                              completion: @escaping (Data?, String?, NSError?) -> Void) {
+        let task = AiOASRequest(language: language, completion: completion)
+        task.speech = true
+        AiLogger.e(String(format: "[AiOAS] requestSpeech id=%@ language=%@ text=%@", task.id.uuidString, language, text))
+        DispatchQueue.main.async {
+            self.active[task.id] = task
+            guard !text.isEmpty else {
+                task.finish(nil, error: oaError(20003, "Text is empty")); return
+            }
+            task.armDeadline()
+            let start: (NSError?) -> Void = { error in
+                guard !task.finished else { return }
+                if let error = error { task.finish(nil, error: error); return }
+                task.start(code: "ttshfbKdALSWn", data: Data(text.utf8))
+            }
+            if self.ready { start(nil) }
+            else if self.initializing { self.initializationCallbacks.append(start) }
+            else { start(oaError(1000, "OAS initialization has not succeeded")) }
+        }
+    }
+
+    /// Restrict this entry point to the three JSON health agents.
     @objc(requestHealthAgentWithCode:data:language:completion:)
     public func requestHealthAgent(code: String, data: Data?, language: String?,
                                    completion: @escaping (Data?, String?, NSError?) -> Void) {
@@ -153,6 +176,7 @@ fileprivate final class AiOASRequest: NSObject, AgentDelegate {
     fileprivate let id = UUID()
     fileprivate let language: String
     fileprivate var finished = false
+    fileprivate var speech = false
     private var controller: AgentController?
     private var completion: ((Data?, String?, NSError?) -> Void)?
     private var messageId = ""
@@ -175,11 +199,13 @@ fileprivate final class AiOASRequest: NSObject, AgentDelegate {
     }
 
     fileprivate func start(code: String, data: Data) {
-        AiLogger.e(String(format: "[AiOAS] start id=%@ agent=%@ language=%@ inputType=textBlockBytes inputFormat=text tts=false bytes=%d", id.uuidString, code, language, data.count))
+        AiLogger.e(String(format: "[AiOAS] start id=%@ agent=%@ language=%@ inputType=textBlockBytes inputFormat=text bytes=%d request=%@", id.uuidString, code, language, data.count, String(decoding: data, as: UTF8.self)))
         controller = AgentController(agentConfig: AgentConfig(agentCode: code, inputLanguage: language))
         controller?.delegate = self
-        run(AgentRequest.builder().setInputType(.textBlockBytes).setInputFormat(.text)
-            .setTtsConfig(TTSConfig(ttsEnable: false, ttsFormat: .wav)).setData(data).build())
+        let request = AgentRequest.builder().setInputType(.textBlockBytes).setInputFormat(.text)
+            .setTtsConfig(TTSConfig(ttsEnable: speech, ttsFormat: .wav)).setData(data)
+        if speech { request.setOutputLanguage(language) }
+        run(request.build())
     }
 
     private func run(_ request: AgentRequest) {
@@ -197,7 +223,12 @@ fileprivate final class AiOASRequest: NSObject, AgentDelegate {
             guard !self.finished, result.messageId == self.messageId else { return }
             if [.agentReasoning, .agentThinking, .agentInternetSearch, .hint].contains(result.sourceType) { return }
             let text = [.textBlockBytes, .textStreamBytes, .textStaticStreamBytes].contains(result.outputType)
-            guard text, result.sourceType == .agent else { return }
+            if self.speech {
+                guard result.sourceType == .tts,
+                      [.audioStreamBytes, .audioFileBytes].contains(result.outputType) else { return }
+            } else {
+                guard text, result.sourceType == .agent else { return }
+            }
             if !result.contextId.isEmpty { self.contextId = result.contextId }
             let snapshot = result.outputType == .textStaticStreamBytes
             self.stream.receive(result.data, snapshot: snapshot, status: result.status)
@@ -229,7 +260,7 @@ fileprivate final class AiOASRequest: NSObject, AgentDelegate {
     fileprivate func finish(_ data: Data?, error: NSError?) {
         guard !finished else { return }
         finished = true
-        AiLogger.e(String(format: "[AiOAS] finish id=%@ messageId=%@ contextId=%@ code=%d message=%@ bytes=%d", id.uuidString, messageId, contextId, error?.code ?? 0, error?.localizedDescription ?? "", data?.count ?? 0))
+        AiLogger.e(String(format: "[AiOAS] finish id=%@ messageId=%@ contextId=%@ code=%d message=%@ bytes=%d response=%@", id.uuidString, messageId, contextId, error?.code ?? 0, error?.localizedDescription ?? "", data?.count ?? 0, String(decoding: data ?? Data(), as: UTF8.self)))
         let callback = completion
         completion = nil
         deadline?.cancel()
