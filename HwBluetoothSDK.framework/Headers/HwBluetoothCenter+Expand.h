@@ -93,6 +93,12 @@
 - (void) removeWorkoutRealtimeDataUpdatedCallback:(HwWorkoutRealtimeDataUpdatedCallback _Nonnull)callback;
 - (void) removeAllWorkoutRealtimeDataUpdatedCallbacks;
 
+- (void) addTimedMeasureCallback:(HwTimedMeasureCallback _Nonnull)callback;
+- (void) removeTimedMeasureCallback:(HwTimedMeasureCallback _Nonnull)callback;
+
+- (void) addTimedHeartRateCallback:(HwTimedHeartRateCallback _Nonnull)callback;
+- (void) removeTimedHeartRateCallback:(HwTimedHeartRateCallback _Nonnull)callback;
+
 - (void) addHeartrateValueChangedCallback:(HwIntValueChangedCallback _Nonnull)callback;
 - (void) removeHeartrateValueChangedCallback:(HwIntValueChangedCallback _Nonnull)callback;
 - (void) removeAllHeartrateValueChangedCallbacks;

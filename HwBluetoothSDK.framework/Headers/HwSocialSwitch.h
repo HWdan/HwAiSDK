@@ -122,6 +122,8 @@ typedef NS_ENUM(NSInteger, HwSocialSwitchType) {
     HwSocialSwitchTypeVK = 0x71,
     HwSocialSwitchTypeAlipay = 0x72,
     HwSocialSwitchTypeZalo = 0x73,
+    HwSocialSwitchTypeGoogle = 0x74,
+    HwSocialSwitchTypeWhatsAppBusiness = 0x75,
     HwSocialSwitchTypeYandex = 0x76,
     HwSocialSwitchTypeAvito = 0x77,
     HwSocialSwitchTypeMax = 0xFF,
@@ -197,6 +199,7 @@ typedef NS_ENUM(NSInteger, HwSocialSwitchType) {
     HwSocialSwitchTypeKite = 0xE5,
     HwSocialSwitchTypeZomato = 0xE6,
     HwSocialSwitchTypeZoom = 0xE7,
+    HwSocialSwitchTypeGoogleChat = 0xF1,
 };
 
 

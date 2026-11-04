@@ -63,6 +63,9 @@
 + (NSData *)dataWithUInt32:(UInt32)value;
 + (NSData *)dataWithUInt64:(UInt64)value;
 
+// 失败时不修改 offset/value，调用方应丢弃当前数据包。
++ (BOOL)readUnsignedInt32FromData:(NSData *)data offset:(UInt32 *)offset value:(UInt32 *)value;
+
 + (UInt32)unsignedDecode32FromBytes:(const void *)bytes offset:(UInt32 *)offset;
 + (UInt64)unsignedDecode64FromBytes:(const void *)bytes offset:(UInt32 *)offset;
 
