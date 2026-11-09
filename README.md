@@ -15,7 +15,7 @@ pod 'AiSDK', :git => 'https://github.com/HWdan/HwAiSDK.git', :branch => 'main'
 pod 'WatchfaceSDK', :git => 'https://github.com/HWdan/WatchfaceSDK.git', :branch => 'main'
 ```
 
-执行 `pod install` 安装依赖。OAS 2.5.0 及其依赖已随 AiSDK 提供，无需额外添加厂商 Pod 源。
+执行 `pod install` 安装依赖。
 
 支持杰里表盘的 App 需要自行加入 `JLBmpConvertKit.xcframework` 1.2.0（Embed & Sign，iOS 10+），并在启动杰里预览或表盘传输前注册转换器：
 
@@ -183,35 +183,6 @@ pod 'WatchfaceSDK', :git => 'https://github.com/HWdan/WatchfaceSDK.git', :branch
     }
         
 }
-
-## App 健康报告
-
-支持由 App 主动请求睡眠生物钟、运动洞察和身体状况报告。
-使用前申请 OAS 渠道参数，并在调用 `setDeviceInfo:` 前完成配置：
-
-```objc
-#import <AiSDK/AiSDK-Swift.h>
-#import <AiSDK/AiSDK+HealthAgents.h>
-
-[[AiOASClient shared] configureWithChannelId:channelId
-                                    appKey:appKey
-                                   appUuid:userId
-                                appChannel:appChannel];
-```
-
-配置后，按上面的设备信息设置流程调用 `setDeviceInfo:`。
-
-| 功能 | 接口 | 入参类型 |
-| --- | --- | --- |
-| 睡眠生物钟 | `generateSleepChronotype:completion:` | `AiSleepChronotypeInput` |
-| 运动洞察 | `generateExerciseInsight:completion:` | `AiExerciseInsightInput` |
-| 身体状况 | `generateBodyStatus:completion:` | `AiBodyStatusInput` |
-
-参数、单位和返回字段见 [AiHealthAgentModel.h](AiSDK/Classes/Handler/Model/AiHealthAgentModel.h)。
-结果通过 completion 在主线程返回，同时提供结果对象或 `NSError`。
-
-睡眠报告通过 `period` 指定日（0）、周（1）、月（2），通过 `use12HourClock` 选择时间制式。
-入睡和起床时间分别使用 `HH:mm:ss` 或 `hh:mm:ss AM/PM` 格式，缺失日期填字符串 `"0"`。
 
 ## 健康分析结果回传
 

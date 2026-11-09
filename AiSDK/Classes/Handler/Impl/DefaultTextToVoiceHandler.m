@@ -7,8 +7,6 @@
 
 #import "DefaultTextToVoiceHandler.h"
 #import "AiLogger.h"
-#import <AiSDK/AiSDK-Swift.h>
-#import "AiLocaleUtils.h"
 #import "AiSDK/AiSDK.h"
 #import <HwBluetoothSDK/HwBluetoothSDK.h>
 #import "AiFileUtils.h"
@@ -80,7 +78,6 @@ static const uint32_t crc32_table[256] = {
 @property(nonatomic, assign) BOOL converting;
 @property(nonatomic, assign) BOOL playing;
 @property(nonatomic, copy) NSString *myText;
-@property(nonatomic, copy) NSString *speechLanguage;
 
 @end
 
@@ -123,7 +120,6 @@ static const uint32_t crc32_table[256] = {
     [AiLogger i:@"text to voice: %@", text];
     self.isCanceled = NO;
     NSString *dir = [AiFileUtils generateTextToVoicePath];
-    NSString *language = self.speechLanguage ?: [AiLocaleUtils fitLocale:[[AiSDK sharedInstance] getDeviceInfo].currentLocale];
     self.converting = YES;
     self.myText = text;
     if (text.length <= 0) {
@@ -131,17 +127,20 @@ static const uint32_t crc32_table[256] = {
         [self convertComplete:nil code:-1 errorMsg:@"Text is null"];
         return;
     }
+    NSString *requestId = [NSString stringWithFormat:@"%@", @([[NSDate date] timeIntervalSince1970])];
+    NSString *wid = [[AiSDK sharedInstance] getDeviceInfo].Id;
     __weak typeof(self) weakSelf = self;
-    [[AiOASClient shared] requestSpeechWithText:text language:language completion:^(NSData *data, NSString *contextId, NSError *error) {
+    [[AFlash shared] textToSpeechWithRequestId:requestId wid:wid thirdUuid:nil text:text fileFormat:@"mp3" onSuccess:^(NSString * _Nonnull requestId, NSData * _Nonnull data) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!strongSelf || strongSelf.isCanceled) return;
         strongSelf.converting = NO;
-        NSString *path = nil;
-        if (!error && data.length > 0) {
-            NSString *name = [NSUUID.UUID.UUIDString stringByAppendingPathExtension:@"wav"];
-            path = [strongSelf saveMP3Data:data toDirectory:dir withFixedFileName:name];
-        }
-        [strongSelf convertComplete:path code:path ? 0 : (error ? error.code : -1) errorMsg:path ? nil : (error.localizedDescription ?: @"Unable to save speech audio")];
+        NSString *path = [strongSelf saveMP3Data:data toDirectory:dir withFixedFileName:@"record.mp3"];
+        [strongSelf convertComplete:path code:path ? 0 : -1 errorMsg:path ? nil : @"Unable to save speech audio"];
+    } onFailure:^(NSString * _Nonnull requestId, ErrorCode * _Nonnull errorCode) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (!strongSelf || strongSelf.isCanceled) return;
+        strongSelf.converting = NO;
+        [strongSelf convertComplete:nil code:[errorCode.code integerValue] errorMsg:errorCode.message];
     }];
 }
 
@@ -170,7 +169,6 @@ static const uint32_t crc32_table[256] = {
 - (void)handle:(NSString *)text state:(NSInteger)state language:(NSInteger)language volumn:(NSInteger)volumn crc:(NSString *)crc
 {
     self.isCanceled = NO;
-    self.speechLanguage = [AiLocaleUtils fitLocale:[HwLanguageUtil getLocaleWithLanguage:language]];
     [self setSystemVolumnPercent:volumn];
     NSString *dir = [AiFileUtils generateTextToVoicePath];
     NSString *txtPath = [dir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt", crc]];

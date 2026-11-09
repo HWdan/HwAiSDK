@@ -37,8 +37,7 @@ None
 # s.dependency 'HwBluetoothSDK'
  s.dependency 'WatchfaceSDK'
  s.dependency 'SSZipArchive'
- s.vendored_frameworks = 'HwBluetoothSDK.framework','NativeLib.xcframework', 'Vendor/OAS/*.xcframework'
- s.preserve_paths = 'Vendor/OAS/LICENSES', 'Vendor/OAS/VERSION'
+ s.vendored_frameworks = 'HwBluetoothSDK.framework','NativeLib.xcframework'
  # NativeLib was built with LLVM profiling and requires its runtime in the host.
  s.user_target_xcconfig = { 'OTHER_LDFLAGS' => '$(inherited) -fprofile-instr-generate' }
  s.static_framework = true

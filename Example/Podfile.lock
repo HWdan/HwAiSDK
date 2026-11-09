@@ -31,7 +31,7 @@ PODS:
   - Zip (2.1.2)
 
 DEPENDENCIES:
-  - AiSDK (from `https://github.com/HWdan/HwAiSDK.git`, branch `main`)
+  - AiSDK (from `../`)
   - ReactiveObjC
   - SVProgressHUD
   - WatchfaceSDK (from `https://github.com/HWdan/WatchfaceSDK.git`, branch `main`)
@@ -47,30 +47,26 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   AiSDK:
-    :branch: main
-    :git: https://github.com/HWdan/HwAiSDK.git
+    :path: "../"
   WatchfaceSDK:
     :branch: main
     :git: https://github.com/HWdan/WatchfaceSDK.git
 
 CHECKOUT OPTIONS:
-  AiSDK:
-    :commit: e35b33651ea3432d4e1d02132e2c85e46e166415
-    :git: https://github.com/HWdan/HwAiSDK.git
   WatchfaceSDK:
     :commit: 4ddc2f1d7b007233306c2244752a7c5fa6c275b1
     :git: https://github.com/HWdan/WatchfaceSDK.git
 
 SPEC CHECKSUMS:
   AFNetworking: 3bd23d814e976cd148d7d44c3ab78017b744cd58
-  AiSDK: 9cbcbabaf8a4d2c8c6388753c0ddc821c5574e8b
+  AiSDK: d18c817b4c49cab2ac43b9b5ad63dbf01775bcf8
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   ReactiveObjC: 011caa393aa0383245f2dcf9bf02e86b80b36040
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
   SVProgressHUD: 4837c74bdfe2e51e8821c397825996a8d7de6e22
-  WatchfaceSDK: 2e7f53ac19c9b0256e6256b5d096a98bacba5f0c
+  WatchfaceSDK: 357f3dad712d7babd6d19a7ddb4607384a840453
   Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
 
-PODFILE CHECKSUM: 4781655437be40732ff4f488e04e6781e8b43f94
+PODFILE CHECKSUM: eb96711e720a64d2bb7c097716f4505bc83ba3e7
 
 COCOAPODS: 1.16.2

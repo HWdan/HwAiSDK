@@ -6,12 +6,10 @@
 //
 
 #import "AiSDK.h"
-#import <AiSDK/AiSDK-Swift.h>
 #import "HwBluetoothSDK/HwBluetoothSDK.h"
 //#import <NativeLib/NativeLib.h>
 //#import <NativeLib/NativeLib-Swift.h>
 @import NativeLib;
-#import "AiLocaleUtils.h"
 #import "IInitSDK.h"
 #import "IVoiceToText.h"
 #import "ITextToAnswerTextHandler.h"
@@ -184,14 +182,6 @@
     if (!deviceInfo) {
         return;
     }
-    // OAS uses its own channel only for the three new health agents.
-    NSString *resolution = [NSString stringWithFormat:@"%ld*%ld", (long)deviceInfo.width, (long)deviceInfo.height];
-    [[AiOASClient shared] initializeDevice:deviceInfo.Id ?: @"" resolution:resolution
-                                language:[AiLocaleUtils fitLocale:deviceInfo.currentLocale]
-                              completion:^(NSError *error) {
-        if (error) [AiLogger e:@"OAS init failed: %@", error.localizedDescription];
-        else [AiLogger i:@"OAS initialized"];
-    }];
     // 开始初始化SDK
     if (_deviceInfo &&
         [_deviceInfo.Id isEqual:deviceInfo.Id] &&
@@ -220,7 +210,6 @@
 
 - (void) cleanDeviceInfo
 {
-    [[AiOASClient shared] resetDevice];
     _deviceInfo = nil;
 }
 

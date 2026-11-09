@@ -240,7 +240,6 @@
 				6003F588195388D20070C39A /* Resources */,
 				97A1E8DE1AF153518C597ACE /* [CP] Embed Pods Frameworks */,
 				F131D719749C05272580E388 /* [CP] Copy Pods Resources */,
-				5742E84C74AAE52DC9EDF021 /* Copy local OAS configuration */,
 			);
 			buildRules = (
 			);
@@ -358,25 +357,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5742E84C74AAE52DC9EDF021 /* Copy local OAS configuration */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Copy local OAS configuration";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "set -eu\nconfig_path=\"${SRCROOT}/OASConfig.example.plist\"\nif [ -f \"${SRCROOT}/OASConfig.local.plist\" ]; then\n  config_path=\"${SRCROOT}/OASConfig.local.plist\"\nfi\nmkdir -p \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ncp \"$config_path\" \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/OASConfig.plist\"\n";
-		};
 		97A1E8DE1AF153518C597ACE /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -391,10 +371,6 @@
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/WatchfaceSDK/WatchfaceSDK.framework",
 				"${BUILT_PRODUCTS_DIR}/Zip/Zip.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AiSDK/OAContracts.framework/OAContracts",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AiSDK/OACore.framework/OACore",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AiSDK/OAOpus.framework/OAOpus",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AiSDK/OAS.framework/OAS",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -405,10 +381,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WatchfaceSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Zip.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OAContracts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OACore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OAOpus.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OAS.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
