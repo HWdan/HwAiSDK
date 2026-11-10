@@ -38,7 +38,11 @@ None
  s.dependency 'WatchfaceSDK'
  s.dependency 'SSZipArchive'
  s.vendored_frameworks = 'HwBluetoothSDK.framework','NativeLib.xcframework'
- # NativeLib was built with LLVM profiling and requires its runtime in the host.
- s.user_target_xcconfig = { 'OTHER_LDFLAGS' => '$(inherited) -fprofile-instr-generate' }
- s.static_framework = true
+ # Both vendored binaries are static archives. Keep AiSDK dynamic (do not set
+ # static_framework) so CocoaPods links them into this one framework. A static
+ # AiSDK copies HwBluetoothDevice and the other classes into every target that
+ # depends on it, and Swift crashes when it bridges the scan-device array.
+ # -ObjC keeps categories from the static archives. NativeLib needs the LLVM
+ # profiling runtime in the image that actually links it.
+ s.pod_target_xcconfig = { 'OTHER_LDFLAGS' => '$(inherited) -ObjC -fprofile-instr-generate' }
 end

@@ -160,6 +160,7 @@
         [userDefaults synchronize];
         [[AiSDK sharedInstance] setDeviceInfo:self.deviceInfo];
     }];
+
 }
 
 

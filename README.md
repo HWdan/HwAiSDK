@@ -17,6 +17,8 @@ pod 'WatchfaceSDK', :git => 'https://github.com/HWdan/WatchfaceSDK.git', :branch
 
 执行 `pod install` 安装依赖。
 
+`use_frameworks!` 不要加 `:linkage => :static`。AiSDK 是动态框架，HwBluetoothSDK 和 NativeLib 只链接进这一份。只在 App target 里 `pod 'AiSDK'`，并由 App Embed 一次。Hawofit.framework、TitanBandLibrary 不要再把 AiSDK、HwBluetoothSDK、NativeLib 链进去或再 Embed 一份，否则 `HwBluetoothDevice` 会注册多次，Swift 桥接扫描结果数组时会崩溃。其它 framework 需要调用时，只链接 App 里的那一份动态 AiSDK，不要再链接这两个静态库。
+
 支持杰里表盘的 App 需要自行加入 `JLBmpConvertKit.xcframework` 1.2.0（Embed & Sign，iOS 10+），并在启动杰里预览或表盘传输前注册转换器：
 
 ```objc
