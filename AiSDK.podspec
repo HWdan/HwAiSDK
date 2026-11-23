@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'AiSDK'
-  s.version          = '1.3.4'
+  s.version          = '2.9.1'
   s.swift_version    = '5.0'
   s.summary          = 'Huawo AiSDK.'
   s.description      = <<-DESC

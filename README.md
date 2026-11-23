@@ -11,7 +11,7 @@ platform :ios, '12.0'
 use_frameworks!
 
 # 添加到 App 的 target 中
-pod 'AiSDK', :git => 'https://github.com/HWdan/HwAiSDK.git', :branch => 'main'
+pod 'AiSDK', :git => 'https://github.com/HWdan/HwAiSDK.git', :tag => '2.9.1'
 pod 'WatchfaceSDK', :git => 'https://github.com/HWdan/WatchfaceSDK.git', :branch => 'main'
 ```
 
