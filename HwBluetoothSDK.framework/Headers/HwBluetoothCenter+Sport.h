@@ -23,6 +23,7 @@
 #import "HwStanding.h"
 #import "HwBreaths.h"
 #import "HwTemperature.h"
+#import "HwTrainingLoad.h"
 
 extern NSString * _Nonnull HwKeySportIndex;
 // cache key for sport state at timestamp
@@ -151,6 +152,7 @@ typedef void (^HwSpo2sCallback)(NSArray<HwSpo2 *> * _Nullable spo2Arr, NSError *
 typedef void (^HwBpsCallback)(NSArray<HwBloodPressure *> * _Nullable bpArr, NSError *_Nullable error);
 typedef void (^HwBreathsCallback)(NSArray<HwBreaths *> * _Nullable breathsArr, NSError *_Nullable error);
 typedef void (^HwTemperatureCallback)(NSArray<HwTemperature *> * _Nullable temperatureArr, NSError *_Nullable error);
+typedef void (^HwTrainingLoadCallback)(NSArray<HwTrainingLoad *> * _Nullable trainingLoadArr, NSError *_Nullable error);
 
 /*! @brief
  获取设备中的运动和睡眠个数[gain the sport and sleep number of the device]

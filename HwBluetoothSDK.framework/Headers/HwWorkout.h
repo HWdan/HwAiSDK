@@ -427,6 +427,29 @@ typedef NS_ENUM(NSInteger, HwWorkoutType)
     HwWorkoutTypeClimbing2 = 300, // 登山，LS项目使用
     HwWorkoutTypeBungee2 = 301, // 蹦极，LS项目使用
     HwWorkoutTypeBallet2 = 302, // 芭蕾舞，LS项目使用
+    HwWorkoutTypeOtherTa = 303, // 其他（协议值 303；与 HwWorkoutTypeOther=0 区分）
+    HwWorkoutTypeBiceps = 304, // 肱二头肌训练
+    HwWorkoutTypeTriceps = 305, // 肱三头肌训练
+    HwWorkoutTypeChestWorkout = 306, // 胸部训练
+    HwWorkoutTypeBackWorkout = 307, // 背部训练
+    HwWorkoutTypeShoulderWorkout = 308, // 肩部训练
+    HwWorkoutTypeLegsWorkout = 309, // 腿部训练
+    HwWorkoutTypeDeadLift = 310, // 硬拉
+    HwWorkoutTypeSquats = 311, // 深蹲
+    HwWorkoutTypePushUp = 312, // 俯卧撑
+    HwWorkoutTypePullUp = 313, // 引体向上
+    HwWorkoutTypeSitUps = 314, // 仰卧起坐
+    HwWorkoutTypeBurpee = 315, // 波比跳
+    HwWorkoutTypeHighKnees = 316, // 高抬腿
+    HwWorkoutTypeJumpingJacks = 317, // 开合跳
+    HwWorkoutTypeLunges = 318, // 箭步蹲
+    HwWorkoutTypeStepperTa = 319, // 踏步
+    HwWorkoutTypeHighJump = 320, // 跳高
+    HwWorkoutTypeLongJump = 321, // 跳远
+    HwWorkoutTypeKungFu = 322, // 功夫
+    HwWorkoutTypeFolkDance = 323, // 民间舞蹈
+    HwWorkoutTypeDiscSports = 324, // 飞盘运动
+    HwWorkoutTypeSnorkelling = 325, // 浮潜
 };
 
 @class HwWorkoutGpsPoint;

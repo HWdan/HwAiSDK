@@ -10,7 +10,9 @@
 #import "HwBluetoothCenter+User.h"
 #import "HwBluetoothCenter+DrinkWater.h"
 #import "HwBluetoothCenter+PhoneSchedule.h"
+#import "HwPhoneScheduleSync2.h"
 #import "HwBluetoothCenter+StandingSetting.h"
+#import "HwBluetoothCenter+Probe.h"
 #import "HwBluetoothCenter+Ota.h"
 #import "HwOtaV2Service.h"
 #import "HwMultipleFileTransferModel.h"
@@ -45,12 +47,17 @@
 #import "HwMuslimDayAlert.h"
 #import "HwBluetoothDeviceRequestManager.h"
 #import "HwBluetoothDeviceRequestManager+DrinkWaterRecords.h"
+#import "HwBluetoothDeviceRequestManager+Probe.h"
 
 #import "HwMonitorDataType.h"
 #import "HwManufacturerAdvertiseInfo.h"
 
 #define HwBluetoothSDK_Version @"3.2.17"
 
+/**
+ 3.2.15:
+ 1. Add reminder notify listeners (E0 type 0x1C, aligned with Android ReminderNotify).
+ */
 typedef NS_ENUM(NSInteger, HWPlatformType) {
     HWPlatformTypeSifli = 0,
     HWPlatformTypeRealtek,
@@ -1369,9 +1376,30 @@ typedef void (^HwHeartrateAlarmCallback)(HwHeartrateAlarm *_Nullable hrAlarm, NS
 #pragma mark - Phone schedule sync
 - (void) syncPhoneSchedules:(NSArray<HwPhoneScheduleEvent *> *_Nonnull)events callback:(HwBoolCallback _Nullable)callback;
 
+/*! @brief
+ 同步手机日程 2（0x75 新协议：开始→增改0x03/删除0x04→结束）。
+ 覆盖式：只传 events，可传空列表清空。
+ 增量式：events 增改，deleteIds 删除；总条数 events+deleteIds ≤ 20。
+ */
+- (void) syncPhoneSchedules2:(HwPhoneScheduleSync2 *_Nonnull)sync callback:(HwBoolCallback _Nullable)callback;
+
 #pragma mark - Standing setting
 - (void) getStandingSettingWithCallback:(HwStandingSettingCallback _Nonnull)callback;
 - (void) setStandingSetting:(HwStandingSetting *_Nonnull)setting callback:(HwBoolCallback _Nullable)callback;
+
+#pragma mark - Probe heartbeat
+/*! @brief
+ 监听设备发起的心跳包（0xD8 / 操作码 0x15）。
+ timestamp 为手机收到该包的本地时间，单位毫秒。
+ */
+- (void) addProbeListener:(HwProbeCallback _Nonnull)callback;
+- (void) removeProbeListener:(HwProbeCallback _Nonnull)callback;
+- (void) removeAllProbeListeners;
+/*! @brief
+ 设置心跳包周期（通用设置 0x63 / 0x71 / 0x16）。
+ 内容为 4 字节，单位分钟。0 表示关闭。
+ */
+- (void) setProbeInterval:(NSInteger)minutes callback:(HwBoolCallback _Nullable)callback;
 
 #pragma mark - Workout APIs
 - (void) getWorkoutsWithCallback:(HwWorkoutsCallback _Nonnull)callback;

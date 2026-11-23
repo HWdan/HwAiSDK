@@ -52,6 +52,18 @@ NS_ASSUME_NONNULL_BEGIN
 /// JL BigData：体温温度
 - (void)getBodyTemperatureBigDataWithCallback:(HwTemperatureCallback _Nonnull)callback;
 
+// JL BigData：训练负荷
+- (void)getTrainingLoadBigDataWithCallback:(HwTrainingLoadCallback _Nonnull)callback;
+
+/// JL BigData：删除手表端训练负荷
+- (void)delTrainingLoadBigDataWithCallback:(HwBoolCallback _Nullable )callback;
+
+/// JL BigData：PAI
+- (void)getPaiBigDataWithCallback:(HwPAIsCallback _Nonnull)callback;
+
+/// JL BigData：删除手表端PAI
+- (void)delPaiBigDataWithCallback:(HwBoolCallback _Nullable )callback;
+
 @end
 
 NS_ASSUME_NONNULL_END

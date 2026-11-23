@@ -51,5 +51,13 @@
 - (void)getBodyTemperatureBigDataWithCallback:(HwTemperatureCallback _Nonnull)callback;
 - (void)delBodyTemperatureBigDataWithCallback:(HwBoolCallback _Nullable )callback;
 
+#pragma mark - TrainingLoad
+- (void)getTrainingLoadBigDataWithCallback:(HwTrainingLoadCallback _Nonnull)callback;
+- (void)delTrainingLoadBigDataWithCallback:(HwBoolCallback _Nullable )callback;
+
+#pragma mark - Pai
+- (void)getPaiBigDataWithCallback:(HwPAIsCallback _Nonnull)callback;
+- (void)delPaiBigDataWithCallback:(HwBoolCallback _Nullable )callback;
+
 @end
 
