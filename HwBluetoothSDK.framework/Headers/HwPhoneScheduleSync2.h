@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
  一次 0x75 新协议同步会话，传给 syncPhoneSchedules2。
  Overwrite 只发 events，覆盖设备列表。
  Incremental 将 events 作为增改(0x03)，deleteIds 作为删除(0x04)。
- itemCount 写入开始包“总条数”；覆盖计 events，增量计 events+deleteIds，上限 maxCount。
+ itemCount 写入开始包「总条数」= 增改数（events.size），不含删除；上限 maxCount。
  */
 @interface HwPhoneScheduleSync2 : NSObject
 

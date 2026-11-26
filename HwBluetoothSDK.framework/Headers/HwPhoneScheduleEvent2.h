@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface HwPhoneScheduleEvent2 : NSObject
 
-/** 单次同步会话最大条数（覆盖计 events；增量计 events+deleteIds）。 */
+/** 单次同步增改条数上限（开始帧总条数 / 增改数，限制 20；删除不计）。 */
 + (NSInteger)maxCount;
 /** 单条日程最多例外数。 */
 + (NSInteger)maxExceptions;
@@ -52,6 +52,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray<HwScheduleException *> *)exceptions;
 
 - (NSArray *)toValueUnits;
+
+/** 0x80 业务数据：一帧一条，直接是 ValueUnit 字段串。 */
++ (NSArray<HwPhoneScheduleEvent2 *> *)listFromData:(NSData *)data;
 
 @end
 

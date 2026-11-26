@@ -56,6 +56,7 @@ typedef NS_ENUM(NSInteger, HwDeviceEvent)
     HwDeviceEventOtaBeat = 0x0b,
     HwDeviceEventSyncLocation = 0x13,
     HwDeviceEventSyncPhoneCalendars = 0x14,
+    HwDeviceEventSyncWorkoutData = 0x16,
 };
 
 typedef NS_ENUM(NSInteger, HwAiType)

@@ -1377,11 +1377,16 @@ typedef void (^HwHeartrateAlarmCallback)(HwHeartrateAlarm *_Nullable hrAlarm, NS
 - (void) syncPhoneSchedules:(NSArray<HwPhoneScheduleEvent *> *_Nonnull)events callback:(HwBoolCallback _Nullable)callback;
 
 /*! @brief
- 同步手机日程 2（0x75 新协议：开始→增改0x03/删除0x04→结束）。
+ 同步手机日程 2（0x75 新协议：开始→删除→增改→结束，全部写完后等一条应答）。
  覆盖式：只传 events，可传空列表清空。
- 增量式：events 增改，deleteIds 删除；总条数 events+deleteIds ≤ 20。
+ 增量式：events 增改，deleteIds 删除；增改数 ≤ 20（删除不计）。
  */
 - (void) syncPhoneSchedules2:(HwPhoneScheduleSync2 *_Nonnull)sync callback:(HwBoolCallback _Nullable)callback;
+
+/*! @brief
+ 获取全部手机日程（0x75 / 0x70：先查个数再拉取，一帧一条）。
+ */
+- (void) getPhoneSchedulesWithCallback:(HwPhoneSchedulesCallback _Nonnull)callback;
 
 #pragma mark - Standing setting
 - (void) getStandingSettingWithCallback:(HwStandingSettingCallback _Nonnull)callback;

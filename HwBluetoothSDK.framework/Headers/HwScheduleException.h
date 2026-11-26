@@ -57,6 +57,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSData *)toBytes;
 
+/** 取消 6 字节，改期 18 字节；否则返回 nil。 */
++ (instancetype _Nullable)exceptionFromBytes:(NSData *)data;
+
 @end
 
 NS_ASSUME_NONNULL_END
