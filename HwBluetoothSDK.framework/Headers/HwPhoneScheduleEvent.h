@@ -5,6 +5,7 @@
 
 #import <Foundation/Foundation.h>
 #import "HwPhoneScheduleReminder.h"
+#import "HwPhoneScheduleDateParts.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -33,6 +34,19 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)clearReminders;
 
 - (NSArray *)toValueUnits;
+
+/** 填充开始时间；全天固定 00:00（UTC 日界）。 */
+- (void)applyStartFromTimeInterval:(NSTimeInterval)timeInterval
+                            allDay:(BOOL)allDay
+                          timeZone:(NSTimeZone * _Nullable)timeZone;
+/**
+ 填充结束时间。
+ 全天 + exclusiveEnd：按 UTC 回退一天并写 23:59。
+ */
+- (void)applyEndFromTimeInterval:(NSTimeInterval)timeInterval
+                          allDay:(BOOL)allDay
+                    exclusiveEnd:(BOOL)exclusiveEnd
+                        timeZone:(NSTimeZone * _Nullable)timeZone;
 
 @end
 

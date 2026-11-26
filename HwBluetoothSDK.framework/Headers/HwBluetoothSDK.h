@@ -11,6 +11,7 @@
 #import "HwBluetoothCenter+DrinkWater.h"
 #import "HwBluetoothCenter+PhoneSchedule.h"
 #import "HwPhoneScheduleSync2.h"
+#import "HwPhoneScheduleDateParts.h"
 #import "HwBluetoothCenter+StandingSetting.h"
 #import "HwBluetoothCenter+Probe.h"
 #import "HwBluetoothCenter+Ota.h"
@@ -1363,6 +1364,10 @@ typedef void (^HwHeartrateAlarmCallback)(HwHeartrateAlarm *_Nullable hrAlarm, NS
 
 #pragma mark - Drink water records
 - (void) getAvailableDrinkWaterRecordIdsWithCallback:(HwDrinkWaterRecordIdsCallback _Nonnull)callback;
+/*! @brief
+ 查询喝水设置（0x9B / 0x70 / 类型 0x00）。
+ 回调同时返回编号 0 目标汇总与编号 1~255 记录列表。
+ */
 - (void) getAllDrinkWaterRecordsWithCallback:(HwDrinkWaterRecordsCallback _Nonnull)callback;
 - (void) addDrinkWaterRecord:(HwDrinkWaterRecord *_Nonnull)record callback:(HwBoolCallback _Nullable)callback;
 - (void) editDrinkWaterRecord:(HwDrinkWaterRecord *_Nonnull)record callback:(HwBoolCallback _Nullable)callback;

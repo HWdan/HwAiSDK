@@ -9,6 +9,7 @@
 #import "HwScheduleRepeatLimit.h"
 #import "HwScheduleRepeatEnd.h"
 #import "HwScheduleException.h"
+#import "HwPhoneScheduleDateParts.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -55,6 +56,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** 0x80 业务数据：一帧一条，直接是 ValueUnit 字段串。 */
 + (NSArray<HwPhoneScheduleEvent2 *> *)listFromData:(NSData *)data;
+
+/** 填充开始时间；全天固定 00:00（UTC 日界）。 */
+- (void)applyStartFromTimeInterval:(NSTimeInterval)timeInterval
+                            allDay:(BOOL)allDay
+                          timeZone:(NSTimeZone * _Nullable)timeZone;
+/**
+ 填充结束时间。
+ 全天 + exclusiveEnd：按 UTC 回退一天并写 23:59（对齐 Android CalendarContract exclusive END）。
+ */
+- (void)applyEndFromTimeInterval:(NSTimeInterval)timeInterval
+                          allDay:(BOOL)allDay
+                    exclusiveEnd:(BOOL)exclusiveEnd
+                        timeZone:(NSTimeZone * _Nullable)timeZone;
 
 @end
 
